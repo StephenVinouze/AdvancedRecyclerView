@@ -110,7 +110,7 @@ abstract class RecyclerSectionAdapter<T>(protected var context: Context) : Recyc
     fun getFirstItemInSection(sectionPosition: Int): T? {
         if (sectionPosition < sections.size()) {
             val computedPosition = sectionPositionToPosition(sections.keyAt(sectionPosition) + 1)
-            return baseAdapter!!.getItemAt(computedPosition)
+            return baseAdapter!!.items[computedPosition]
         }
         return null
     }

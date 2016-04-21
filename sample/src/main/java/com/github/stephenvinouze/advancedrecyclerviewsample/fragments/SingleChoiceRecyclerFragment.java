@@ -26,7 +26,7 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         mSampleAdapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(int position) {
-                Sample sample = mSampleAdapter.getItemAt(position);
+                Sample sample = mSampleAdapter.getItems().get(position);
                 Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + mSampleAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });

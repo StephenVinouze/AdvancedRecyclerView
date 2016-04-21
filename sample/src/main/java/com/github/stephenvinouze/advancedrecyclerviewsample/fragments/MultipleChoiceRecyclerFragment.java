@@ -28,16 +28,17 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         mSampleAdapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(int position) {
-                Sample sample = mSampleAdapter.getItemAt(position);
+                Sample sample = mSampleAdapter.getItems().get(position);
                 Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + mSampleAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
 
-        //configureFragment(mRecyclerView, mSampleAdapter);
+        configureFragment(mRecyclerView, mSampleAdapter);
 
         List<Sample> samples = SampleAdapter.buildSamples();
 
         //displayItems(samples);
+        mSampleAdapter.setItems(samples);
 
         return contentView;
     }

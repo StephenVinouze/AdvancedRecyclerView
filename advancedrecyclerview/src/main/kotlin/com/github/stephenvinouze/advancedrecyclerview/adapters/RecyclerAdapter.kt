@@ -14,23 +14,15 @@ import java.util.*
  */
 abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView.Adapter<DefaultViewHolder>() {
     private val selectedItemViews = SparseBooleanArray()
-    private var clickCallback: ClickCallback? = null
 
     var items: MutableList<T> = ArrayList()
     var choiceMode = ChoiceMode.SINGLE_CHOICE
+    var clickCallback: ClickCallback? = null
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
 
     enum class ChoiceMode {
         SINGLE_CHOICE, MULTIPLE_CHOICE
-    }
-
-    fun setClickCallback(callback: ClickCallback) {
-        clickCallback = callback
-    }
-
-    fun getItemAt(position: Int): T {
-        return items[position]
     }
 
     fun addItems(items: List<T>, position: Int) {
@@ -154,11 +146,9 @@ abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView
         itemView.setOnClickListener {
             toggleItemView(position)
 
-            if (clickCallback != null) {
-                clickCallback!!.onItemClick(position)
-            }
+            clickCallback?.onItemClick(position)
         }
-        itemView.setOnLongClickListener { clickCallback != null && clickCallback!!.onItemLongClick(position) }
+        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(position) ?: false }
 
         onBindItemView(itemView, position)
     }
