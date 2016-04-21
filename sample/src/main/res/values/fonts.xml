@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icon_rate">\uf005</string>
+    <string name="icon_tick">\uf00c</string>
+</resources>

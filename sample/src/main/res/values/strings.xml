@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">AdvancedRecyclerView</string>
+    <string name="app_name">Advanced RecyclerView</string>
+
+    <string name="single_choice_recycler_name">Single choice list</string>
+    <string name="multiple_choice_recycler_name">Multiple choice list</string>
+    <string name="section_recycler_name">Section list</string>
+    <string name="custom_section_recycler_name">Custom section view list</string>
+    <string name="gesture_recycler_name">Gestures enabled list</string>
+    <string name="pagination_recycler_name">Pagination list</string>
 </resources>
