@@ -31,17 +31,13 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-        //configureFragment(mRecyclerView, mSampleAdapter);
+        configureFragment(mRecyclerView, mSampleAdapter);
 
         List<Sample> samples = SampleAdapter.buildSamples();
 
-        //displayItems(samples);
+        mSampleAdapter.setItems(samples);
 
         return contentView;
     }
 
-/*    @Override
-    public String sortSectionMethod() {
-        return null;
-    }*/
 }

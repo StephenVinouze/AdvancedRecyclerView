@@ -11,9 +11,9 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionI
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-public class SampleSectionViewAdapter extends RecyclerSectionAdapter<Sample> {
+public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
 
-    public SampleSectionViewAdapter(Context context) {
+    public SampleSectionAdapter(Context context) {
         super(context);
     }
 

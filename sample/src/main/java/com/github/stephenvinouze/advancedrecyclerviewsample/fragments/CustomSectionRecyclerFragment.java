@@ -23,7 +23,7 @@ public class CustomSectionRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        //configureFragment(mRecyclerView, mSampleAdapter, new SampleSectionViewAdapter(getActivity()));
+        //configureFragment(mRecyclerView, mSampleAdapter, new SampleSectionAdapter(getActivity()));
 
         List<Sample> samples = SampleAdapter.buildSamples();
 
@@ -38,9 +38,4 @@ public class CustomSectionRecyclerFragment extends AbstractRecyclerFragment {
 
         return contentView;
     }
-
-/*    @Override
-    public String sortSectionMethod() {
-        return "getRate";
-    }*/
 }

@@ -58,8 +58,4 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
         mRefreshLayout.setRefreshing(false);
     }
 
-/*    @Override
-    public String sortSectionMethod() {
-        return null;
-    }*/
 }

@@ -42,8 +42,4 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         return contentView;
     }
 
-/*    @Override
-    public String sortSectionMethod() {
-        return null;
-    }*/
 }

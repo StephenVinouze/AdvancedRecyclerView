@@ -43,8 +43,4 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
         return contentView;
     }
 
-/*    @Override
-    public String sortSectionMethod() {
-        return "getRate";
-    }*/
 }

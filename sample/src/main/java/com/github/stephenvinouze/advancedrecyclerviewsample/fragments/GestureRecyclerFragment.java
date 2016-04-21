@@ -34,7 +34,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
                 Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + mSampleAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
-/*        configureFragment(mRecyclerView, mSampleAdapter, new SampleSectionViewAdapter(getActivity()));
+/*        configureFragment(mRecyclerView, mSampleAdapter, new SampleSectionAdapter(getActivity()));
         setGestureCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
             @Override
             public boolean onMove(int fromPosition, int toPosition) {
@@ -62,8 +62,4 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
         return contentView;
     }
 
-/*    @Override
-    public String sortSectionMethod() {
-        return "getRate";
-    }*/
 }

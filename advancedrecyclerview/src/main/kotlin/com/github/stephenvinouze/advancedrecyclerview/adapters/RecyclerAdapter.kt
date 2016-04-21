@@ -16,15 +16,8 @@ abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView
     private val selectedItemViews = SparseBooleanArray()
     private var clickCallback: ClickCallback? = null
 
+    var items: MutableList<T> = ArrayList()
     var choiceMode = ChoiceMode.SINGLE_CHOICE
-
-    var items: MutableList<T>
-        get() = items
-        set(items) {
-            this.items = items
-            notifyDataSetChanged()
-        }
-
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
 
@@ -40,18 +33,14 @@ abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView
         return items[position]
     }
 
-    fun addItems(items: List<T>?, position: Int) {
-        if (items != null) {
-            this.items.addAll(position, items)
-            notifyItemRangeInserted(position, items.size)
-        }
+    fun addItems(items: List<T>, position: Int) {
+        this.items.addAll(position, items)
+        notifyItemRangeInserted(position, items.size)
     }
 
-    fun addItem(item: T?, position: Int) {
-        if (item != null) {
-            items.add(position, item)
-            notifyItemInserted(position)
-        }
+    fun addItem(item: T, position: Int) {
+        items.add(position, item)
+        notifyItemInserted(position)
     }
 
     fun moveItem(from: Int, to: Int) {
