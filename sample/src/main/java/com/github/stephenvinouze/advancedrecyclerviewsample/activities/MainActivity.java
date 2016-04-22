@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
-import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.CustomSectionRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.GestureRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.MultipleChoiceRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.PaginationRecyclerFragment;
@@ -43,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 displaySectionRecyclerFragment();
                 break;
 
-            case R.id.custom_section_action:
-                displayCustomSectionRecyclerFragment();
-                break;
-
             case R.id.gesture_action:
                 displayGestureRecyclerFragment();
                 break;
@@ -72,11 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private void displaySectionRecyclerFragment() {
         setTitle(getString(R.string.section_recycler_name));
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new SectionRecyclerFragment()).commit();
-    }
-
-    private void displayCustomSectionRecyclerFragment() {
-        setTitle(getString(R.string.custom_section_recycler_name));
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new CustomSectionRecyclerFragment()).commit();
     }
 
     private void displayGestureRecyclerFragment() {

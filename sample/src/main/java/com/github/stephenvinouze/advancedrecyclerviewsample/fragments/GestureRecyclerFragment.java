@@ -12,10 +12,6 @@ import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Created by Stephen Vinouze on 06/11/2015.
  */
@@ -26,12 +22,13 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        mSampleAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
-        mSampleAdapter.setClickCallback(new ClickCallback() {
+        final SampleAdapter adapter = new SampleAdapter(getActivity());
+        adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
+        adapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(int position) {
-                Sample sample = mSampleAdapter.getItems().get(position);
-                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + mSampleAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
+                Sample sample = adapter.getItems().get(position);
+                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
 /*        configureFragment(mRecyclerView, mSampleAdapter, new SampleSectionAdapter(getActivity()));
@@ -48,16 +45,9 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
             }
         });*/
 
-        List<Sample> samples = SampleAdapter.buildSamples();
+        adapter.setItems(SampleAdapter.buildSamples());
 
-        Collections.sort(samples, new Comparator<Sample>() {
-            @Override
-            public int compare(Sample lhs, Sample rhs) {
-                return lhs.getRate() - rhs.getRate();
-            }
-        });
-
-        //displayItems(samples);
+        mRecyclerView.setAdapter(adapter);
 
         return contentView;
     }

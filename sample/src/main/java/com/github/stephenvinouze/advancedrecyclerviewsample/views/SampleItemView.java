@@ -3,7 +3,6 @@ package com.github.stephenvinouze.advancedrecyclerviewsample.views;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -38,8 +37,7 @@ public class SampleItemView extends FrameLayout {
     }
 
     private void initViews(Context context) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.sample_item_view, this);
+        View view = inflate(getContext(), R.layout.sample_item_view, this);
         mNameTextView = (TextView) view.findViewById(R.id.sample_item_name_text_view);
         mTickIconView = (TextView) view.findViewById(R.id.sample_item_name_tick_view);
         mTickIconView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
+import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
 import java.util.Collections;
@@ -23,11 +24,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        //configureFragment(mRecyclerView, mSampleAdapter);
-
-        // Set grid layout manager to display data as grid
-        /*GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
-        setLayoutManager(manager);*/
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
 
         List<Sample> samples = SampleAdapter.buildSamples();
 
@@ -38,7 +35,9 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-        //displayItems(samples);
+        sectionAdapter.setItems(samples);
+
+        mRecyclerView.setAdapter(sectionAdapter);
 
         return contentView;
     }

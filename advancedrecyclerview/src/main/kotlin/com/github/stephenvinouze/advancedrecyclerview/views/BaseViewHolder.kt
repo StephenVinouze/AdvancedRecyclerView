@@ -6,4 +6,4 @@ import android.view.View
 /**
  * Created by Stephen Vinouze on 04/11/2015.
  */
-open class DefaultViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+open class BaseViewHolder(val view: View) : RecyclerView.ViewHolder(view)

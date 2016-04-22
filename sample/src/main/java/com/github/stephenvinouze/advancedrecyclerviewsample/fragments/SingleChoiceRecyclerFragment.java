@@ -11,8 +11,6 @@ import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
-import java.util.List;
-
 /**
  * Created by Stephen Vinouze on 06/11/2015.
  */
@@ -23,19 +21,18 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        mSampleAdapter.setClickCallback(new ClickCallback() {
+        final SampleAdapter adapter = new SampleAdapter(getActivity());
+        adapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(int position) {
-                Sample sample = mSampleAdapter.getItems().get(position);
-                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + mSampleAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
+                Sample sample = adapter.getItems().get(position);
+                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
 
-        configureFragment(mRecyclerView, mSampleAdapter);
+        adapter.setItems(SampleAdapter.buildSamples());
 
-        List<Sample> samples = SampleAdapter.buildSamples();
-
-        mSampleAdapter.setItems(samples);
+        mRecyclerView.setAdapter(adapter);
 
         return contentView;
     }

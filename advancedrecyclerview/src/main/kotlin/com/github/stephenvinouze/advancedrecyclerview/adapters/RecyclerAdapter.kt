@@ -6,13 +6,13 @@ import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback
-import com.github.stephenvinouze.advancedrecyclerview.views.DefaultViewHolder
+import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 import java.util.*
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView.Adapter<DefaultViewHolder>() {
+abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.Adapter<BaseViewHolder>() {
     private val selectedItemViews = SparseBooleanArray()
 
     var items: MutableList<T> = ArrayList()
@@ -136,11 +136,11 @@ abstract class RecyclerAdapter<T>(protected var context: Context) : RecyclerView
         return items.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultViewHolder {
-        return DefaultViewHolder(onCreateItemView(parent, viewType))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        return BaseViewHolder(onCreateItemView(parent, viewType))
     }
 
-    override fun onBindViewHolder(holder: DefaultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val itemView = holder.view
 
         itemView.setOnClickListener {
