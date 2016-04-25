@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
+import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -21,7 +26,16 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
 
-        sectionAdapter.setItems(SampleAdapter.buildSamples());
+        ArrayList<Sample> samples = SampleAdapter.buildSamples();
+
+        Collections.sort(samples, new Comparator<Sample>() {
+            @Override
+            public int compare(Sample lhs, Sample rhs) {
+                return lhs.getRate() - rhs.getRate();
+            }
+        });
+
+        sectionAdapter.buildSections(samples, (sample) -> sample.getRate());
 
         mRecyclerView.setAdapter(sectionAdapter);
 

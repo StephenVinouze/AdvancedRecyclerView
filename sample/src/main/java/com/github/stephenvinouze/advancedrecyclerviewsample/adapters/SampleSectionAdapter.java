@@ -12,35 +12,13 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionI
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
-
-    private Map<Integer, List<Sample>> samplesMap = new LinkedHashMap<>();
+public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample> {
 
     public SampleSectionAdapter(Context context) {
         super(context);
-    }
-
-    @Override
-    public void setItems(@NotNull List<Sample> samples) {
-        super.setItems(samples);
-
-        Collections.sort(samples, new Comparator<Sample>() {
-            @Override
-            public int compare(Sample lhs, Sample rhs) {
-                return lhs.getRate() - rhs.getRate();
-            }
-        });
-
-        samplesMap = buildSection(samples, (sample) -> sample.getRate());
     }
 
     @NotNull
@@ -55,17 +33,6 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
         sampleItemView.bind(getItems().get(position), isItemViewToggled(position));
     }
 
-    @Override
-    public int numberOfSections() {
-        return samplesMap.size();
-    }
-
-    @Override
-    public int numberOfItemsInSection(int section) {
-        Object keyAtIndex = samplesMap.keySet().toArray()[section];
-        return samplesMap.get(keyAtIndex).size();
-    }
-
     @NonNull
     @Override
     public View onCreateSectionItemView(@NonNull ViewGroup parent, int viewType) {
@@ -74,9 +41,8 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
 
     @Override
     public void onBindSectionItemView(@NonNull View v, int section) {
-        int rate = (Integer)samplesMap.keySet().toArray()[section];
         SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
-        sampleSectionItemView.bind(rate);
+        sampleSectionItemView.bind(sectionAt(section));
     }
 
 }

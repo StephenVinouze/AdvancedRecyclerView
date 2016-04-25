@@ -9,12 +9,11 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(context) {
+abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T>(context) {
 
     private val SECTION_TYPE = 0
+    private var sectionItems = LinkedHashMap<K, List<T>>()
 
-    abstract fun numberOfSections(): Int
-    abstract fun numberOfItemsInSection(section: Int): Int
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
     abstract fun onBindSectionItemView(v: View, section: Int)
 
@@ -30,7 +29,7 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
         return super.getItemCount() + numberOfSections()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         if (viewType == SECTION_TYPE) {
             return BaseViewHolder(onCreateSectionItemView(parent, viewType))
         } else {
@@ -38,7 +37,7 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    final override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (isSectionAt(position)) {
             onBindSectionItemView(holder.view, sectionPosition(position))
         } else {
@@ -46,27 +45,50 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
         }
     }
 
-    fun <K> buildSection(items : List<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
-        var sectionItems = LinkedHashMap<K, List<T>>()
-        var itemsPerSection = ArrayList<T>()
-        var currentSection : K? = null
-        for (item in items) {
-            val itemSection = section(item)
+    fun buildSections(items : ArrayList<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
+        super.items = items
 
-            if (currentSection != null && currentSection != itemSection || items.indexOf(item) == items.size - 1) {
-                if (!itemsPerSection.isEmpty()) {
-                    sectionItems.put(currentSection!!, ArrayList<T>(itemsPerSection))
+        sectionItems.clear()
+
+        if (!items.isEmpty()) {
+
+            var itemsPerSection = ArrayList<T>()
+            var currentSection : K = section(items[0])
+
+            for (item in items) {
+                val itemSection = section(item)
+
+                if (currentSection != itemSection || items.indexOf(item) == items.size - 1) {
+                    if (!itemsPerSection.isEmpty()) {
+                        sectionItems.put(currentSection, ArrayList<T>(itemsPerSection))
+                    }
+                    itemsPerSection.clear()
                 }
-                itemsPerSection.clear()
-            }
-            else {
-                itemsPerSection.add(item)
-            }
+                else {
+                    itemsPerSection.add(item)
+                }
 
-            currentSection = itemSection
+                currentSection = itemSection
+            }
         }
 
         return sectionItems
+    }
+
+    fun sectionAt(position: Int): K {
+        return allSections()[position]
+    }
+
+    private fun allSections(): List<K> {
+        return sectionItems.keys.toMutableList()
+    }
+
+    private fun numberOfSections(): Int {
+        return sectionItems.size
+    }
+
+    private fun numberOfItemsInSection(section: Int): Int {
+        return sectionItems[sectionAt(section)]?.size ?: 0
     }
 
     /**

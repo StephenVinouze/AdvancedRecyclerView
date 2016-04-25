@@ -12,7 +12,6 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -23,8 +22,8 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
         super(context);
     }
 
-    public static List<Sample> buildSamples() {
-        List<Sample> samples = new ArrayList<>();
+    public static ArrayList<Sample> buildSamples() {
+        ArrayList<Sample> samples = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
             Sample sample = new Sample();
