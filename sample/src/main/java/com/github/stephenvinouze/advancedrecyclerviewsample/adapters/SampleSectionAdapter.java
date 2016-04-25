@@ -12,7 +12,6 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionI
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -41,21 +40,7 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
             }
         });
 
-        int currentRate = 0;
-        List<Sample> rankedSamples = new ArrayList<>();
-        for (Sample sample : samples) {
-            if (sample.getRate() != currentRate || samples.indexOf(sample) == samples.size() - 1) {
-                if (!rankedSamples.isEmpty()) {
-                    samplesMap.put(currentRate, new ArrayList<>(rankedSamples));
-                }
-
-                currentRate = sample.getRate();
-                rankedSamples.clear();
-            }
-            else {
-                rankedSamples.add(sample);
-            }
-        }
+        samplesMap = buildSection(samples, (sample) -> sample.getRate());
     }
 
     @NotNull

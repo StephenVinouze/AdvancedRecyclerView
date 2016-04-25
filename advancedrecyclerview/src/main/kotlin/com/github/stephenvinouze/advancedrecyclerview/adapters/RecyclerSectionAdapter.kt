@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
+import java.util.*
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -43,6 +44,29 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
         } else {
             super.onBindViewHolder(holder, relativePosition(position))
         }
+    }
+
+    fun <K> buildSection(items : List<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
+        var sectionItems = LinkedHashMap<K, List<T>>()
+        var itemsPerSection = ArrayList<T>()
+        var currentSection : K? = null
+        for (item in items) {
+            val itemSection = section(item)
+
+            if (currentSection != null && currentSection != itemSection || items.indexOf(item) == items.size - 1) {
+                if (!itemsPerSection.isEmpty()) {
+                    sectionItems.put(currentSection!!, ArrayList<T>(itemsPerSection))
+                }
+                itemsPerSection.clear()
+            }
+            else {
+                itemsPerSection.add(item)
+            }
+
+            currentSection = itemSection
+        }
+
+        return sectionItems
     }
 
     /**

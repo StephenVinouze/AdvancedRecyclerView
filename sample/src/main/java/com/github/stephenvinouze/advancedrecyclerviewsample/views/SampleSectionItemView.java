@@ -31,9 +31,7 @@ public class SampleSectionItemView extends LinearLayout {
 
     public void bind(int rate) {
         for (TextView icon : mIcons) {
-            if (rate > mIcons.indexOf(icon)) {
-                icon.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-            }
+            icon.setTextColor(ContextCompat.getColor(getContext(), rate > mIcons.indexOf(icon) ? R.color.colorAccent : android.R.color.primary_text_light));
         }
     }
 
