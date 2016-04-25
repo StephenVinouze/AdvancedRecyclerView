@@ -12,24 +12,50 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionI
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
 public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
 
+    private Map<Integer, List<Sample>> samplesMap = new LinkedHashMap<>();
+
     public SampleSectionAdapter(Context context) {
         super(context);
+    }
 
-/*        Map<Integer, List<Sample>> sampleMap = new LinkedHashMap<>();
-        for (Sample sample : getItems()) {
-            int rate = sample.getRate();
-            List<Sample> samples = new ArrayList<>();
-            if (sampleMap.containsKey(rate)) {
-                samples.add(sample);
+    @Override
+    public void setItems(@NotNull List<Sample> samples) {
+        super.setItems(samples);
+
+        Collections.sort(samples, new Comparator<Sample>() {
+            @Override
+            public int compare(Sample lhs, Sample rhs) {
+                return lhs.getRate() - rhs.getRate();
             }
+        });
 
-            sampleMap.put(rate, samples);
-        }*/
+        int currentRate = 0;
+        List<Sample> rankedSamples = new ArrayList<>();
+        for (Sample sample : samples) {
+            if (sample.getRate() != currentRate || samples.indexOf(sample) == samples.size() - 1) {
+                if (!rankedSamples.isEmpty()) {
+                    samplesMap.put(currentRate, new ArrayList<>(rankedSamples));
+                }
+
+                currentRate = sample.getRate();
+                rankedSamples.clear();
+            }
+            else {
+                rankedSamples.add(sample);
+            }
+        }
     }
 
     @NotNull
@@ -44,6 +70,17 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
         sampleItemView.bind(getItems().get(position), isItemViewToggled(position));
     }
 
+    @Override
+    public int numberOfSections() {
+        return samplesMap.size();
+    }
+
+    @Override
+    public int numberOfItemsInSection(int section) {
+        Object keyAtIndex = samplesMap.keySet().toArray()[section];
+        return samplesMap.get(keyAtIndex).size();
+    }
+
     @NonNull
     @Override
     public View onCreateSectionItemView(@NonNull ViewGroup parent, int viewType) {
@@ -51,19 +88,10 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Sample> {
     }
 
     @Override
-    public void onBindSectionItemView(@NonNull View v, int sectionPosition) {
+    public void onBindSectionItemView(@NonNull View v, int section) {
+        int rate = (Integer)samplesMap.keySet().toArray()[section];
         SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
-        sampleSectionItemView.bind(getItems().get(0));
-    }
-
-    @Override
-    public int numberOfSections() {
-        return getItems().size() / 2;
-    }
-
-    @Override
-    public int numberOfItemsInSection(int section) {
-        return 2;
+        sampleSectionItemView.bind(rate);
     }
 
 }

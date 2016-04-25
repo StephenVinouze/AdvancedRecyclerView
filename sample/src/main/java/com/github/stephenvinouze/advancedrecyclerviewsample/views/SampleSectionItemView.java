@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
-import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +29,10 @@ public class SampleSectionItemView extends LinearLayout {
         initViews(context);
     }
 
-    public void bind(Sample sample) {
-        if (sample != null) {
-            for (TextView icon : mIcons) {
-                if (sample.getRate() > mIcons.indexOf(icon)) {
-                    icon.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-                }
+    public void bind(int rate) {
+        for (TextView icon : mIcons) {
+            if (rate > mIcons.indexOf(icon)) {
+                icon.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             }
         }
     }

@@ -15,7 +15,7 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
     abstract fun numberOfSections(): Int
     abstract fun numberOfItemsInSection(section: Int): Int
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
-    abstract fun onBindSectionItemView(v: View, sectionPosition: Int)
+    abstract fun onBindSectionItemView(v: View, section: Int)
 
     override fun getItemViewType(position: Int): Int {
         return if (isSectionAt(position)) SECTION_TYPE else super.getItemViewType(relativePosition(position)) + 1
@@ -52,7 +52,7 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
      */
     private fun isSectionAt(position: Int): Boolean {
         var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections()) {
+        for (section in 0..numberOfSections() - 1) {
             if (position == absoluteSectionPosition) {
                 return true
             }
@@ -69,7 +69,7 @@ abstract class RecyclerSectionAdapter<T>(context: Context): RecyclerAdapter<T>(c
     private fun sectionPosition(position: Int): Int {
         var sectionPosition = 0
         var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections()) {
+        for (section in 0..numberOfSections() - 1) {
             if (position <= absoluteSectionPosition + numberOfItemsInSection(section)) {
                 return sectionPosition
             }
