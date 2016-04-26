@@ -6,8 +6,8 @@ import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback
+import com.github.stephenvinouze.advancedrecyclerview.extensions.swap
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
-import java.util.*
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -45,12 +45,12 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     fun moveItem(from: Int, to: Int) {
         moveSelectedItemView(from, to)
 
-        Collections.swap(items, from, to)
+        items.swap(from, to)
         notifyItemMoved(from, to)
     }
 
     fun remoteItems(items: List<T>, position: Int) {
-        val selectedPositions = ArrayList<Int>()
+        val selectedPositions: MutableList<Int> = arrayListOf()
         for (item in items) {
             selectedPositions.add(items.indexOf(item))
         }
@@ -78,7 +78,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     }
 
     fun getSelectedItemViews(): MutableList<Int> {
-        val items = ArrayList<Int>()
+        val items: MutableList<Int> = arrayListOf()
         for (i in 0..selectedItemViews.size() - 1) {
             items.add(selectedItemViews.keyAt(i))
         }

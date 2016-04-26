@@ -33,7 +33,6 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-
         mRecyclerView.setAdapter(adapter);
 
         return contentView;

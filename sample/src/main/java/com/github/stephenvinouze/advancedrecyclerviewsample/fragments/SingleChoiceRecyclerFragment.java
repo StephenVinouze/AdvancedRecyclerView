@@ -31,7 +31,6 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-
         mRecyclerView.setAdapter(adapter);
 
         return contentView;

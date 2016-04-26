@@ -46,14 +46,14 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
         }
     }
 
-    fun buildSections(items : ArrayList<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
-        this.items = items
+    fun buildSections(items : List<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
+        this.items = items.toMutableList()
 
         sectionItems.clear()
 
         if (!items.isEmpty()) {
 
-            var itemsPerSection = ArrayList<T>()
+            var itemsPerSection: MutableList<T> = arrayListOf()
             var currentSection : K = section(items[0])
 
             for (item in items) {
