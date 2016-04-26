@@ -15,11 +15,18 @@ import java.util.*
 abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.Adapter<BaseViewHolder>() {
     private val selectedItemViews = SparseBooleanArray()
 
-    var items = ArrayList<T>()
     var choiceMode = ChoiceMode.SINGLE_CHOICE
     var clickCallback: ClickCallback? = null
+
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
+
+    var items : MutableList<T> = arrayListOf()
+        get() = field
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     enum class ChoiceMode {
         SINGLE_CHOICE, MULTIPLE_CHOICE

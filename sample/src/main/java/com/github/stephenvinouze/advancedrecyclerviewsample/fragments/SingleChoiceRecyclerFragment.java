@@ -22,6 +22,7 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
         final SampleAdapter adapter = new SampleAdapter(getActivity());
+        adapter.setItems(SampleAdapter.buildSamples());
         adapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(int position) {
@@ -30,7 +31,6 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-        adapter.setItems(SampleAdapter.buildSamples());
 
         mRecyclerView.setAdapter(adapter);
 

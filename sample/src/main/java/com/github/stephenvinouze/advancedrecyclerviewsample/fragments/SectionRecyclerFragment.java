@@ -24,10 +24,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
-
         ArrayList<Sample> samples = SampleAdapter.buildSamples();
-
         Collections.sort(samples, new Comparator<Sample>() {
             @Override
             public int compare(Sample lhs, Sample rhs) {
@@ -35,6 +32,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
         sectionAdapter.buildSections(samples, (sample) -> sample.getRate());
 
         mRecyclerView.setAdapter(sectionAdapter);

@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.stephenvinouze.advancedrecyclerview.extensions.PaginationKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
-import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
-
-import java.util.List;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -20,40 +18,39 @@ import java.util.List;
 public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
 
     private SwipeRefreshLayout mRefreshLayout;
+    private SampleAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.pagination_recycler_layout, container, false);
 
-        RecyclerView recyclerView = (RecyclerView)contentView.findViewById(R.id.recycler_view);
         mRefreshLayout = (SwipeRefreshLayout)contentView.findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fillList(1);
+                populatePage(1);
             }
         });
 
-        SampleAdapter sampleAdapter = new SampleAdapter(getActivity());
+        configureRecyclerView((RecyclerView)contentView.findViewById(R.id.recycler_view));
 
-/*        configureFragment(recyclerView, sampleAdapter);
-        setPaginationCallback(new PaginationCallback() {
-            @Override
-            public void fetchNextPage(int nextPage) {
-                fillList(nextPage);
-            }
-        });*/
+        mAdapter = new SampleAdapter(getActivity());
 
-        fillList(1);
+        PaginationKt.handlePagination(mRecyclerView, (nextPage) -> {
+            populatePage(nextPage);
+            return null;
+        });
+
+        populatePage(1);
+
+        mRecyclerView.setAdapter(mAdapter);
 
         return contentView;
     }
 
-    private void fillList(int page) {
-        List<Sample> samples = SampleAdapter.buildSamples();
-
-        //displayItems(samples, page);
+    private void populatePage(int page) {
+        PaginationKt.setItems(mAdapter, SampleAdapter.buildSamples(), page);
 
         mRefreshLayout.setRefreshing(false);
     }

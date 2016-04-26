@@ -24,12 +24,16 @@ public abstract class AbstractRecyclerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.recycler_layout, container, false);
 
-        mRecyclerView = (RecyclerView)contentView.findViewById(R.id.recycler_view);
+        configureRecyclerView((RecyclerView)contentView.findViewById(R.id.recycler_view));
+
+        return contentView;
+    }
+
+    protected void configureRecyclerView(RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        return contentView;
     }
 
 }
