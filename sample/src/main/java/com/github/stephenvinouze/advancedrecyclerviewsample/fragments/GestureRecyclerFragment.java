@@ -13,7 +13,6 @@ import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerview.callbacks.GestureCallback;
 import com.github.stephenvinouze.advancedrecyclerview.extensions.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
-import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
 /**
@@ -26,7 +25,8 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
+        /*final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());*/
+        final SampleAdapter sectionAdapter = new SampleAdapter(getActivity());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
         sectionAdapter.setClickCallback(new ClickCallback() {
             @Override
@@ -50,6 +50,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
         });
 
         sectionAdapter.setItems(SampleAdapter.buildSamples());
+        /*sectionAdapter.buildSections(SampleAdapter.buildSamples(), (sample -> sample.getRate()));*/
 
         mRecyclerView.setAdapter(sectionAdapter);
 

@@ -47,6 +47,8 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
 
         items.swap(from, to)
         notifyItemMoved(from, to)
+        notifyItemChanged(from)
+        notifyItemChanged(to)
     }
 
     fun remoteItems(items: List<T>, position: Int) {
