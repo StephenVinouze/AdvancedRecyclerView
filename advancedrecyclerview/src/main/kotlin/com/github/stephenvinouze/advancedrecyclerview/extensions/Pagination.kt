@@ -14,9 +14,9 @@ private var currentPage: Int = 1
 /**
  * Enable your list to be paginable. Trigger an event to let the user fetch the next page
  * Note that pagination will be ignore whether you are using sections. Same if you are using a LayoutManager that does not extend LinearLayoutManager.
- * @param paginate The pagination callback that let you fetch your pages
+ * @param callback The pagination callback that let you fetch your pages
  */
-fun RecyclerView.handlePagination(paginate: (nextPage: Int) -> Unit) {
+fun RecyclerView.handlePagination(callback: (nextPage: Int) -> Unit) {
     val linearLayoutManager: LinearLayoutManager? = layoutManager as? LinearLayoutManager
     if (linearLayoutManager != null) {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
@@ -24,7 +24,7 @@ fun RecyclerView.handlePagination(paginate: (nextPage: Int) -> Unit) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (!isLoading && linearLayoutManager.findLastVisibleItemPosition() > paginationTrigger(linearLayoutManager.itemCount)) {
-                    paginate(++currentPage)
+                    callback(++currentPage)
                 }
             }
         })

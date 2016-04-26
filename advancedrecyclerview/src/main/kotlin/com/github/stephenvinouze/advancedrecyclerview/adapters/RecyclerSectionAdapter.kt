@@ -3,6 +3,10 @@ package com.github.stephenvinouze.advancedrecyclerview.adapters
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import com.github.stephenvinouze.advancedrecyclerview.extensions.isSectionAt
+import com.github.stephenvinouze.advancedrecyclerview.extensions.numberOfSections
+import com.github.stephenvinouze.advancedrecyclerview.extensions.relativePosition
+import com.github.stephenvinouze.advancedrecyclerview.extensions.sectionPosition
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 import java.util.*
 
@@ -74,71 +78,6 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
         }
 
         return sectionItems
-    }
-
-    fun sectionAt(position: Int): K {
-        return allSections()[position]
-    }
-
-    fun allSections(): List<K> {
-        return sectionItems.keys.toMutableList()
-    }
-
-    fun numberOfSections(): Int {
-        return sectionItems.size
-    }
-
-    fun numberOfItemsInSection(section: Int): Int {
-        return sectionItems[sectionAt(section)]?.size ?: 0
-    }
-
-    /**
-     * Check that the given position in the list matches with a section position
-     * @param position: The absolute position in the list
-     * @return True if this is a section
-     */
-    private fun isSectionAt(position: Int): Boolean {
-        var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections() - 1) {
-            if (position == absoluteSectionPosition) {
-                return true
-            }
-            absoluteSectionPosition += numberOfItemsInSection(section) + 1
-        }
-        return false
-    }
-
-    /**
-     * Compute the relative section position in the list depending on the number of items in each section
-     * @param position: The absolute position in the list
-     * @return The relative section position of the given position
-     */
-    private fun sectionPosition(position: Int): Int {
-        var sectionPosition = 0
-        var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections() - 1) {
-            if (position <= absoluteSectionPosition + numberOfItemsInSection(section)) {
-                return sectionPosition
-            }
-            sectionPosition++
-            absoluteSectionPosition += numberOfItemsInSection(section) + 1
-        }
-        return sectionPosition
-    }
-
-    /**
-     * Compute the relative position in the list that omits the sections
-     * @param position: The absolute position in the list
-     * @return The relative position without sections
-     */
-    private fun relativePosition(position: Int): Int {
-        var relativePosition = position
-        for (absolutePosition in 0..position) {
-            if (isSectionAt(absolutePosition)) {
-                relativePosition--
-            }
-        }
-        return relativePosition
     }
 
 }
