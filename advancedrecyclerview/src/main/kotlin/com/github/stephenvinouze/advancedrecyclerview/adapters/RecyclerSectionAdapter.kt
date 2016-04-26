@@ -11,8 +11,9 @@ import java.util.*
  */
 abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T>(context) {
 
+    var sectionItems = LinkedHashMap<K, List<T>>()
+
     private val SECTION_TYPE = 0
-    private var sectionItems = LinkedHashMap<K, List<T>>()
 
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
     abstract fun onBindSectionItemView(v: View, section: Int)
@@ -46,7 +47,7 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
     }
 
     fun buildSections(items : ArrayList<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
-        super.items = items
+        this.items = items
 
         sectionItems.clear()
 
@@ -79,15 +80,15 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
         return allSections()[position]
     }
 
-    private fun allSections(): List<K> {
+    fun allSections(): List<K> {
         return sectionItems.keys.toMutableList()
     }
 
-    private fun numberOfSections(): Int {
+    fun numberOfSections(): Int {
         return sectionItems.size
     }
 
-    private fun numberOfItemsInSection(section: Int): Int {
+    fun numberOfItemsInSection(section: Int): Int {
         return sectionItems[sectionAt(section)]?.size ?: 0
     }
 
