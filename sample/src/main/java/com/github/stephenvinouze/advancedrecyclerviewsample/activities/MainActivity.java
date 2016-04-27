@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.GestureRecyclerFragment;
+import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.GestureSectionRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.MultipleChoiceRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.PaginationRecyclerFragment;
 import com.github.stephenvinouze.advancedrecyclerviewsample.fragments.SectionRecyclerFragment;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 displayGestureRecyclerFragment();
                 break;
 
+            case R.id.gesture_section_action:
+                displayGestureSectionRecyclerFragment();
+                break;
+
             case R.id.pagination_action:
                 displayPaginationRecyclerFragment();
                 break;
@@ -72,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
     private void displayGestureRecyclerFragment() {
         setTitle(getString(R.string.gesture_recycler_name));
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new GestureRecyclerFragment()).commit();
+    }
+
+    private void displayGestureSectionRecyclerFragment() {
+        setTitle(getString(R.string.gesture_sections_recycler_name));
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new GestureSectionRecyclerFragment()).commit();
     }
 
     private void displayPaginationRecyclerFragment() {
