@@ -32,6 +32,16 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         SINGLE_CHOICE, MULTIPLE_CHOICE
     }
 
+    open fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
+        val itemView = viewHolder.view
+        itemView.setOnClickListener {
+            toggleItemView(clickPosition(viewHolder))
+
+            clickCallback?.onItemClick(clickPosition(viewHolder))
+        }
+        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(clickPosition(viewHolder)) ?: false }
+    }
+
     open fun addItems(items: List<T>, position: Int) {
         this.items.addAll(position, items)
         notifyItemRangeInserted(position, items.size)
@@ -73,7 +83,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         return items
     }
 
-    fun toggleItemView(position: Int) {
+    open fun toggleItemView(position: Int) {
         when (choiceMode) {
             RecyclerAdapter.ChoiceMode.SINGLE_CHOICE -> {
                 clearSelectedItemViews()
@@ -127,12 +137,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         val itemView = onCreateItemView(parent, viewType)
         val viewHolder = BaseViewHolder(itemView)
 
-        itemView.setOnClickListener {
-            toggleItemView(viewHolder.layoutPosition)
-
-            clickCallback?.onItemClick(viewHolder.layoutPosition)
-        }
-        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(viewHolder.layoutPosition) ?: false }
+        handleClick(viewHolder, { it.layoutPosition })
 
         return viewHolder
     }

@@ -3,10 +3,7 @@ package com.github.stephenvinouze.advancedrecyclerview.adapters
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.extensions.isSectionAt
-import com.github.stephenvinouze.advancedrecyclerview.extensions.numberOfSections
-import com.github.stephenvinouze.advancedrecyclerview.extensions.relativePosition
-import com.github.stephenvinouze.advancedrecyclerview.extensions.sectionPosition
+import com.github.stephenvinouze.advancedrecyclerview.extensions.*
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 import java.util.*
 
@@ -34,6 +31,10 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
             buildSections(field, section)
         }
 
+    override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
+        super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
+    }
+
     override fun addItems(items: List<T>, position: Int) {
         this.items.addAll(relativePosition(position), items)
         buildSections(items, section)
@@ -52,6 +53,11 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
     override fun removeItem(position: Int) {
         super.removeItem(relativePosition(position))
         buildSections(items, section)
+    }
+
+    override fun toggleItemView(position: Int) {
+        super.toggleItemView(position)
+        notifyItemChanged(absolutePosition(position))
     }
 
     override fun getItemViewType(position: Int): Int {
