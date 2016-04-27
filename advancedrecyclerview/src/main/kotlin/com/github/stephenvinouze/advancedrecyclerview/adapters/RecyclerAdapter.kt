@@ -47,24 +47,10 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
 
         items.swap(from, to)
         notifyItemMoved(from, to)
-        //notifyItemChanged(from)
-        //notifyItemChanged(to)
-    }
-
-    fun remoteItems(items: List<T>, position: Int) {
-        val selectedPositions: MutableList<Int> = arrayListOf()
-        for (item in items) {
-            selectedPositions.add(items.indexOf(item))
-        }
-
-        removeSelectedItemViews(selectedPositions)
-
-        this.items.removeAll(items)
-        notifyItemRangeRemoved(position, items.size)
     }
 
     fun removeItem(position: Int) {
-        //removeSelectedItemView(position)
+        removeSelectedItemView(position)
 
         items.removeAt(position)
         notifyItemRemoved(position)
@@ -113,19 +99,11 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         }
     }
 
-    fun removeSelectedItemViews(positions: List<Int>) {
-        val selectedPositions = getSelectedItemViews()
-        selectedPositions.removeAll(positions)
-
-        selectedItemViews.clear()
-        for (selectedPosition in selectedPositions) {
-            selectedItemViews.put(selectedPosition - 1, true)
-        }
-    }
-
     fun removeSelectedItemView(position: Int) {
         val selectedPositions = getSelectedItemViews()
-        selectedPositions.removeAt(selectedPositions.indexOf(position))
+        if (isItemViewToggled(position)) {
+            selectedPositions.removeAt(selectedPositions.indexOf(position))
+        }
 
         selectedItemViews.clear()
         for (selectedPosition in selectedPositions) {
