@@ -6,6 +6,9 @@ import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAd
  * Created by stephenvinouze on 26/04/16.
  */
 
+val RecyclerSectionAdapter<*, *>.hasSections: Boolean
+    get() = !sectionItems.isEmpty()
+
 fun RecyclerSectionAdapter<*, *>.numberOfSections(): Int {
     return sectionItems.size
 }

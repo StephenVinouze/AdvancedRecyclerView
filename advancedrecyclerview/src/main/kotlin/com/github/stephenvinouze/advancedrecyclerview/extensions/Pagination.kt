@@ -3,10 +3,20 @@ package com.github.stephenvinouze.advancedrecyclerview.extensions
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAdapter
 
 /**
  * Created by stephenvinouze on 26/04/16.
  */
+
+val RecyclerView.canPaginate: Boolean
+    get() {
+        val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
+        if (sectionAdapter != null) {
+            return !sectionAdapter.hasSections
+        }
+        return true
+    }
 
 private var isLoading: Boolean = false
 private var currentPage: Int = 1
@@ -17,17 +27,19 @@ private var currentPage: Int = 1
  * @param callback The pagination callback that let you fetch your pages
  */
 fun RecyclerView.handlePagination(callback: (nextPage: Int) -> Unit) {
-    val linearLayoutManager: LinearLayoutManager? = layoutManager as? LinearLayoutManager
-    if (linearLayoutManager != null) {
-        addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+    if (canPaginate) {
+        val linearLayoutManager: LinearLayoutManager? = layoutManager as? LinearLayoutManager
+        if (linearLayoutManager != null) {
+            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-                if (!isLoading && linearLayoutManager.findLastVisibleItemPosition() > paginationTrigger(linearLayoutManager.itemCount)) {
-                    callback(++currentPage)
+                    if (!isLoading && linearLayoutManager.findLastVisibleItemPosition() > paginationTrigger(linearLayoutManager.itemCount)) {
+                        callback(++currentPage)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 }
 
