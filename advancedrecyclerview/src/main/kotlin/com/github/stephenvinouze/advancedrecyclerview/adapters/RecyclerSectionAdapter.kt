@@ -13,14 +13,46 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T>(context) {
+abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K): RecyclerAdapter<T>(context) {
 
     var sectionItems = LinkedHashMap<K, List<T>>()
 
+    private var section: (T) -> K
     private val SECTION_TYPE = 0
+
+    init {
+        this.section = section
+    }
 
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
     abstract fun onBindSectionItemView(v: View, section: Int)
+
+    override var items: MutableList<T> = arrayListOf()
+        get() = field
+        set(value) {
+            field = value
+            buildSections(field, section)
+        }
+
+    override fun addItems(items: List<T>, position: Int) {
+        this.items.addAll(relativePosition(position), items)
+        buildSections(items, section)
+    }
+
+    override fun addItem(item: T, position: Int) {
+        super.addItem(item, relativePosition(position))
+        buildSections(items, section)
+    }
+
+    override fun moveItem(from: Int, to: Int) {
+        super.moveItem(relativePosition(from), relativePosition(to))
+        buildSections(items, section)
+    }
+
+    override fun removeItem(position: Int) {
+        super.removeItem(relativePosition(position))
+        buildSections(items, section)
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (isSectionAt(position)) SECTION_TYPE else super.getItemViewType(relativePosition(position)) + 1
@@ -50,9 +82,7 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
         }
     }
 
-    fun buildSections(items : List<T>, section: (T) -> K): LinkedHashMap<K, List<T>> {
-        this.items = items.toMutableList()
-
+    private fun buildSections(items : List<T>, section: (T) -> K) {
         sectionItems.clear()
 
         if (!items.isEmpty()) {
@@ -77,7 +107,7 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context): RecyclerAdapter<T
             }
         }
 
-        return sectionItems
+        notifyDataSetChanged()
     }
 
 }

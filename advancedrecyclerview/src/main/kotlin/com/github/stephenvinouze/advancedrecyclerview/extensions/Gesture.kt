@@ -54,13 +54,9 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
                         sectionAdapter.notifyDataSetChanged()
                         return false
                     }
-
-                    fromPosition = sectionAdapter.absolutePosition(fromPosition)
-                    toPosition = sectionAdapter.absolutePosition(toPosition)
                 }
 
                 adapter.moveItem(fromPosition, toPosition)
-
                 return callback?.onMove(fromPosition, toPosition) ?: true
             }
 
@@ -71,14 +67,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
             var position = viewHolder!!.layoutPosition
             val adapter = adapter as? RecyclerAdapter<*>
             if (adapter != null) {
-
-                val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-                if (sectionAdapter != null) {
-                    position = sectionAdapter.absolutePosition(position)
-                }
-
                 adapter.removeItem(position)
-
                 callback?.onSwiped(position, direction)
             }
         }

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample> {
 
     public SampleSectionAdapter(Context context) {
-        super(context);
+        super(context, (sample -> sample.getRate()));
     }
 
     @NotNull

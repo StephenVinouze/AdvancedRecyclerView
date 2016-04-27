@@ -13,7 +13,12 @@ import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerview.callbacks.GestureCallback;
 import com.github.stephenvinouze.advancedrecyclerview.extensions.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
+import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -25,8 +30,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        //final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
-        final SampleAdapter sectionAdapter = new SampleAdapter(getActivity());
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
         sectionAdapter.setClickCallback(new ClickCallback() {
             @Override
@@ -49,8 +53,15 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-        sectionAdapter.setItems(SampleAdapter.buildSamples());
-        //sectionAdapter.buildSections(SampleAdapter.buildSamples(), (sample -> sample.getRate()));
+        ArrayList<Sample> samples = SampleAdapter.buildSamples();
+        Collections.sort(samples, new Comparator<Sample>() {
+            @Override
+            public int compare(Sample lhs, Sample rhs) {
+                return lhs.getRate() - rhs.getRate();
+            }
+        });
+
+        sectionAdapter.setItems(samples);
 
         mRecyclerView.setAdapter(sectionAdapter);
 

@@ -33,7 +33,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
         });
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
-        sectionAdapter.buildSections(samples, (sample) -> sample.getRate());
+        sectionAdapter.setItems(samples);
 
         mRecyclerView.setAdapter(sectionAdapter);
 

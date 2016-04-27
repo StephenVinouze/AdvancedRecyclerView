@@ -21,7 +21,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
 
-    var items : MutableList<T> = arrayListOf()
+    open var items : MutableList<T> = arrayListOf()
         get() = field
         set(value) {
             field = value
@@ -32,24 +32,24 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         SINGLE_CHOICE, MULTIPLE_CHOICE
     }
 
-    fun addItems(items: List<T>, position: Int) {
+    open fun addItems(items: List<T>, position: Int) {
         this.items.addAll(position, items)
         notifyItemRangeInserted(position, items.size)
     }
 
-    fun addItem(item: T, position: Int) {
+    open fun addItem(item: T, position: Int) {
         items.add(position, item)
         notifyItemInserted(position)
     }
 
-    fun moveItem(from: Int, to: Int) {
+    open fun moveItem(from: Int, to: Int) {
         moveSelectedItemView(from, to)
 
         items.swap(from, to)
         notifyItemMoved(from, to)
     }
 
-    fun removeItem(position: Int) {
+    open fun removeItem(position: Int) {
         removeSelectedItemView(position)
 
         items.removeAt(position)
