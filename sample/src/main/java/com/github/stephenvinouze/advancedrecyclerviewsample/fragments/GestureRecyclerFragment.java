@@ -25,7 +25,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
-        /*final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());*/
+        //final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
         final SampleAdapter sectionAdapter = new SampleAdapter(getActivity());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
         sectionAdapter.setClickCallback(new ClickCallback() {
@@ -50,7 +50,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
         });
 
         sectionAdapter.setItems(SampleAdapter.buildSamples());
-        /*sectionAdapter.buildSections(SampleAdapter.buildSamples(), (sample -> sample.getRate()));*/
+        //sectionAdapter.buildSections(SampleAdapter.buildSamples(), (sample -> sample.getRate()));
 
         mRecyclerView.setAdapter(sectionAdapter);
 

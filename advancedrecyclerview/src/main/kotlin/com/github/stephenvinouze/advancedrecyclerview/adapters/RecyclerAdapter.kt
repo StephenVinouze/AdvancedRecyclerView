@@ -47,8 +47,8 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
 
         items.swap(from, to)
         notifyItemMoved(from, to)
-        notifyItemChanged(from)
-        notifyItemChanged(to)
+        //notifyItemChanged(from)
+        //notifyItemChanged(to)
     }
 
     fun remoteItems(items: List<T>, position: Int) {
@@ -64,7 +64,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     }
 
     fun removeItem(position: Int) {
-        removeSelectedItemView(position)
+        //removeSelectedItemView(position)
 
         items.removeAt(position)
         notifyItemRemoved(position)
@@ -146,20 +146,21 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return BaseViewHolder(onCreateItemView(parent, viewType))
+        val itemView = onCreateItemView(parent, viewType)
+        val viewHolder = BaseViewHolder(itemView)
+
+        itemView.setOnClickListener {
+            toggleItemView(viewHolder.layoutPosition)
+
+            clickCallback?.onItemClick(viewHolder.layoutPosition)
+        }
+        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(viewHolder.layoutPosition) ?: false }
+
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        val itemView = holder.view
-
-        itemView.setOnClickListener {
-            toggleItemView(position)
-
-            clickCallback?.onItemClick(position)
-        }
-        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(position) ?: false }
-
-        onBindItemView(itemView, position)
+        onBindItemView(holder.view, position)
     }
 
 }
