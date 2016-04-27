@@ -48,6 +48,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
             val adapter = adapter as? RecyclerAdapter<*>
             if (adapter != null) {
 
+                // Prevent move items outside its section if any
                 val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
                 if (sectionAdapter != null) {
                     if (sectionAdapter.isSectionAt(toPosition)) {

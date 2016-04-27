@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAdapter
+import com.github.stephenvinouze.advancedrecyclerview.callbacks.PaginationCallback
 
 /**
  * Created by stephenvinouze on 26/04/16.
@@ -26,7 +27,7 @@ private var currentPage: Int = 1
  * Note that pagination will be ignore whether you are using sections. Same if you are using a LayoutManager that does not extend LinearLayoutManager.
  * @param callback The pagination callback that let you fetch your pages
  */
-fun RecyclerView.handlePagination(callback: (nextPage: Int) -> Unit) {
+fun RecyclerView.handlePagination(callback: PaginationCallback) {
     if (canPaginate) {
         val linearLayoutManager: LinearLayoutManager? = layoutManager as? LinearLayoutManager
         if (linearLayoutManager != null) {
@@ -35,7 +36,7 @@ fun RecyclerView.handlePagination(callback: (nextPage: Int) -> Unit) {
                     super.onScrolled(recyclerView, dx, dy)
 
                     if (!isLoading && linearLayoutManager.findLastVisibleItemPosition() > paginationTrigger(linearLayoutManager.itemCount)) {
-                        callback(++currentPage)
+                        callback.fetchNextPage(++currentPage)
                     }
                 }
             })
