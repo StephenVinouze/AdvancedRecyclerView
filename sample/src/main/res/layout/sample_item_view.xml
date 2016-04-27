@@ -11,8 +11,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/sample_item_index_text_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"/>
 
         <TextView
             android:id="@+id/sample_item_name_tick_view"
@@ -20,8 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:padding="16dp"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
             android:text="@string/icon_tick"
+            android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:visibility="gone"/>
 
@@ -29,9 +39,13 @@
             android:id="@+id/sample_item_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/sample_item_index_text_view"
             android:layout_toLeftOf="@id/sample_item_name_tick_view"
+            android:layout_toRightOf="@id/sample_item_index_text_view"
             android:layout_toStartOf="@id/sample_item_name_tick_view"
-            android:padding="16dp"
             android:textSize="16sp"/>
 
     </RelativeLayout>

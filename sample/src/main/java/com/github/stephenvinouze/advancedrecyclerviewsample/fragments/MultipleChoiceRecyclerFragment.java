@@ -29,7 +29,7 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
             @Override
             public void onItemClick(int position) {
                 Sample sample = adapter.getItems().get(position);
-                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item clicked : " + sample.getId() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
 

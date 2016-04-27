@@ -36,7 +36,7 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
             @Override
             public void onItemClick(int position) {
                 Sample sample = sectionAdapter.getItems().get(position);
-                Toast.makeText(getActivity(), "Item clicked : " + sample.getName() + " (" + sectionAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item clicked : " + sample.getId() + " (" + sectionAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -31,19 +31,19 @@ public class SampleSectionItemView extends LinearLayout {
 
     public void bind(int rate) {
         for (TextView icon : mIcons) {
-            icon.setTextColor(ContextCompat.getColor(getContext(), rate > mIcons.indexOf(icon) ? R.color.colorAccent : android.R.color.primary_text_light));
+            icon.setTextColor(ContextCompat.getColor(getContext(), rate > mIcons.indexOf(icon) ? R.color.colorAccent : R.color.colorPrimaryLight));
         }
     }
 
     private void initViews(Context context) {
         setOrientation(HORIZONTAL);
-        setPadding(10, 10, 10, 10);
+        setPadding(10, 20, 10, 20);
 
         for (int i = 0; i < 5; i++) {
             TextView icon = new TextView(getContext());
             icon.setText(context.getString(R.string.icon_rate));
             icon.setTextSize(20);
-            icon.setPadding(10, 10, 10, 10);
+            icon.setPadding(15, 10, 15, 10);
             icon.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));
 
             addView(icon);

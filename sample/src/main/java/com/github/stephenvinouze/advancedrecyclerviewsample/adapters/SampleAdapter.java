@@ -12,6 +12,7 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -25,11 +26,12 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
     public static ArrayList<Sample> buildSamples() {
         ArrayList<Sample> samples = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        Random random = new Random();
+        for (int i = 1; i < 20; i++) {
             Sample sample = new Sample();
             sample.setId(i);
-            sample.setRate(i < 3 ? 1 : (i > 7 ? 4 : 2));
-            sample.setName("Sample N°" + (i + 1));
+            sample.setRate((int) (Math.random() * 5));
+            sample.setName("Sample name for index " + i);
             samples.add(sample);
         }
 

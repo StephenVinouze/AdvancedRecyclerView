@@ -15,6 +15,7 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
  */
 public class SampleItemView extends FrameLayout {
 
+    private TextView mIndexTextView;
     private TextView mNameTextView;
     private TextView mTickIconView;
 
@@ -30,6 +31,7 @@ public class SampleItemView extends FrameLayout {
 
     public void bind(Sample sample, boolean isToggled) {
         if (sample != null) {
+            mIndexTextView.setText(String.format("%d", sample.getId()));
             mNameTextView.setText(sample.getName());
         }
 
@@ -38,6 +40,7 @@ public class SampleItemView extends FrameLayout {
 
     private void initViews(Context context) {
         View view = inflate(getContext(), R.layout.sample_item_view, this);
+        mIndexTextView = (TextView) view.findViewById(R.id.sample_item_index_text_view);
         mNameTextView = (TextView) view.findViewById(R.id.sample_item_name_text_view);
         mTickIconView = (TextView) view.findViewById(R.id.sample_item_name_tick_view);
         mTickIconView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));
