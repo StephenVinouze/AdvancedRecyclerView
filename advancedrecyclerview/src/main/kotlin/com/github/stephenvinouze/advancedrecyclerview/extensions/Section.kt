@@ -35,7 +35,10 @@ fun RecyclerSectionAdapter<*, *>.isSectionAt(position: Int): Boolean {
     for (section in 0..numberOfSections() - 1) {
         if (position == absoluteSectionPosition) {
             return true
+        } else if (position < absoluteSectionPosition) {
+            return false
         }
+
         absoluteSectionPosition += numberOfItemsInSection(section) + 1
     }
     return false
@@ -50,11 +53,13 @@ fun RecyclerSectionAdapter<*, *>.sectionPosition(position: Int): Int {
     var sectionPosition = 0
     var absoluteSectionPosition = 0
     for (section in 0..numberOfSections() - 1) {
-        if (position <= absoluteSectionPosition + numberOfItemsInSection(section)) {
+        absoluteSectionPosition += numberOfItemsInSection(section)
+        if (position <= absoluteSectionPosition) {
             return sectionPosition
         }
+
         sectionPosition++
-        absoluteSectionPosition += numberOfItemsInSection(section) + 1
+        absoluteSectionPosition++
     }
     return sectionPosition
 }
@@ -76,7 +81,7 @@ fun RecyclerSectionAdapter<*, *>.relativePosition(position: Int): Int {
 
 /**
  * Compute the absolute position in the list that includes the sections
- * @param position: The relate position in the list
+ * @param position: The relative position in the list
  * @return The absolute position with sections
  */
 fun RecyclerSectionAdapter<*, *>.absolutePosition(position: Int): Int {

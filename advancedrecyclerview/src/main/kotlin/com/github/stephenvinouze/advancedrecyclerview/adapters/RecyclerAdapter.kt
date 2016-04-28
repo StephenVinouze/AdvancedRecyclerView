@@ -48,26 +48,26 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     }
 
     open fun addItem(item: T, position: Int) {
-        items.add(position, item)
+        this.items.add(position, item)
         notifyItemInserted(position)
     }
 
     open fun moveItem(from: Int, to: Int) {
         moveSelectedItemView(from, to)
 
-        items.swap(from, to)
+        this.items.swap(from, to)
         notifyItemMoved(from, to)
     }
 
     open fun removeItem(position: Int) {
         removeSelectedItemView(position)
 
-        items.removeAt(position)
+        this.items.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun clearItems() {
-        items.clear()
+        this.items.clear()
         clearSelectedItemViews()
     }
 
@@ -99,7 +99,12 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         notifyItemChanged(position)
     }
 
-    fun moveSelectedItemView(from: Int, to: Int) {
+    fun clearSelectedItemViews() {
+        selectedItemViews.clear()
+        notifyDataSetChanged()
+    }
+
+    private fun moveSelectedItemView(from: Int, to: Int) {
         if (isItemViewToggled(from) && !isItemViewToggled(to)) {
             selectedItemViews.delete(from)
             selectedItemViews.put(to, true)
@@ -109,7 +114,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         }
     }
 
-    fun removeSelectedItemView(position: Int) {
+    private fun removeSelectedItemView(position: Int) {
         val selectedPositions = getSelectedItemViews()
         if (isItemViewToggled(position)) {
             selectedPositions.removeAt(selectedPositions.indexOf(position))
@@ -119,11 +124,6 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         for (selectedPosition in selectedPositions) {
             selectedItemViews.put(if (position > selectedPosition) selectedPosition else selectedPosition - 1, true)
         }
-    }
-
-    fun clearSelectedItemViews() {
-        selectedItemViews.clear()
-        notifyDataSetChanged()
     }
 
     protected abstract fun onCreateItemView(parent: ViewGroup, viewType: Int): View

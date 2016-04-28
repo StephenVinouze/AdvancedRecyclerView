@@ -12,7 +12,6 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -26,7 +25,6 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
     public static ArrayList<Sample> buildSamples() {
         ArrayList<Sample> samples = new ArrayList<>();
 
-        Random random = new Random();
         for (int i = 1; i < 20; i++) {
             Sample sample = new Sample();
             sample.setId(i);
