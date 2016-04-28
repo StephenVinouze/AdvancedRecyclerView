@@ -37,9 +37,9 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         itemView.setOnClickListener {
             toggleItemView(clickPosition(viewHolder))
 
-            clickCallback?.onItemClick(clickPosition(viewHolder))
+            clickCallback?.onItemClick(itemView, clickPosition(viewHolder))
         }
-        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(clickPosition(viewHolder)) ?: false }
+        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(itemView, clickPosition(viewHolder)) ?: false }
     }
 
     open fun addItems(items: List<T>, position: Int) {

@@ -1,6 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerviewsample.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
         adapter.setClickCallback(new ClickCallback() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick(@NonNull View view, int position) {
                 Sample sample = adapter.getItems().get(position);
                 Toast.makeText(getActivity(), "Item clicked : " + sample.getId() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();
             }
