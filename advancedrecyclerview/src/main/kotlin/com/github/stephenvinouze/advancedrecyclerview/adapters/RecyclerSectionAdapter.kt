@@ -12,9 +12,9 @@ import java.util.*
  */
 abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K): RecyclerAdapter<T>(context) {
 
+    var section: (T) -> K
     var sectionItems = LinkedHashMap<K, List<T>>()
 
-    private var section: (T) -> K
     private val SECTION_TYPE = 0
 
     init {
