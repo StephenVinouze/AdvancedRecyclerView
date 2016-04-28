@@ -27,8 +27,14 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
     override var items: MutableList<T> = arrayListOf()
         get() = field
         set(value) {
-            field = value
-            buildSections(field, section)
+            buildSections(value, section)
+
+            var reorderedItems: MutableList<T> = arrayListOf()
+            for (items in sectionItems.values) {
+                reorderedItems.addAll(items)
+            }
+
+            field = reorderedItems
         }
 
     override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
@@ -91,26 +97,13 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
     private fun buildSections(items : List<T>, section: (T) -> K) {
         sectionItems.clear()
 
-        if (!items.isEmpty()) {
+        for (item in items) {
+            val itemSection = section(item)
+            val itemsInSection = sectionItems[itemSection]?.toMutableList() ?: arrayListOf()
 
-            var itemsPerSection: MutableList<T> = arrayListOf()
-            var currentSection : K = section(items[0])
+            itemsInSection.add(item)
 
-            for (item in items) {
-                val itemSection = section(item)
-
-                if (currentSection != itemSection || items.indexOf(item) == items.size - 1) {
-                    if (!itemsPerSection.isEmpty()) {
-                        sectionItems.put(currentSection, ArrayList<T>(itemsPerSection))
-                    }
-                    itemsPerSection.clear()
-                }
-                else {
-                    itemsPerSection.add(item)
-                }
-
-                currentSection = itemSection
-            }
+            sectionItems.put(itemSection, itemsInSection.toList())
         }
 
         notifyDataSetChanged()
