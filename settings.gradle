@@ -1,1 +1,1 @@
-include ':sample', ':advancedrecyclerview'
+include ':sample', ':advancedrecyclerview', ':advancedrecyclerview-common', ':advancedrecyclerview-section', ':advancedrecyclerview-pagination', ':advancedrecyclerview-gesture'
