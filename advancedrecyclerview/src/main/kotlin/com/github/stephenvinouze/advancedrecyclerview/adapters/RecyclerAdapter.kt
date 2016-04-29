@@ -42,7 +42,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         itemView.setOnLongClickListener { clickCallback?.onItemLongClick(itemView, clickPosition(viewHolder)) ?: false }
     }
 
-    open fun addItems(items: List<T>, position: Int) {
+    open fun addItems(items: MutableList<T>, position: Int) {
         this.items.addAll(position, items)
         notifyItemRangeInserted(position, items.size)
     }
@@ -66,7 +66,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         notifyItemRemoved(position)
     }
 
-    fun clearItems() {
+    open fun clearItems() {
         this.items.clear()
         clearSelectedItemViews()
     }

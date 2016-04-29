@@ -43,24 +43,29 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
         super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
     }
 
-    override fun addItems(items: List<T>, position: Int) {
-        this.items.addAll(relativePosition(position), items)
-        buildSections(items, section)
+    override fun addItems(items: MutableList<T>, position: Int) {
+        super.addItems(items, relativePosition(position))
+        this.items = items
     }
 
     override fun addItem(item: T, position: Int) {
         super.addItem(item, relativePosition(position))
-        buildSections(items, section)
+        this.items = items
     }
 
     override fun moveItem(from: Int, to: Int) {
         super.moveItem(relativePosition(from), relativePosition(to))
-        buildSections(items, section)
+        this.items = items
     }
 
     override fun removeItem(position: Int) {
         super.removeItem(relativePosition(position))
-        buildSections(items, section)
+        this.items = items
+    }
+
+    override fun clearItems() {
+        super.clearItems()
+        this.items = items
     }
 
     override fun toggleItemView(position: Int) {
