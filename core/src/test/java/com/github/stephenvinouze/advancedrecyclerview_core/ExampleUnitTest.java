@@ -1,4 +1,4 @@
-package com.github.stephenvinouze.advancedrecyclerview_common;
+package com.github.stephenvinouze.advancedrecyclerview_core;
 
 import org.junit.Test;
 

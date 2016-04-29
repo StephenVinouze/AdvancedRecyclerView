@@ -7,5 +7,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile "com.nhaarman:mockito-kotlin:0.4.0"
     testCompile 'junit:junit:4.12'
-    compile project(path: ':advancedrecyclerview-common')
+    compile project(path: ':core')
 }

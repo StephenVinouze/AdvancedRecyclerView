@@ -22,5 +22,3 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 }
-
-apply from: '../bintray-upload.gradle'

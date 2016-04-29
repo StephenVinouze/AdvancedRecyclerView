@@ -2,8 +2,8 @@ apply from: '../library.gradle'
 apply plugin: 'kotlin-android'
 
 dependencies {
-    compile project(':advancedrecyclerview-common')
-    compile project(':advancedrecyclerview-section')
-    compile project(':advancedrecyclerview-pagination')
-    compile project(':advancedrecyclerview-gesture')
+    compile project(':core')
+    compile project(':section')
+    compile project(':pagination')
+    compile project(':gesture')
 }
