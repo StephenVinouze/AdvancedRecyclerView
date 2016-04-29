@@ -14,7 +14,7 @@ val RecyclerView.canPaginate: Boolean
     get() {
         val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
         if (sectionAdapter != null) {
-            return !sectionAdapter.hasSections
+            return sectionAdapter.numberOfSections() > 0
         }
         return true
     }

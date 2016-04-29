@@ -2,9 +2,9 @@ apply from: '../library.gradle'
 apply plugin: 'kotlin-android'
 
 dependencies {
+    compile 'com.android.support:design:23.3.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile "com.nhaarman:mockito-kotlin:0.4.0"
     testCompile 'junit:junit:4.12'
-
-    compile 'com.android.support:design:23.3.0'
 }

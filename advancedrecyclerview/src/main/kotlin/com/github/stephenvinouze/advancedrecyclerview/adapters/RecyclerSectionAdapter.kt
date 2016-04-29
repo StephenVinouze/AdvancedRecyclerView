@@ -3,7 +3,6 @@ package com.github.stephenvinouze.advancedrecyclerview.adapters
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.extensions.*
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 import java.util.*
 
@@ -13,7 +12,8 @@ import java.util.*
 abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K): RecyclerAdapter<T>(context) {
 
     var section: (T) -> K
-    var sectionItems = LinkedHashMap<K, List<T>>()
+    var sectionItems: LinkedHashMap<K, MutableList<T>> = linkedMapOf()
+        private set
 
     private val SECTION_TYPE = 0
 
@@ -22,7 +22,7 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
     }
 
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
-    abstract fun onBindSectionItemView(v: View, section: Int)
+    abstract fun onBindSectionItemView(itemView: View, section: Int)
 
     override var items: MutableList<T> = arrayListOf()
         get() = field
@@ -35,6 +35,7 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
             }
 
             field = reorderedItems
+            notifyDataSetChanged()
         }
 
     override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
@@ -94,19 +95,101 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
         }
     }
 
-    private fun buildSections(items : List<T>, section: (T) -> K) {
-        sectionItems.clear()
+    fun numberOfSections(): Int {
+        return sectionItems.size
+    }
+
+    fun numberOfItemsInSection(section: Int): Int {
+        return sectionItems[sectionAt(section)]?.size ?: 0
+    }
+
+    fun sectionAt(position: Int): Any? {
+        return allSections()[position]
+    }
+
+    fun allSections(): List<K> {
+        return sectionItems.keys.toList()
+    }
+
+    fun buildSections(items: List<T>, section: (T) -> K) {
+        sectionItems = linkedMapOf()
 
         for (item in items) {
             val itemSection = section(item)
-            val itemsInSection = sectionItems[itemSection]?.toMutableList() ?: arrayListOf()
+            val itemsInSection = sectionItems[itemSection] ?: arrayListOf()
 
             itemsInSection.add(item)
 
-            sectionItems.put(itemSection, itemsInSection.toList())
+            sectionItems.put(itemSection, itemsInSection)
         }
-
-        notifyDataSetChanged()
     }
 
+    /**
+     * Check that the given position in the list matches with a section position
+     * @param position: The absolute position in the list
+     * @return True if this is a section
+     */
+    fun isSectionAt(position: Int): Boolean {
+        var absoluteSectionPosition = 0
+        for (section in 0..numberOfSections() - 1) {
+            if (position == absoluteSectionPosition) {
+                return true
+            } else if (position < absoluteSectionPosition) {
+                return false
+            }
+
+            absoluteSectionPosition += numberOfItemsInSection(section) + 1
+        }
+        return false
+    }
+
+    /**
+     * Compute the relative section position in the list depending on the number of items in each section
+     * @param position: The absolute position in the list
+     * @return The relative section position of the given position
+     */
+    fun sectionPosition(position: Int): Int {
+        var sectionPosition = 0
+        var absoluteSectionPosition = 0
+        for (section in 0..numberOfSections() - 1) {
+            absoluteSectionPosition += numberOfItemsInSection(section)
+            if (position <= absoluteSectionPosition) {
+                return sectionPosition
+            }
+
+            sectionPosition++
+            absoluteSectionPosition++
+        }
+        return sectionPosition
+    }
+
+    /**
+     * Compute the relative position in the list that omits the sections
+     * @param position: The absolute position in the list
+     * @return The relative position without sections
+     */
+    fun relativePosition(position: Int): Int {
+        var relativePosition = position
+        for (absolutePosition in 0..position) {
+            if (isSectionAt(absolutePosition)) {
+                relativePosition--
+            }
+        }
+        return relativePosition
+    }
+
+    /**
+     * Compute the absolute position in the list that includes the sections
+     * @param position: The relative position in the list
+     * @return The absolute position with sections
+     */
+    fun absolutePosition(position: Int): Int {
+        var absolutePosition = position
+        for (relative in 0..position) {
+            if (isSectionAt(relative)) {
+                absolutePosition++
+            }
+        }
+        return absolutePosition
+    }
 }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAdapter;
-import com.github.stephenvinouze.advancedrecyclerview.extensions.SectionKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionItemView;
@@ -43,7 +42,7 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
     @Override
     public void onBindSectionItemView(@NonNull View v, int section) {
         SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
-        sampleSectionItemView.bind((int) SectionKt.sectionAt(this, section));
+        sampleSectionItemView.bind((int) sectionAt(section));
     }
 
 }
