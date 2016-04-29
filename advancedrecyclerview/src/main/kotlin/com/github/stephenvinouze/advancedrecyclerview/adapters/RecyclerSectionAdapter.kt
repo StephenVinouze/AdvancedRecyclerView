@@ -1,6 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.adapters
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
@@ -166,9 +167,13 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
     /**
      * Compute the relative position in the list that omits the sections
      * @param position: The absolute position in the list
-     * @return The relative position without sections
+     * @return The relative position without sections or NO_POSITION if matches section position
      */
     fun relativePosition(position: Int): Int {
+        if (isSectionAt(position)) {
+            return RecyclerView.NO_POSITION
+        }
+
         var relativePosition = position
         for (absolutePosition in 0..position) {
             if (isSectionAt(absolutePosition)) {
@@ -184,12 +189,12 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
      * @return The absolute position with sections
      */
     fun absolutePosition(position: Int): Int {
-        var absolutePosition = position
-        for (relative in 0..position) {
-            if (isSectionAt(relative)) {
-                absolutePosition++
+        var offset = 0
+        for (relativePosition in 0..position) {
+            if (isSectionAt(relativePosition + offset)) {
+                offset++
             }
         }
-        return absolutePosition
+        return position + offset
     }
 }
