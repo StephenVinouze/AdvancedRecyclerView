@@ -1,0 +1,17 @@
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-23.0.2
+    - android-23
+
+    # For the emulator
+    - sys-img-armeabi-v7a-android-19
+
+jdk: oraclejdk8
+
+notifications:
+  email: false
+
+sudo: false
