@@ -11,4 +11,7 @@ notifications:
   email: false
 
 script:
-   - ./gradlew build connectedCheck
+    - ./gradlew build connectedCheck
+
+env:
+    - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
