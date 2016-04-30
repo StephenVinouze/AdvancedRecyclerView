@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.stephenvinouze.advancedrecyclerviewsample"
-        minSdkVersion 7
+        minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -25,11 +25,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':advancedrecyclerview')
+    compile project(':core')
+    compile project(':section')
+    compile project(':pagination')
+    compile project(':gesture')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:cardview-v7:23.3.0'

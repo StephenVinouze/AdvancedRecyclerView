@@ -1,1 +1,1 @@
-include ':sample', ':advancedrecyclerview', ':core', ':section', ':pagination', ':gesture'
+include ':sample', ':core', ':section', ':pagination', ':gesture'
