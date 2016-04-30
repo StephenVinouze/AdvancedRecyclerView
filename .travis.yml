@@ -12,8 +12,5 @@ jdk: oraclejdk8
 notifications:
   email: false
 
-script:
-    - ./gradlew build connectedCheck
-
 env:
-    - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+    - GRADLE_OPTS="-Xmx2048M -XX:MaxPermSize=2048m"
