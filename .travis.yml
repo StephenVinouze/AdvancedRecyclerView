@@ -7,6 +7,8 @@ android:
     - android-23
     - extra-android-m2repository
 
+jdk: oraclejdk8
+
 notifications:
   email: false
 
