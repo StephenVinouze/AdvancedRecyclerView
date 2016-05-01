@@ -7,7 +7,7 @@ license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.c
 
 Single choice | Multiple choice | Sections
 ---- | ---- | ----
-![Single choice](art/single_choice.png) | ![Multiple choice](art/multiple_choice.png) | ![Sections](art/sections.png)
+![Single choice](art/single_choice_framed.png) | ![Multiple choice](art/multiple_choice_framed.png) | ![Sections](art/sections_framed.png)
 
 ## Gradle Dependency
 
@@ -21,7 +21,7 @@ allprojects {
 	}
 }
 ```
-Then add the dependencies that you need in your app `build.gradle` file:
+Then add the dependencies that you need in your project.
 
 ```gradle
 
@@ -30,10 +30,10 @@ def advancedrecyclerview_version = "1.0.2"
 dependencies {
 
   // ... other dependencies here
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
+  compile "com.github.stephenvinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
+  compile "com.github.stephenvinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
+  compile "com.github.stephenvinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
+  compile "com.github.stephenvinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
 }
 ```
 
@@ -41,15 +41,15 @@ If you need to fetch the *section* module, just declare it in your dependencies 
 
 ## Usage
 
-Note that this library, although written in Kotlin, will perfectly work in a Java environment. As such, the sample provided in this repository has been written in Java to demonstrate its interoperability. The only limitation you will face while using this library in a Java environment is that you will need to use Java 8 if you need the *section* module as sections are built using **Lambdas**.
+Note that this library, although written in Kotlin, will perfectly work in a Java environment. As such, the sample provided in this repository has been written in Java to prove its interoperability. The only limitation you will face while using this library in a Java environment is that you will need to use Java 8 if you need the *section* module as sections are built using **Lambdas**.
 
-The following examples illustrating how to use this library will be written in Java to stay on track with the *sample* module and illustrate how to use Kotlin **lambdas** and **extensions** in Java.
+The following examples illustrating how to use this library will be written in Java to keep track of the *sample* module and illustrate how to use Kotlin **lambdas** and **extensions** in Java.
 
 ### Core
 
-The *core* module contains the basic logic to easily manipulate a `RecyclerView`. It allows you to define your adapter in a blink of the eye, with an already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list.
+The *core* module contains the basic logic to easily manipulate a `RecyclerView`. It allows you to define your adapter in a blink of the eye, with a already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list.
 
-Define your own adapter that overrides `RecyclerAdapter` and template it with the model that will be used to populate your list. Let's name the model `Sample`, and `SampleItemView` the `View` that will be displayed in each row of your list. Finally implement two abstract methods to specify how to display your views in your list:
+Define your own adapter that overrides `RecyclerAdapter` and template it with the model that will be used to populate your list. Let's name it `Sample` and `SampleItemView` the `View` that will be displayed in each row of your list. Finally implement two abstract methods to specify how to display your views in your list:
 
 ```java
 public class SampleAdapter extends RecyclerAdapter<Sample> {
@@ -83,7 +83,7 @@ public class Sample {
 }
 ```
 
-That's it! You can now instanciate your `SampleAdapter`, set it some `Sample` items and apply it to your `RecyclerView`:
+That's it! You can now instanciate your `SampleAdapter`, set it some `Sample` items and apply it to your `RecyclerView` by calling:
 
 ```java
 SampleAdapter sampleAdapter = new SampleAdapter(getActivity());
@@ -92,9 +92,9 @@ sampleAdapter.setItems(yourSampleItems);
 yourRecyclerView.setAdapter(sampleAdapter);
 ```
 
-In addition, the *core* module also provides within the `RecyclerAdapter` abstract class some useful features such as **ChoiceMode** to easily configure a list with *SINGLE_CHOICE* or *MULTIPLE_CHOICE*. We provide several methods to retrieve your selected items and you can also programmatically toggle them.
+In addition, the *core* module also provides within the `RecyclerAdapter` abstract class some useful features such as **ChoiceMode** to easily configure a list with *SINGLE_CHOICE* or *MULTIPLE_CHOICE* and retrieve all selected items in your list.
 
-Finally, you can listen to basic click events and easily respond to it by setting a `clickCallback` to your `SampleAdapter`.
+Finally, you can listen to click events and easily respond to it by setting a `clickCallback` to your `SampleAdapter`.
 
 A full example using these features would look like:
 
@@ -139,13 +139,13 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
 }
 ```
 
-Note the **Integer** generic type in the class declaration. This is required to indicate the type that will contains the section. In our case, we want to sort them by rate, which is an integer. The rate sorting will be indicated via the constructor that contains a **lambda** `(sample -> sample.rate)`. That's it! Using `sampleSectionAdapter.setItems(yourSampleItems)` will do the magic for you! You may want before settings your items sorting them in any way you want (e.g. : in an ascending order).
+Note the **Integer** generic type in the class declaration. This is require to indicate the type that will contains the section. In our case, we want to sort them by rate. This will be done via the constructor that contains a **lambda** `(sample -> sample.rate)`. That's it! Using `sampleSectionAdapter.setItems(yourSampleItems)` will do the magic for you! You may want before settings your items sorting them in any way you want (e.g. : in an ascending order).
 
 ### Pagination
 
 You may want to paginate your content. The *pagination* module lets you do it without a breaking a sweat by providing an extension to the `RecyclerView` class. You just need to call the `handlePagination` method. The callback will be called every time you reach the end of your content.
 
-To make it even smoother, the triggering depends on the amount of items in your list to be triggered a bit before reaching the bottom so that the user does not notify the loading.
+To make it even smoother, the triggering depends on the amount of elements in your list to be triggered a bit before reaching the bottom so that the user does not notify the loading.
 
 ```java
 PaginationKt.handlePagination(yourRecylerView, new PaginationCallback() {
@@ -177,9 +177,9 @@ GestureKt.handleGesture(yourRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.D
         });
 ```
 
-Gestures depend whether your list contains sections as the library needs to do some extra computations to correctly position your items while your list is being updated. Although the gestures is fully working with sections, the re-computations lead to animation drawbacks and limit the move gesture to one item at a time. Finally, you won't be able to move items from one section to another section as it would break the section behavior of your list.
+Gestures depend whether your list contains sections as the library needs to do some extra computations to correctly position your items while your list is being updated. Although the gestures is fully working with sections, the re-computations lead to animation drawbacks and limit the move gesture to one item at a time. Finally, you won't be able to move items from one section into another section as it would break the section behavior of your list.
 
-## Pull requests
+### Pull requests
 
 I welcome and encourage all pull requests. I might not be able to respond as fast as I would want to but I endeavor to be as responsive as possible.
 
