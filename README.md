@@ -175,7 +175,7 @@ GestureKt.handleGesture(yourRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.D
 
 Gestures depend whether your list contains sections as the library needs to do some extra computations to correctly position your items while your list is being updated. Although the gestures is fully working with sections, the re-computations lead to animation drawbacks and limit the move gesture to one item at a time. Finally, you won't be able to move items from one section to another section as it would break the section behavior of your list.
 
-### Pull requests
+## Pull requests
 
 I welcome and encourage all pull requests. I might not be able to respond as fast as I would want to but I endeavor to be as responsive as possible.
 
