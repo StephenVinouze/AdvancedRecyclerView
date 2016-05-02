@@ -30,10 +30,10 @@ def advancedrecyclerview_version = "1.0.2"
 dependencies {
 
   // ... other dependencies here
-  compile "com.github.stephenvinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
-  compile "com.github.stephenvinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
-  compile "com.github.stephenvinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
-  compile "com.github.stephenvinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
+  compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
+  compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
+  compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
+  compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
 }
 ```
 
