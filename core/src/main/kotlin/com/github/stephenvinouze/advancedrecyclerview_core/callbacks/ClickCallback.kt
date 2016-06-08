@@ -9,7 +9,7 @@ abstract class ClickCallback {
 
     abstract fun onItemClick(view: View, position: Int)
 
-    fun onItemLongClick(view: View, position: Int): Boolean {
+    open fun onItemLongClick(view: View, position: Int): Boolean {
         return false
     }
 
