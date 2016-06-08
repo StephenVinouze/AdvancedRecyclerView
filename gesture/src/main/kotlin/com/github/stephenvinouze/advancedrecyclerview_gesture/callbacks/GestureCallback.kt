@@ -5,11 +5,11 @@ package com.github.stephenvinouze.advancedrecyclerview.callbacks
  */
 abstract class GestureCallback {
 
-    fun canMoveAt(position: Int): Boolean {
+    open fun canMoveAt(position: Int): Boolean {
         return true
     }
 
-    fun canSwipeAt(position: Int): Boolean {
+    open fun canSwipeAt(position: Int): Boolean {
         return true
     }
 
