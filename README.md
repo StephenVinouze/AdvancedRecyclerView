@@ -26,7 +26,7 @@ Then add the dependencies that you need in your project.
 
 ```gradle
 
-def advancedrecyclerview_version = "1.0.2"
+def advancedrecyclerview_version = "1.0.3"
 
 dependencies {
 
