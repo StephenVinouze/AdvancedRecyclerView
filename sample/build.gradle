@@ -39,6 +39,7 @@ dependencies {
     compile project(':pagination')
     compile project(':gesture')
     testCompile 'junit:junit:4.12'
+
     compile "com.android.support:appcompat-v7:$appcompat_version"
     compile "com.android.support:cardview-v7:$appcompat_version"
 }

@@ -1,8 +1,12 @@
 apply from: '../library.gradle'
 apply plugin: 'kotlin-android'
 
+def appcompat_version = "25.3.1"
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    compile "com.android.support:recyclerview-v7:$appcompat_version"
 }
