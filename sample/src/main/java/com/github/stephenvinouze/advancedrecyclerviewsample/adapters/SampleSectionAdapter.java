@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample> {
 
     public SampleSectionAdapter(Context context) {
-        super(context, (sample -> sample.getRate()));
+        super(context, (Sample::getRate));
     }
 
     @NotNull
@@ -40,9 +40,12 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
     }
 
     @Override
-    public void onBindSectionItemView(@NonNull View v, int section) {
-        SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
-        sampleSectionItemView.bind((int) sectionAt(section));
+    public void onBindSectionItemView(@NonNull View v, int sectionPosition) {
+        Integer section = sectionAt(sectionPosition);
+        if (section != null) {
+            SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
+            sampleSectionItemView.bind(section);
+        }
     }
 
 }

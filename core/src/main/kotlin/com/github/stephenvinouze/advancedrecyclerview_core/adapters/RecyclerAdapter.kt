@@ -12,7 +12,8 @@ import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.Adapter<BaseViewHolder>() {
+abstract class RecyclerAdapter<MODEL>(protected var context: Context): RecyclerView.Adapter<BaseViewHolder>() {
+
     private val selectedItemViews = SparseBooleanArray()
 
     var choiceMode = ChoiceMode.SINGLE_CHOICE
@@ -21,7 +22,7 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
 
-    open var items : MutableList<T> = arrayListOf()
+    open var items : MutableList<MODEL> = arrayListOf()
         get() = field
         set(value) {
             field = value
@@ -42,12 +43,12 @@ abstract class RecyclerAdapter<T>(protected var context: Context): RecyclerView.
         itemView.setOnLongClickListener { clickCallback?.onItemLongClick(itemView, clickPosition(viewHolder)) ?: false }
     }
 
-    open fun addItems(items: MutableList<T>, position: Int) {
+    open fun addItems(items: MutableList<MODEL>, position: Int) {
         this.items.addAll(position, items)
         notifyItemRangeInserted(position, items.size)
     }
 
-    open fun addItem(item: T, position: Int) {
+    open fun addItem(item: MODEL, position: Int) {
         this.items.add(position, item)
         notifyItemInserted(position)
     }

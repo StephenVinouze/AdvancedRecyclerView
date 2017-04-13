@@ -10,27 +10,24 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K): RecyclerAdapter<T>(context) {
+abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var section: (MODEL) -> SECTION): RecyclerAdapter<MODEL>(context) {
 
-    var section: (T) -> K
-    var sectionItems: LinkedHashMap<K, MutableList<T>> = linkedMapOf()
-        private set
-
-    private val SECTION_TYPE = 0
-
-    init {
-        this.section = section
+    companion object {
+        private val SECTION_TYPE = 0
     }
 
-    abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
-    abstract fun onBindSectionItemView(itemView: View, section: Int)
+    var sectionItems: LinkedHashMap<SECTION, MutableList<MODEL>> = linkedMapOf()
+        private set
 
-    override var items: MutableList<T> = arrayListOf()
+    abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
+    abstract fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
+
+    override var items: MutableList<MODEL> = arrayListOf()
         get() = field
         set(value) {
             buildSections(value, section)
 
-            var reorderedItems: MutableList<T> = arrayListOf()
+            val reorderedItems: MutableList<MODEL> = arrayListOf()
             for (items in sectionItems.values) {
                 reorderedItems.addAll(items)
             }
@@ -43,12 +40,12 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
         super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
     }
 
-    override fun addItems(items: MutableList<T>, position: Int) {
+    override fun addItems(items: MutableList<MODEL>, position: Int) {
         super.addItems(items, relativePosition(position))
         this.items = items
     }
 
-    override fun addItem(item: T, position: Int) {
+    override fun addItem(item: MODEL, position: Int) {
         super.addItem(item, relativePosition(position))
         this.items = items
     }
@@ -109,15 +106,15 @@ abstract class RecyclerSectionAdapter<K, T>(context: Context, section: (T) -> K)
         return sectionItems[sectionAt(section)]?.size ?: 0
     }
 
-    fun sectionAt(position: Int): Any? {
+    fun sectionAt(position: Int): SECTION? {
         return allSections()[position]
     }
 
-    fun allSections(): List<K> {
+    fun allSections(): List<SECTION> {
         return sectionItems.keys.toList()
     }
 
-    fun buildSections(items: List<T>, section: (T) -> K) {
+    fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
         sectionItems = linkedMapOf()
 
         for (item in items) {
