@@ -26,7 +26,7 @@ Then add the dependencies that you need in your project.
 
 ```gradle
 
-def advancedrecyclerview_version = "1.0.3"
+def advancedrecyclerview_version = "1.1.2"
 
 dependencies {
 
@@ -133,9 +133,9 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
     }
 
     @Override
-    public void onBindSectionItemView(@NonNull View sectionItemView, int section) {
-        SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)sectionItemView;
-        sampleSectionItemView.bind((int) sectionAt(section));
+    public void onBindSectionItemView(@NonNull View sectionView, int sectionPosition) {
+        SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)sectionView;
+        sampleSectionItemView.bind(sectionAt(sectionPosition));
     }
 }
 ```
