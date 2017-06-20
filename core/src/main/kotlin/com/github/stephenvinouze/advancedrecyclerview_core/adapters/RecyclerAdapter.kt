@@ -12,17 +12,22 @@ import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<MODEL>(protected var context: Context): RecyclerView.Adapter<BaseViewHolder>() {
+abstract class RecyclerAdapter<MODEL>(protected var context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private val selectedItemViews = SparseBooleanArray()
 
-    var choiceMode = ChoiceMode.SINGLE_CHOICE
     var clickCallback: ClickCallback? = null
+
+    var choiceMode = ChoiceMode.SINGLE_CHOICE
+        set(value) {
+            field = value
+            clearSelectedItemViews()
+        }
 
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
 
-    open var items : MutableList<MODEL> = arrayListOf()
+    open var items: MutableList<MODEL> = arrayListOf()
         get() = field
         set(value) {
             field = value
@@ -78,16 +83,17 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context): RecyclerV
 
     fun getSelectedItemViews(): MutableList<Int> {
         val items: MutableList<Int> = arrayListOf()
-        for (i in 0..selectedItemViews.size() - 1) {
-            items.add(selectedItemViews.keyAt(i))
-        }
+        (0..selectedItemViews.size() - 1).mapTo(items) { selectedItemViews.keyAt(it) }
         return items
     }
 
     open fun toggleItemView(position: Int) {
         when (choiceMode) {
             RecyclerAdapter.ChoiceMode.SINGLE_CHOICE -> {
-                clearSelectedItemViews()
+                getSelectedItemViews().forEach {
+                    selectedItemViews.delete(it)
+                    notifyItemChanged(it)
+                }
                 selectedItemViews.put(position, true)
             }
 
