@@ -1,4 +1,4 @@
-package com.github.stephenvinouze.advancedrecyclerview.views
+package com.github.stephenvinouze.advancedrecyclerview_core.views
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

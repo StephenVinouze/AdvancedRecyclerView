@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.stephenvinouze.advancedrecyclerview.extensions.GestureKt;
+import com.github.stephenvinouze.advancedrecyclerview_gesture.extensions.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 
 /**

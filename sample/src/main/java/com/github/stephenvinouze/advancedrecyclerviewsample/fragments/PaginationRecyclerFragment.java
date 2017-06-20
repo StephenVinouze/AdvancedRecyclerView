@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.PaginationCallback;
-import com.github.stephenvinouze.advancedrecyclerview.extensions.PaginationKt;
+import com.github.stephenvinouze.advancedrecyclerview_pagination.callbacks.PaginationCallback;
+import com.github.stephenvinouze.advancedrecyclerview_pagination.extensions.PaginationKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 

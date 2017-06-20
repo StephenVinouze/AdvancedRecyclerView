@@ -1,4 +1,4 @@
-package com.github.stephenvinouze.advancedrecyclerview.callbacks
+package com.github.stephenvinouze.advancedrecyclerview_core.callbacks
 
 import android.view.View
 

@@ -1,4 +1,4 @@
-package com.github.stephenvinouze.advancedrecyclerview.extensions
+package com.github.stephenvinouze.advancedrecyclerview_core.extensions
 
 /**
  * Created by stephenvinouze on 26/04/16.

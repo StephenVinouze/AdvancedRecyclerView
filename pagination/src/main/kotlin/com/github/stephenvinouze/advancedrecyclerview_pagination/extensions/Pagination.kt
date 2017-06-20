@@ -1,10 +1,10 @@
-package com.github.stephenvinouze.advancedrecyclerview.extensions
+package com.github.stephenvinouze.advancedrecyclerview_pagination.extensions
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAdapter
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.PaginationCallback
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview_pagination.callbacks.PaginationCallback
+import com.github.stephenvinouze.advancedrecyclerview_section.adapters.RecyclerSectionAdapter
 
 /**
  * Created by stephenvinouze on 26/04/16.

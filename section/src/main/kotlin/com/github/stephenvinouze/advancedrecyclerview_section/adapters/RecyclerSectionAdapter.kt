@@ -1,10 +1,11 @@
-package com.github.stephenvinouze.advancedrecyclerview.adapters
+package com.github.stephenvinouze.advancedrecyclerview_section.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview_core.views.BaseViewHolder
 import java.util.*
 
 /**

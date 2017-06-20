@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
+import com.github.stephenvinouze.advancedrecyclerview_core.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 

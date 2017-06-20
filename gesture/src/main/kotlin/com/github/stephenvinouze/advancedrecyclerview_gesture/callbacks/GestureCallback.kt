@@ -1,4 +1,4 @@
-package com.github.stephenvinouze.advancedrecyclerview.callbacks
+package com.github.stephenvinouze.advancedrecyclerview_gesture.callbacks
 
 /**
  * Created by Stephen Vinouze on 10/11/2015.

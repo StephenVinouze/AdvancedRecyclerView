@@ -1,10 +1,10 @@
-package com.github.stephenvinouze.advancedrecyclerview.extensions
+package com.github.stephenvinouze.advancedrecyclerview_gesture.extensions
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerSectionAdapter
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.GestureCallback
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview_gesture.callbacks.GestureCallback
+import com.github.stephenvinouze.advancedrecyclerview_section.adapters.RecyclerSectionAdapter
 
 /**
  * Created by stephenvinouze on 26/04/16.

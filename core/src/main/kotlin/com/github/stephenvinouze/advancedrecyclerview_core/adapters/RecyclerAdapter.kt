@@ -1,13 +1,13 @@
-package com.github.stephenvinouze.advancedrecyclerview.adapters
+package com.github.stephenvinouze.advancedrecyclerview_core.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback
-import com.github.stephenvinouze.advancedrecyclerview.extensions.swap
-import com.github.stephenvinouze.advancedrecyclerview.views.BaseViewHolder
+import com.github.stephenvinouze.advancedrecyclerview_core.callbacks.ClickCallback
+import com.github.stephenvinouze.advancedrecyclerview_core.extensions.swap
+import com.github.stephenvinouze.advancedrecyclerview_core.views.BaseViewHolder
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
@@ -89,7 +89,7 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
 
     open fun toggleItemView(position: Int) {
         when (choiceMode) {
-            RecyclerAdapter.ChoiceMode.SINGLE_CHOICE -> {
+            ChoiceMode.SINGLE_CHOICE -> {
                 getSelectedItemViews().forEach {
                     selectedItemViews.delete(it)
                     notifyItemChanged(it)
@@ -97,7 +97,7 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
                 selectedItemViews.put(position, true)
             }
 
-            RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE -> if (isItemViewToggled(position)) {
+            ChoiceMode.MULTIPLE_CHOICE -> if (isItemViewToggled(position)) {
                 selectedItemViews.delete(position)
             } else {
                 selectedItemViews.put(position, true)

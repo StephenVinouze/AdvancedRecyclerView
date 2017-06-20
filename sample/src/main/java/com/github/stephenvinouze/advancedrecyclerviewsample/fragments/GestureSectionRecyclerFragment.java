@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter;
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.ClickCallback;
-import com.github.stephenvinouze.advancedrecyclerview.callbacks.GestureCallback;
-import com.github.stephenvinouze.advancedrecyclerview.extensions.GestureKt;
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter;
+import com.github.stephenvinouze.advancedrecyclerview_core.callbacks.ClickCallback;
+import com.github.stephenvinouze.advancedrecyclerview_gesture.callbacks.GestureCallback;
+import com.github.stephenvinouze.advancedrecyclerview_gesture.extensions.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;

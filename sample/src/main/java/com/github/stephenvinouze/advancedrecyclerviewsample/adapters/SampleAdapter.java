@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.stephenvinouze.advancedrecyclerview.adapters.RecyclerAdapter;
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView;
 
