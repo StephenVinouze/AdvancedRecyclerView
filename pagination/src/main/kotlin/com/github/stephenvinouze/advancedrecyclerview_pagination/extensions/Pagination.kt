@@ -69,9 +69,9 @@ fun <T> RecyclerAdapter<T>.setItems(items: MutableList<T>, page: Int) {
  */
 private fun paginationTrigger(totalItemCount: Int): Int {
     var offset = 0.6f
-    if (totalItemCount > 50 && totalItemCount <= 100) {
+    if (totalItemCount in 51..100) {
         offset = 0.7f
-    } else if (totalItemCount > 100 && totalItemCount <= 150) {
+    } else if (totalItemCount in 101..150) {
         offset = 0.8f
     } else if (totalItemCount > 150) {
         offset = 0.9f

@@ -43,8 +43,8 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
         }
 
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            var fromPosition = viewHolder!!.layoutPosition
-            var toPosition = target!!.layoutPosition
+            val fromPosition = viewHolder!!.layoutPosition
+            val toPosition = target!!.layoutPosition
             val adapter = adapter as? RecyclerAdapter<*>
             if (adapter != null) {
 
@@ -65,7 +65,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            var position = viewHolder!!.layoutPosition
+            val position = viewHolder!!.layoutPosition
             val adapter = adapter as? RecyclerAdapter<*>
             if (adapter != null) {
                 adapter.removeItem(position)
