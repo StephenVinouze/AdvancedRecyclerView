@@ -32,7 +32,7 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
-        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
+        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
         sectionAdapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(@NonNull View view, int position) {

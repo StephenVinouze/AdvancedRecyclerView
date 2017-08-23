@@ -25,7 +25,7 @@ public class MultipleChoiceRecyclerFragment extends AbstractRecyclerFragment {
 
         final SampleAdapter adapter = new SampleAdapter(getActivity());
         adapter.setItems(SampleAdapter.buildSamples());
-        adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
+        adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
         adapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(@NonNull View view, int position) {

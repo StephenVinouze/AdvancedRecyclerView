@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleSectionAdapter;
 
@@ -20,6 +21,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
+        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.SINGLE);
         sectionAdapter.setItems(SampleAdapter.buildSamples());
 
         mRecyclerView.setAdapter(sectionAdapter);

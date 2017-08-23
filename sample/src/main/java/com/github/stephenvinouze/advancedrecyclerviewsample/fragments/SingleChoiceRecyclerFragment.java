@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdapter;
 import com.github.stephenvinouze.advancedrecyclerview_core.callbacks.ClickCallback;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
@@ -23,6 +24,7 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
         final SampleAdapter adapter = new SampleAdapter(getActivity());
+        adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.SINGLE);
         adapter.setItems(SampleAdapter.buildSamples());
         adapter.setClickCallback(new ClickCallback() {
             @Override

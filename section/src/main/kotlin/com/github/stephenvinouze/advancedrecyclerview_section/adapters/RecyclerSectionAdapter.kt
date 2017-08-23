@@ -23,7 +23,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
     abstract fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
 
-    override var items: MutableList<MODEL> = arrayListOf()
+    override var items: MutableList<MODEL> = mutableListOf()
         get() = field
         set(value) {
             buildSections(value, section)
@@ -71,23 +71,19 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
         notifyItemChanged(absolutePosition(position))
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (isSectionAt(position)) SECTION_TYPE else super.getItemViewType(relativePosition(position)) + 1
-    }
+    override fun getItemViewType(position: Int): Int =
+            if (isSectionAt(position)) SECTION_TYPE else super.getItemViewType(relativePosition(position)) + 1
 
-    override fun getItemId(position: Int): Long {
-        return if (isSectionAt(position)) Long.MAX_VALUE - sectionPosition(position) else super.getItemId(relativePosition(position))
-    }
+    override fun getItemId(position: Int): Long =
+            if (isSectionAt(position)) Long.MAX_VALUE - sectionPosition(position) else super.getItemId(relativePosition(position))
 
-    override fun getItemCount(): Int {
-        return super.getItemCount() + numberOfSections()
-    }
+    override fun getItemCount(): Int = super.getItemCount() + numberOfSections()
 
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        if (viewType == SECTION_TYPE) {
-            return BaseViewHolder(onCreateSectionItemView(parent, viewType))
+        return if (viewType == SECTION_TYPE) {
+            BaseViewHolder(onCreateSectionItemView(parent, viewType))
         } else {
-            return super.onCreateViewHolder(parent, viewType - 1)
+            super.onCreateViewHolder(parent, viewType - 1)
         }
     }
 
@@ -99,21 +95,13 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
         }
     }
 
-    fun numberOfSections(): Int {
-        return sectionItems.size
-    }
+    fun numberOfSections(): Int = sectionItems.size
 
-    fun numberOfItemsInSection(section: Int): Int {
-        return sectionItems[sectionAt(section)]?.size ?: 0
-    }
+    fun numberOfItemsInSection(section: Int): Int = sectionItems[sectionAt(section)]?.size ?: 0
 
-    fun sectionAt(position: Int): SECTION? {
-        return allSections()[position]
-    }
+    fun sectionAt(position: Int): SECTION? = allSections()[position]
 
-    fun allSections(): List<SECTION> {
-        return sectionItems.keys.toList()
-    }
+    fun allSections(): List<SECTION> = sectionItems.keys.toList()
 
     fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
         sectionItems = linkedMapOf()
@@ -135,7 +123,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
      */
     fun isSectionAt(position: Int): Boolean {
         var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections() - 1) {
+        for (section in 0 until numberOfSections()) {
             if (position == absoluteSectionPosition) {
                 return true
             } else if (position < absoluteSectionPosition) {
@@ -155,7 +143,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     fun sectionPosition(position: Int): Int {
         var sectionPosition = 0
         var absoluteSectionPosition = 0
-        for (section in 0..numberOfSections() - 1) {
+        for (section in 0 until numberOfSections()) {
             absoluteSectionPosition += numberOfItemsInSection(section)
             if (position <= absoluteSectionPosition) {
                 return sectionPosition

@@ -93,7 +93,7 @@ sampleAdapter.setItems(yourSampleItems);
 yourRecyclerView.setAdapter(sampleAdapter);
 ```
 
-In addition, the *core* module also provides within the `RecyclerAdapter` abstract class some useful features such as **ChoiceMode** to easily configure a list with *SINGLE_CHOICE* or *MULTIPLE_CHOICE* and retrieve all selected items in your list.
+In addition, the *core* module also provides within the `RecyclerAdapter` abstract class some useful features such as **ChoiceMode** to easily configure a list with either *NONE* (default), *SINGLE* or *MULTIPLE* and retrieve all selected items in your list.
 
 Finally, you can listen to click events and easily respond to it by setting a `clickCallback` to your `SampleAdapter`.
 
@@ -102,7 +102,7 @@ A full example using these features would look like:
 ```java
 final SampleAdapter sampleAdapter = new SampleAdapter(getActivity());
 sampleAdapter.setItems(yourSampleItems);
-sampleAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE_CHOICE);
+sampleAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
 sampleAdapter.setClickCallback(new ClickCallback() {
             @Override
             public void onItemClick(@NonNull View view, int position) {
