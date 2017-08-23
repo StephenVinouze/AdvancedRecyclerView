@@ -67,6 +67,9 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     }
 
     override fun toggleItemView(position: Int) {
+        getSelectedItemViews().forEach {
+            notifyItemChanged(absolutePosition(it))
+        }
         super.toggleItemView(position)
         notifyItemChanged(absolutePosition(position))
     }

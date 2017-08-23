@@ -21,7 +21,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
         View contentView = super.onCreateView(inflater, container, savedInstanceState);
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
-        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.SINGLE);
+        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.NONE);
         sectionAdapter.setItems(SampleAdapter.buildSamples());
 
         mRecyclerView.setAdapter(sectionAdapter);
