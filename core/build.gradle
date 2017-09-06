@@ -1,7 +1,7 @@
 apply from: '../library.gradle'
 apply plugin: 'kotlin-android'
 
-def appcompat_version = "25.3.1"
+def appcompat_version = "26.0.2"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -5,13 +5,13 @@ plugins {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.github.stephenvinouze.advancedrecyclerviewsample"
-        minSdkVersion 11
-        targetSdkVersion 25
+        minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
         versionCode 1
         versionName "1.0"
     }
@@ -30,7 +30,7 @@ android {
     }
 }
 
-def appcompat_version = "25.3.1"
+def appcompat_version = "26.0.2"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

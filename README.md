@@ -1,7 +1,7 @@
 # AdvancedRecyclerView
 [![Release](https://jitpack.io/v/StephenVinouze/AdvancedRecyclerView.svg)](https://jitpack.io/#StephenVinouze/AdvancedRecyclerView)
 [![Build Status](https://travis-ci.org/StephenVinouze/AdvancedRecyclerView.svg)](https://travis-ci.org/StephenVinouze/AdvancedRecyclerView)
-[![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)
+[![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AdvancedRecyclerView-green.svg?style=true)](https://android-arsenal.com/details/1/3553)
 [![GitHub
 license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.com/StephenVinouze/AdvancedRecyclerView/blob/master/LICENSE)
