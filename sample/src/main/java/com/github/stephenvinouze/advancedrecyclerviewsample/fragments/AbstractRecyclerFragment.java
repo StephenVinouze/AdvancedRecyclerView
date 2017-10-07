@@ -22,11 +22,13 @@ public abstract class AbstractRecyclerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.recycler_layout, container, false);
+        return inflater.inflate(R.layout.recycler_layout, container, false);
+    }
 
-        configureRecyclerView((RecyclerView)contentView.findViewById(R.id.recycler_view));
-
-        return contentView;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        configureRecyclerView(view.findViewById(R.id.recycler_view));
     }
 
     protected void configureRecyclerView(RecyclerView recyclerView) {

@@ -19,7 +19,6 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -29,8 +28,12 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = super.onCreateView(inflater, container, savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
         sectionAdapter.setClickCallback(new ClickCallback() {
@@ -55,18 +58,11 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
         });
 
         ArrayList<Sample> samples = SampleAdapter.buildSamples();
-        Collections.sort(samples, new Comparator<Sample>() {
-            @Override
-            public int compare(Sample lhs, Sample rhs) {
-                return lhs.getRate() - rhs.getRate();
-            }
-        });
+        Collections.sort(samples, (lhs, rhs) -> lhs.getRate() - rhs.getRate());
 
         sectionAdapter.setItems(samples);
 
         mRecyclerView.setAdapter(sectionAdapter);
-
-        return contentView;
     }
 
 }

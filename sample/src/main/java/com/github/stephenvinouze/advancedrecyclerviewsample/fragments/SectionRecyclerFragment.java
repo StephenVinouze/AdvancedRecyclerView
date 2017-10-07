@@ -18,15 +18,18 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = super.onCreateView(inflater, container, savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.NONE);
         sectionAdapter.setItems(SampleAdapter.buildSamples());
 
         mRecyclerView.setAdapter(sectionAdapter);
-
-        return contentView;
     }
 
 }

@@ -18,7 +18,12 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = super.onCreateView(inflater, container, savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final SampleAdapter adapter = new SampleAdapter(getActivity());
         adapter.setItems(SampleAdapter.buildSamples());
@@ -26,8 +31,6 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
         mRecyclerView.setAdapter(adapter);
 
         GestureKt.handleGesture(mRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, null);
-
-        return contentView;
     }
 
 }

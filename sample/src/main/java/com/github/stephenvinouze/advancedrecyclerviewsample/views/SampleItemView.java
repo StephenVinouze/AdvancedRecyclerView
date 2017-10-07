@@ -40,9 +40,9 @@ public class SampleItemView extends FrameLayout {
 
     private void initViews(Context context) {
         View view = inflate(getContext(), R.layout.sample_item_view, this);
-        mIndexTextView = (TextView) view.findViewById(R.id.sample_item_index_text_view);
-        mNameTextView = (TextView) view.findViewById(R.id.sample_item_name_text_view);
-        mTickIconView = (TextView) view.findViewById(R.id.sample_item_name_tick_view);
+        mIndexTextView = view.findViewById(R.id.sample_item_index_text_view);
+        mNameTextView = view.findViewById(R.id.sample_item_name_text_view);
+        mTickIconView = view.findViewById(R.id.sample_item_name_tick_view);
         mTickIconView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));
     }
 }

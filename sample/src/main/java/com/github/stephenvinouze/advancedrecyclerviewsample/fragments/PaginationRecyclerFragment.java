@@ -3,7 +3,6 @@ package com.github.stephenvinouze.advancedrecyclerviewsample.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +23,17 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.pagination_recycler_layout, container, false);
+        return inflater.inflate(R.layout.pagination_recycler_layout, container, false);
+    }
 
-        mRefreshLayout = (SwipeRefreshLayout)contentView.findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                populatePage(1);
-            }
-        });
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        configureRecyclerView((RecyclerView)contentView.findViewById(R.id.recycler_view));
+        mRefreshLayout = view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setOnRefreshListener(() -> populatePage(1));
+
+        configureRecyclerView(view.findViewById(R.id.recycler_view));
 
         mAdapter = new SampleAdapter(getActivity());
 
@@ -48,8 +47,6 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
         populatePage(1);
 
         mRecyclerView.setAdapter(mAdapter);
-
-        return contentView;
     }
 
     private void populatePage(int page) {
