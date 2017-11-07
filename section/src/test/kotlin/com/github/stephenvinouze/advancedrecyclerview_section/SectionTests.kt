@@ -15,11 +15,11 @@ class SectionTests {
 
     private data class SectionItem(val id: Int, val rate: Int)
 
-    private val adapter : RecyclerSectionAdapter<Int, SectionItem> = mock(Mockito.CALLS_REAL_METHODS)
+    private val adapter: RecyclerSectionAdapter<Int, SectionItem> = mock(Mockito.CALLS_REAL_METHODS)
     private val items = arrayListOf(
-            SectionItem(1, 1),SectionItem(2, 1),SectionItem(3, 1),SectionItem(4, 1),
-            SectionItem(5, 2),SectionItem(6, 2),SectionItem(7, 2),
-            SectionItem(8, 3),SectionItem(9, 3),SectionItem(10, 3),SectionItem(11, 3),SectionItem(12, 3))
+            SectionItem(1, 1), SectionItem(2, 1), SectionItem(3, 1), SectionItem(4, 1),
+            SectionItem(5, 2), SectionItem(6, 2), SectionItem(7, 2),
+            SectionItem(8, 3), SectionItem(9, 3), SectionItem(10, 3), SectionItem(11, 3), SectionItem(12, 3))
 
     @Before
     fun setup() {

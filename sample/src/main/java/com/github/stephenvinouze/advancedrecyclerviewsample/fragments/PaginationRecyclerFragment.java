@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.stephenvinouze.advancedrecyclerview_pagination.callbacks.PaginationCallback;
 import com.github.stephenvinouze.advancedrecyclerview_pagination.extensions.PaginationKt;
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
+
+import kotlin.Unit;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -37,16 +38,14 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
 
         mAdapter = new SampleAdapter(getActivity());
 
-        PaginationKt.handlePagination(mRecyclerView, new PaginationCallback() {
-            @Override
-            public void fetchNextPage(int nextPage) {
-                populatePage(nextPage);
-            }
-        });
-
         populatePage(1);
 
         mRecyclerView.setAdapter(mAdapter);
+
+        PaginationKt.handlePagination(mRecyclerView, (page) -> {
+            populatePage(page);
+            return Unit.INSTANCE;
+        });
     }
 
     private void populatePage(int page) {

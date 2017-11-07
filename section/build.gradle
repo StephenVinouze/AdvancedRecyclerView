@@ -2,9 +2,11 @@ apply from: '../library.gradle'
 apply plugin: 'kotlin-android'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile "com.nhaarman:mockito-kotlin:0.4.0"
-    testCompile 'junit:junit:4.12'
     compile project(path: ':core')
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testCompile 'junit:junit:4.12'
+    testCompile "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
 }
