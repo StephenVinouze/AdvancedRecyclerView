@@ -6,7 +6,7 @@ android {
     buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "com.github.stephenvinouze.advancedrecyclerviewsample"
+        applicationId "com.github.stephenvinouze.advancedrecyclerview.javasample"
         minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
         versionCode 1
@@ -34,7 +34,6 @@ dependencies {
     api project(':pagination')
     api project(':gesture')
 
-    //compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$appcompat_version"
     implementation "com.android.support:cardview-v7:$appcompat_version"
     implementation "com.android.support:recyclerview-v7:$appcompat_version"
