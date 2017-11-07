@@ -10,8 +10,6 @@ import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleSectionItemView;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
@@ -21,15 +19,15 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
         super(context, (Sample::getRate));
     }
 
-    @NotNull
+    @NonNull
     @Override
-    protected View onCreateItemView(@NotNull ViewGroup parent, int viewType) {
+    protected View onCreateItemView(@NonNull ViewGroup parent, int viewType) {
         return new SampleItemView(getContext());
     }
 
     @Override
     protected void onBindItemView(@NonNull View v, int position) {
-        SampleItemView sampleItemView = (SampleItemView)v;
+        SampleItemView sampleItemView = (SampleItemView) v;
         sampleItemView.bind(getItems().get(position), isItemViewToggled(position));
     }
 
@@ -40,10 +38,10 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
     }
 
     @Override
-    public void onBindSectionItemView(@NonNull View v, int sectionPosition) {
+    public void onBindSectionItemView(@NonNull View sectionView, int sectionPosition) {
         Integer section = sectionAt(sectionPosition);
         if (section != null) {
-            SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)v;
+            SampleSectionItemView sampleSectionItemView = (SampleSectionItemView) sectionView;
             sampleSectionItemView.bind(section);
         }
     }

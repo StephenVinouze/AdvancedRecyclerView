@@ -28,7 +28,6 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
         get() = selectedItemViews.size()
 
     open var items: MutableList<MODEL> = arrayListOf()
-        get() = field
         set(value) {
             field = value
             notifyDataSetChanged()

@@ -1,1 +1,1 @@
-include ':sample', ':core', ':section', ':pagination', ':gesture'
+include ':javasample', ':core', ':section', ':pagination', ':gesture'

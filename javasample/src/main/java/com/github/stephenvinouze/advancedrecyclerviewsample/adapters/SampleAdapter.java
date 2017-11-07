@@ -9,8 +9,6 @@ import com.github.stephenvinouze.advancedrecyclerview_core.adapters.RecyclerAdap
 import com.github.stephenvinouze.advancedrecyclerviewsample.models.Sample;
 import com.github.stephenvinouze.advancedrecyclerviewsample.views.SampleItemView;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 /**
@@ -36,9 +34,9 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
         return samples;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    protected View onCreateItemView(@NotNull ViewGroup parent, int viewType) {
+    protected View onCreateItemView(@NonNull ViewGroup parent, int viewType) {
         return new SampleItemView(getContext());
     }
 

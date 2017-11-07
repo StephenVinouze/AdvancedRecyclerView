@@ -11,8 +11,6 @@ import com.github.stephenvinouze.advancedrecyclerview_pagination.extensions.Pagi
 import com.github.stephenvinouze.advancedrecyclerviewsample.R;
 import com.github.stephenvinouze.advancedrecyclerviewsample.adapters.SampleAdapter;
 
-import kotlin.Unit;
-
 /**
  * Created by Stephen Vinouze on 06/11/2015.
  */
@@ -44,7 +42,7 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
 
         PaginationKt.handlePagination(mRecyclerView, (page) -> {
             populatePage(page);
-            return Unit.INSTANCE;
+            return null;
         });
     }
 
