@@ -9,6 +9,9 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  * Created by stephenvinouze on 26/04/16.
  */
 
+private var isLoading: Boolean = false
+private var currentPage: Int = 1
+
 val RecyclerView.canPaginate: Boolean
     get() {
         val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
@@ -17,9 +20,6 @@ val RecyclerView.canPaginate: Boolean
         }
         return true
     }
-
-private var isLoading: Boolean = false
-private var currentPage: Int = 1
 
 /**
  * Enable your list to be paginable. Trigger an event to let the user fetch the next page
