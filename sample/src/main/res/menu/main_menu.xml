@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/single_choice_action"
+          android:orderInCategory="100"
+          android:title="@string/single_choice_recycler_name"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/multiple_choice_action"
+          android:orderInCategory="100"
+          android:title="@string/multiple_choice_recycler_name"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/section_action"
+          android:orderInCategory="100"
+          android:title="@string/section_recycler_name"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/gesture_action"
+          android:orderInCategory="100"
+          android:title="@string/gesture_recycler_name"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/gesture_section_action"
+          android:orderInCategory="100"
+          android:title="@string/gesture_sections_recycler_name"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/pagination_action"
+          android:orderInCategory="100"
+          android:title="@string/pagination_recycler_name"
+          app:showAsAction="never"/>
+</menu>

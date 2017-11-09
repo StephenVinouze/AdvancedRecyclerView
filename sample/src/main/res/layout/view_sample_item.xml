@@ -13,7 +13,7 @@
         android:layout_height="60dp">
 
         <TextView
-            android:id="@+id/sample_item_index_text_view"
+            android:id="@+id/sampleItemIndexTV"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@color/colorPrimaryDark"
@@ -22,7 +22,7 @@
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/sample_item_name_tick_view"
+            android:id="@+id/sampleItemTickIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -36,16 +36,16 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/sample_item_name_text_view"
+            android:id="@+id/sampleItemNameTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/sample_item_index_text_view"
-            android:layout_toLeftOf="@id/sample_item_name_tick_view"
-            android:layout_toRightOf="@id/sample_item_index_text_view"
-            android:layout_toStartOf="@id/sample_item_name_tick_view"
+            android:layout_toEndOf="@id/sampleItemIndexTV"
+            android:layout_toLeftOf="@id/sampleItemTickIcon"
+            android:layout_toRightOf="@id/sampleItemIndexTV"
+            android:layout_toStartOf="@id/sampleItemTickIcon"
             android:textSize="16sp" />
 
     </RelativeLayout>

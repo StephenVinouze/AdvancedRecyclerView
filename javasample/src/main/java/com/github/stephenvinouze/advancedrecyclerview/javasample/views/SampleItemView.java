@@ -1,7 +1,6 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.views;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,12 +20,12 @@ public class SampleItemView extends FrameLayout {
 
     public SampleItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        initViews(context);
+        initViews();
     }
 
     public SampleItemView(Context context) {
         super(context);
-        initViews(context);
+        initViews();
     }
 
     public void bind(Sample sample, boolean isToggled) {
@@ -38,11 +37,11 @@ public class SampleItemView extends FrameLayout {
         mTickIconView.setVisibility(isToggled ? VISIBLE : GONE);
     }
 
-    private void initViews(Context context) {
+    private void initViews() {
         View view = inflate(getContext(), R.layout.sample_item_view, this);
         mIndexTextView = view.findViewById(R.id.sample_item_index_text_view);
         mNameTextView = view.findViewById(R.id.sample_item_name_text_view);
         mTickIconView = view.findViewById(R.id.sample_item_name_tick_view);
-        mTickIconView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));
     }
+
 }
