@@ -6,8 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.core.callbacks.ClickCallback
-import com.github.stephenvinouze.advancedrecyclerview.gesture.callbacks.GestureCallback
-import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.handleGesture
+import com.github.stephenvinouze.advancedrecyclerview.gesture.handleGesture
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
 import kotlinx.android.synthetic.main.recycler_layout.*
@@ -30,16 +29,16 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
             }
         }
 
-        recyclerView.handleGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, object : GestureCallback() {
-            override fun onMove(fromPosition: Int, toPosition: Int): Boolean {
-                Toast.makeText(context, "Item selected : ${sectionAdapter.getSelectedItemViews()}", Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-            override fun onSwiped(position: Int, direction: Int) {
-                Toast.makeText(context, "Item selected : ${sectionAdapter.getSelectedItemViews()}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        recyclerView.handleGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                onMove = { fromPosition, toPosition ->
+                    Toast.makeText(context, "Item moved from position $fromPosition to position $toPosition", Toast.LENGTH_SHORT).show()
+                    false
+                },
+                onSwipe = { position, _ ->
+                    Toast.makeText(context, "Item swiped at position $position", Toast.LENGTH_SHORT).show()
+                }
+        )
 
         val samples = SampleAdapter.buildSamples()
         Collections.sort(samples) { lhs, rhs -> lhs.rate - rhs.rate }

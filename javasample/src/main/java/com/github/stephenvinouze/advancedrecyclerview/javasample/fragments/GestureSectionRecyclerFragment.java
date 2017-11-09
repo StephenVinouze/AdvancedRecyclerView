@@ -11,8 +11,7 @@ import android.widget.Toast;
 
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.core.callbacks.ClickCallback;
-import com.github.stephenvinouze.advancedrecyclerview.gesture.callbacks.GestureCallback;
-import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.GestureKt;
+import com.github.stephenvinouze.advancedrecyclerview.gesture.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
@@ -44,7 +43,7 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
             }
         });
 
-        GestureKt.handleGesture(mRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
+/*        GestureKt.handleGesture(mRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
             @Override
             public boolean onMove(int fromPosition, int toPosition) {
                 Toast.makeText(getActivity(), "Item selected : " + sectionAdapter.getSelectedItemViews(), Toast.LENGTH_SHORT).show();
@@ -55,7 +54,21 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
             public void onSwiped(int position, int direction) {
                 Toast.makeText(getActivity(), "Item selected : " + sectionAdapter.getSelectedItemViews(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+        GestureKt.handleGesture(mRecyclerView,
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                (fromPosition, toPosition) -> {
+                    Toast.makeText(getContext(), "Item moved from position " + fromPosition + " to position " + toPosition, Toast.LENGTH_SHORT).show();
+                    return false;
+                },
+                (position, directions) -> {
+                    Toast.makeText(getContext(), "Item swiped at position " + position, Toast.LENGTH_SHORT).show();
+                    return null;
+                },
+                integer -> true,
+                integer -> true
+        );
 
         ArrayList<Sample> samples = SampleAdapter.buildSamples();
         Collections.sort(samples, (lhs, rhs) -> lhs.getRate() - rhs.getRate());

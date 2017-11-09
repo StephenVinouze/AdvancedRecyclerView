@@ -6,8 +6,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.GestureKt;
+import com.github.stephenvinouze.advancedrecyclerview.gesture.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleAdapter;
 
 /**
@@ -30,7 +31,19 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
 
         mRecyclerView.setAdapter(adapter);
 
-        GestureKt.handleGesture(mRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, null);
+        GestureKt.handleGesture(mRecyclerView,
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                (fromPosition, toPosition) -> {
+                    Toast.makeText(getContext(), "Item moved from position " + fromPosition + " to position " + toPosition, Toast.LENGTH_SHORT).show();
+                    return false;
+                },
+                (position, directions) -> {
+                    Toast.makeText(getContext(), "Item swiped at position " + position, Toast.LENGTH_SHORT).show();
+                    return null;
+                },
+                integer -> true,
+                integer -> true);
     }
 
 }

@@ -1,9 +1,8 @@
-package com.github.stephenvinouze.advancedrecyclerview.gesture.extensions
+package com.github.stephenvinouze.advancedrecyclerview.gesture
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.gesture.callbacks.GestureCallback
 import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerSectionAdapter
 
 /**
@@ -15,15 +14,23 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  * You can also implement the OnRecyclerTouchCallback to be notified of the move/swipe events as well as enabling/disabling these gestures for some specific items
  * @param dragDirections The move directions. Can be either ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT, ItemTouchHelper.UP or ItemTouchHelper.DOWN
  * @param swipeDirections The swipe directions. Can be either ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT, ItemTouchHelper.UP or ItemTouchHelper.DOWN
- * @param callback The gesture callback
+ * @param onMove The gesture callback when moving item from two positions
+ * @param onSwipe The gesture callback when swiping item at given position and direction
+ * @param canMoveAt The gesture callback that enables move at given position (default true)
+ * @param canSwipeAt The gesture callback that enables swipe at given position (default true)
  */
-fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: GestureCallback? = null) {
-    ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(dragGestures, swipeGestures) {
+fun RecyclerView.handleGesture(dragDirections: Int,
+                               swipeDirections: Int,
+                               onMove: (fromPosition: Int, toPosition: Int) -> Boolean,
+                               onSwipe: (position: Int, direction: Int) -> Unit,
+                               canMoveAt: (position: Int) -> Boolean = { true },
+                               canSwipeAt: (position: Int) -> Boolean = { true }) {
+    ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
         override fun getDragDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
             val position = viewHolder!!.layoutPosition
             val adapter = adapter as? RecyclerSectionAdapter<*, *>
-            var isMovable = callback?.canMoveAt(position) ?: true
+            var isMovable = canMoveAt(position)
             if (adapter != null) {
                 isMovable = !adapter.isSectionAt(position)
             }
@@ -34,7 +41,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
         override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
             val position = viewHolder!!.layoutPosition
             val adapter = adapter as? RecyclerSectionAdapter<*, *>
-            var isSwipable = callback?.canSwipeAt(position) ?: true
+            var isSwipable = canSwipeAt(position)
             if (adapter != null) {
                 isSwipable = !adapter.isSectionAt(position)
             }
@@ -58,7 +65,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
                 }
 
                 adapter.moveItem(fromPosition, toPosition)
-                return callback?.onMove(fromPosition, toPosition) ?: true
+                return onMove(fromPosition, toPosition)
             }
 
             return false
@@ -69,7 +76,7 @@ fun RecyclerView.handleGesture(dragGestures: Int, swipeGestures: Int, callback: 
             val adapter = adapter as? RecyclerAdapter<*>
             if (adapter != null) {
                 adapter.removeItem(position)
-                callback?.onSwiped(position, direction)
+                onSwipe(position, direction)
             }
         }
 

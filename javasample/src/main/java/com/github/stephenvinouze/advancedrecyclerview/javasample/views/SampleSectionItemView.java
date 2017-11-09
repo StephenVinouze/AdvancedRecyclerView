@@ -1,8 +1,8 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.views;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,7 +44,7 @@ public class SampleSectionItemView extends LinearLayout {
             icon.setText(context.getString(R.string.icon_rate));
             icon.setTextSize(20);
             icon.setPadding(15, 10, 15, 10);
-            icon.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf"));
+            icon.setTypeface(ResourcesCompat.getFont(getContext(), R.font.fontawesome));
 
             addView(icon);
             mIcons.add(icon);
