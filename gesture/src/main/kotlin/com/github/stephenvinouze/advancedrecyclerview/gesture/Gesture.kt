@@ -50,37 +50,33 @@ fun RecyclerView.onGesture(dragDirections: Int,
         }
 
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            onMove?.let {
-                val fromPosition = viewHolder!!.layoutPosition
-                val toPosition = target!!.layoutPosition
-                val adapter = adapter as? RecyclerAdapter<*>
-                if (adapter != null) {
+            val fromPosition = viewHolder!!.layoutPosition
+            val toPosition = target!!.layoutPosition
+            val adapter = adapter as? RecyclerAdapter<*>
+            if (adapter != null) {
 
-                    // Prevent move items outside its section if any
-                    val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-                    if (sectionAdapter != null) {
-                        if (sectionAdapter.isSectionAt(toPosition)) {
-                            sectionAdapter.notifyDataSetChanged()
-                            return false
-                        }
+                // Prevent move items outside its section if any
+                val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
+                if (sectionAdapter != null) {
+                    if (sectionAdapter.isSectionAt(toPosition)) {
+                        sectionAdapter.notifyDataSetChanged()
+                        return false
                     }
-
-                    adapter.moveItem(fromPosition, toPosition)
-                    return it(fromPosition, toPosition)
                 }
+
+                adapter.moveItem(fromPosition, toPosition)
+                return onMove?.invoke(fromPosition, toPosition) ?: true
             }
 
             return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            onSwipe?.let {
-                val position = viewHolder!!.layoutPosition
-                val adapter = adapter as? RecyclerAdapter<*>
-                if (adapter != null) {
-                    adapter.removeItem(position)
-                    it(position, direction)
-                }
+            val position = viewHolder!!.layoutPosition
+            val adapter = adapter as? RecyclerAdapter<*>
+            if (adapter != null) {
+                adapter.removeItem(position)
+                onSwipe?.invoke(position, direction)
             }
         }
 
