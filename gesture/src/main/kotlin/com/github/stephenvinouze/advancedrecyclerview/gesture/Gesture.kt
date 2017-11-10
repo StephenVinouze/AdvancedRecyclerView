@@ -19,12 +19,12 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  * @param canMoveAt The gesture callback that enables move at given position (default true)
  * @param canSwipeAt The gesture callback that enables swipe at given position (default true)
  */
-fun RecyclerView.handleGesture(dragDirections: Int,
-                               swipeDirections: Int,
-                               onMove: (fromPosition: Int, toPosition: Int) -> Boolean,
-                               onSwipe: (position: Int, direction: Int) -> Unit,
-                               canMoveAt: (position: Int) -> Boolean = { true },
-                               canSwipeAt: (position: Int) -> Boolean = { true }) {
+fun RecyclerView.onGesture(dragDirections: Int,
+                           swipeDirections: Int,
+                           onMove: (fromPosition: Int, toPosition: Int) -> Boolean,
+                           onSwipe: (position: Int, direction: Int) -> Unit,
+                           canMoveAt: (position: Int) -> Boolean = { true },
+                           canSwipeAt: (position: Int) -> Boolean = { true }) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
         override fun getDragDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {

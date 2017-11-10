@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.pagination.handlePagination
+import com.github.stephenvinouze.advancedrecyclerview.pagination.onPaginate
 import com.github.stephenvinouze.advancedrecyclerview.pagination.setItems
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
@@ -39,7 +39,7 @@ class PaginationRecyclerFragment : Fragment() {
 
         paginationRecyclerView.adapter = adapter
 
-        paginationRecyclerView.handlePagination({ page ->
+        paginationRecyclerView.onPaginate({ page ->
             populatePage(page)
         })
     }

@@ -5,8 +5,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.core.callbacks.ClickCallback
-import com.github.stephenvinouze.advancedrecyclerview.gesture.handleGesture
+import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
 import kotlinx.android.synthetic.main.recycler_layout.*
@@ -22,14 +21,12 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
 
         val sectionAdapter = SampleSectionAdapter(context!!)
         sectionAdapter.choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
-        sectionAdapter.clickCallback = object : ClickCallback() {
-            override fun onItemClick(view: View, position: Int) {
-                val sample = sectionAdapter.items[position]
-                Toast.makeText(context, "Item clicked : ${sample.id} (${sectionAdapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
-            }
+        sectionAdapter.onClick = { _, position ->
+            val sample = sectionAdapter.items[position]
+            Toast.makeText(context, "Item clicked : ${sample.id} (${sectionAdapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
         }
 
-        recyclerView.handleGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 onMove = { fromPosition, toPosition ->
                     Toast.makeText(context, "Item moved from position $fromPosition to position $toPosition", Toast.LENGTH_SHORT).show()

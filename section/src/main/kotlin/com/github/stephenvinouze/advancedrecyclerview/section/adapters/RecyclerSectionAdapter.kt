@@ -24,7 +24,6 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     abstract fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
 
     override var items: MutableList<MODEL> = mutableListOf()
-        get() = field
         set(value) {
             buildSections(value, section)
 

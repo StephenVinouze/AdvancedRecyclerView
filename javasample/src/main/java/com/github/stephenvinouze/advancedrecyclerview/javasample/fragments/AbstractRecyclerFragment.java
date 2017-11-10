@@ -1,6 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,25 +18,25 @@ import com.github.stephenvinouze.advancedrecyclerview.javasample.R;
  */
 public abstract class AbstractRecyclerFragment extends Fragment {
 
-    protected RecyclerView mRecyclerView;
+    protected RecyclerView recyclerView;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.recycler_layout, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         configureRecyclerView(view.findViewById(R.id.recycler_view));
     }
 
     protected void configureRecyclerView(RecyclerView recyclerView) {
-        mRecyclerView = recyclerView;
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.recyclerView = recyclerView;
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 }

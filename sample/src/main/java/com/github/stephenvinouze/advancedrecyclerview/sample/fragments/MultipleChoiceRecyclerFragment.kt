@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.core.callbacks.ClickCallback
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import kotlinx.android.synthetic.main.recycler_layout.*
 
@@ -19,11 +18,9 @@ class MultipleChoiceRecyclerFragment : AbstractRecyclerFragment() {
         val adapter = SampleAdapter(context!!)
         adapter.items = SampleAdapter.buildSamples()
         adapter.choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
-        adapter.clickCallback = object : ClickCallback() {
-            override fun onItemClick(view: View, position: Int) {
-                val sample = adapter.items[position]
-                Toast.makeText(context, "Item clicked : ${sample.id} (${adapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
-            }
+        adapter.onClick = { _, position ->
+            val sample = adapter.items[position]
+            Toast.makeText(context, "Item clicked : ${sample.id} (${adapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
         }
 
         recyclerView.adapter = adapter

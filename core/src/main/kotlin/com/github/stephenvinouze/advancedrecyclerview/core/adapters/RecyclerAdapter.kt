@@ -5,18 +5,17 @@ import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.core.callbacks.ClickCallback
 import com.github.stephenvinouze.advancedrecyclerview.core.extensions.swap
 import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<MODEL>(protected var context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+abstract class RecyclerAdapter<MODEL>(protected val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
+    var onClick: ((view: View, position: Int) -> Unit)? = null
+    var onLongClick: ((view: View, position: Int) -> Boolean)? = { _: View, _: Int -> false }
     private val selectedItemViews = SparseBooleanArray()
-
-    var clickCallback: ClickCallback? = null
 
     var choiceMode = ChoiceMode.NONE
         set(value) {
@@ -35,16 +34,6 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
 
     enum class ChoiceMode {
         NONE, SINGLE, MULTIPLE
-    }
-
-    open fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
-        val itemView = viewHolder.view
-        itemView.setOnClickListener {
-            toggleItemView(clickPosition(viewHolder))
-
-            clickCallback?.onItemClick(itemView, clickPosition(viewHolder))
-        }
-        itemView.setOnLongClickListener { clickCallback?.onItemLongClick(itemView, clickPosition(viewHolder)) ?: false }
     }
 
     open fun addItems(items: MutableList<MODEL>, position: Int) {
@@ -84,6 +73,11 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
         return items
     }
 
+    fun clearSelectedItemViews() {
+        selectedItemViews.clear()
+        notifyDataSetChanged()
+    }
+
     open fun toggleItemView(position: Int) {
         when (choiceMode) {
             ChoiceMode.NONE -> return
@@ -104,9 +98,17 @@ abstract class RecyclerAdapter<MODEL>(protected var context: Context) : Recycler
         notifyItemChanged(position)
     }
 
-    fun clearSelectedItemViews() {
-        selectedItemViews.clear()
-        notifyDataSetChanged()
+    protected open fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
+        val itemView = viewHolder.view
+        itemView.setOnClickListener {
+            toggleItemView(clickPosition(viewHolder))
+
+            onClick?.invoke(itemView, clickPosition(viewHolder))
+        }
+
+        onLongClick?.let {
+            itemView.setOnLongClickListener { it(itemView, clickPosition(viewHolder)) }
+        }
     }
 
     private fun moveSelectedItemView(from: Int, to: Int) {
