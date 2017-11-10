@@ -21,8 +21,8 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  */
 fun RecyclerView.onGesture(dragDirections: Int,
                            swipeDirections: Int,
-                           onMove: (fromPosition: Int, toPosition: Int) -> Boolean,
-                           onSwipe: (position: Int, direction: Int) -> Unit,
+                           onMove: ((fromPosition: Int, toPosition: Int) -> Boolean)? = null,
+                           onSwipe: ((position: Int, direction: Int) -> Unit)? = null,
                            canMoveAt: (position: Int) -> Boolean = { true },
                            canSwipeAt: (position: Int) -> Boolean = { true }) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
@@ -50,33 +50,37 @@ fun RecyclerView.onGesture(dragDirections: Int,
         }
 
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            val fromPosition = viewHolder!!.layoutPosition
-            val toPosition = target!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
+            onMove?.let {
+                val fromPosition = viewHolder!!.layoutPosition
+                val toPosition = target!!.layoutPosition
+                val adapter = adapter as? RecyclerAdapter<*>
+                if (adapter != null) {
 
-                // Prevent move items outside its section if any
-                val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-                if (sectionAdapter != null) {
-                    if (sectionAdapter.isSectionAt(toPosition)) {
-                        sectionAdapter.notifyDataSetChanged()
-                        return false
+                    // Prevent move items outside its section if any
+                    val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
+                    if (sectionAdapter != null) {
+                        if (sectionAdapter.isSectionAt(toPosition)) {
+                            sectionAdapter.notifyDataSetChanged()
+                            return false
+                        }
                     }
-                }
 
-                adapter.moveItem(fromPosition, toPosition)
-                return onMove(fromPosition, toPosition)
+                    adapter.moveItem(fromPosition, toPosition)
+                    return it(fromPosition, toPosition)
+                }
             }
 
             return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            val position = viewHolder!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
-                adapter.removeItem(position)
-                onSwipe(position, direction)
+            onSwipe?.let {
+                val position = viewHolder!!.layoutPosition
+                val adapter = adapter as? RecyclerAdapter<*>
+                if (adapter != null) {
+                    adapter.removeItem(position)
+                    it(position, direction)
+                }
             }
         }
 

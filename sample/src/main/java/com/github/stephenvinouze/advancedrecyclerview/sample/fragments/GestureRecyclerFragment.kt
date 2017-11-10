@@ -19,10 +19,7 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
         adapter.items = SampleAdapter.buildSamples()
 
         recyclerView.adapter = adapter
-        recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onMove = { _, _ -> false },
-                onSwipe = { _, _ -> })
+        recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
     }
 
 }
