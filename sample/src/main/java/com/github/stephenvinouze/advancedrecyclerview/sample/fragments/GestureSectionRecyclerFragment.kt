@@ -9,7 +9,6 @@ import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
 import kotlinx.android.synthetic.main.recycler_layout.*
-import java.util.*
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -20,12 +19,14 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val sectionAdapter = SampleSectionAdapter(context!!)
+        sectionAdapter.items = SampleAdapter.buildSamples().sortedBy { it.rate }.toMutableList()
         sectionAdapter.choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
         sectionAdapter.onClick = { _, position ->
             val sample = sectionAdapter.items[position]
             Toast.makeText(context, "Item clicked : ${sample.id} (${sectionAdapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
         }
 
+        recyclerView.adapter = sectionAdapter
         recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 onMove = { fromPosition, toPosition ->
@@ -36,13 +37,6 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
                     Toast.makeText(context, "Item swiped at position $position", Toast.LENGTH_SHORT).show()
                 }
         )
-
-        val samples = SampleAdapter.buildSamples()
-        Collections.sort(samples) { lhs, rhs -> lhs.rate - rhs.rate }
-
-        sectionAdapter.items = samples
-
-        recyclerView.adapter = sectionAdapter
     }
 
 }
