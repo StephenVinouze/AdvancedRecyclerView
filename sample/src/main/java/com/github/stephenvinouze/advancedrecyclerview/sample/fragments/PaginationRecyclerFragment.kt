@@ -66,7 +66,7 @@ class PaginationRecyclerFragment : Fragment() {
     }
 
     private fun loadPage(firstPage: Boolean) {
-        val items = Sample.mockItems(paginationAdapter.items.size)
+        val items = Sample.mockItems()
         if (firstPage) {
             paginationAdapter.items = items
         } else {

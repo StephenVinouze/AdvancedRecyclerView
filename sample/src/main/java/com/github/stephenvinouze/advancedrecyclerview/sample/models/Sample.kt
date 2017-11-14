@@ -9,12 +9,11 @@ data class Sample(val id: Int, val rate: Int, val name: String) {
 
     companion object {
 
-        fun mockItems(itemCount: Int = 0): ArrayList<Sample> {
+        fun mockItems(): ArrayList<Sample> {
             return (1 until 20).mapTo(ArrayList()) {
-                val id = it + itemCount
-                Sample(id = id,
+                Sample(id = it,
                         rate = (Math.random() * 5).toInt(),
-                        name = "Sample name for index " + id
+                        name = "Sample name for index " + it
                 )
             }
         }

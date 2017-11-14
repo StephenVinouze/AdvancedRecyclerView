@@ -1,11 +1,10 @@
 package com.github.stephenvinouze.advancedrecyclerview.pagination.adapters
 
 import android.content.Context
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
-import com.github.stephenvinouze.advancedrecyclerview.pagination.R
 
 /**
  * Created by stephenvinouze on 10/11/2017.
@@ -31,7 +30,7 @@ abstract class RecyclerPaginationAdapter<MODEL>(context: Context) : RecyclerAdap
             if (isLoading && position == itemCount - 1) LOADING_VIEW_TYPE else super.getItemViewType(position)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder = when (viewType) {
-        LOADING_VIEW_TYPE -> BaseViewHolder(LayoutInflater.from(context).inflate(R.layout.view__footer_progress, parent, false))
+        LOADING_VIEW_TYPE -> BaseViewHolder(onCreateLoaderView(parent, viewType))
         else -> super.onCreateViewHolder(parent, viewType)
     }
 
@@ -40,5 +39,7 @@ abstract class RecyclerPaginationAdapter<MODEL>(context: Context) : RecyclerAdap
             super.onBindViewHolder(holder, position)
         }
     }
+
+    protected abstract fun onCreateLoaderView(parent: ViewGroup, viewType: Int) : View
 
 }
