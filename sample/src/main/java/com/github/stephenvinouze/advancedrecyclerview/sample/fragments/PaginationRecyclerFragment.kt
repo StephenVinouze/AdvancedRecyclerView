@@ -20,8 +20,6 @@ import kotlinx.android.synthetic.main.pagination_recycler_layout.*
  */
 class PaginationRecyclerFragment : Fragment() {
 
-    private var currentPage = 0
-
     private val paginationAdapter: PaginationSampleAdapter by lazy {
         PaginationSampleAdapter(context!!)
     }
@@ -45,30 +43,36 @@ class PaginationRecyclerFragment : Fragment() {
                         false
                     },
                     onLoad = {
-                        populatePage(true)
+                        populatePage(false, delayed = true)
                     })
         }
 
-        refreshLayout.setOnRefreshListener { populatePage(true) }
+        refreshLayout.setOnRefreshListener { populatePage(true, delayed = true) }
 
-        populatePage()
+        populatePage(true)
     }
 
-    private fun populatePage(delayed: Boolean = false) {
+    private fun populatePage(reload: Boolean, delayed: Boolean = false) {
         paginationAdapter.isLoading = true
 
         if (delayed) {
             val handler = Handler()
             handler.postDelayed({
-                loadPage()
+                loadPage(reload)
             }, 2000)
         } else {
-            loadPage()
+            loadPage(reload)
         }
     }
 
-    private fun loadPage() {
-        paginationAdapter.appendItems(SampleAdapter.buildSamples())
+    private fun loadPage(firstPage: Boolean) {
+        val items = SampleAdapter.buildSamples(paginationAdapter.items.size)
+        if (firstPage) {
+            paginationAdapter.items = items
+        } else {
+            paginationAdapter.appendItems(items)
+        }
+
         paginationAdapter.isLoading = false
         refreshLayout.isRefreshing = false
     }

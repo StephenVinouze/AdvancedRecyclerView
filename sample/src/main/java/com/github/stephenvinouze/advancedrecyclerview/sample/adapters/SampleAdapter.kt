@@ -15,19 +15,20 @@ open class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
-    override fun onBindItemView(v: View, position: Int) {
-        when (v) {
-            is SampleItemView -> v.bind(items[position], isItemViewToggled(position))
+    override fun onBindItemView(view: View, position: Int) {
+        when (view) {
+            is SampleItemView -> view.bind(items[position], isItemViewToggled(position))
         }
     }
 
     companion object {
 
-        fun buildSamples(): ArrayList<Sample> {
-            return (1..19).mapTo(ArrayList()) {
-                Sample(id = it,
+        fun buildSamples(itemCount: Int = 0): ArrayList<Sample> {
+            return (1 until 20).mapTo(ArrayList()) {
+                val id = it + itemCount
+                Sample(id = id,
                         rate = (Math.random() * 5).toInt(),
-                        name = "Sample name for index " + it
+                        name = "Sample name for index " + id
                 )
             }
         }

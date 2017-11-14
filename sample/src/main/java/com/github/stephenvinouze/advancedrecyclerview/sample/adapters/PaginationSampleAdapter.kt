@@ -29,16 +29,14 @@ class PaginationSampleAdapter(context: Context) : SampleAdapter(context) {
     override fun getItemViewType(position: Int): Int =
             if (isLoading && position == itemCount - 1) LOADING_VIEW_TYPE else super.getItemViewType(position)
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View {
-        return if (viewType == LOADING_VIEW_TYPE)
-            LayoutInflater.from(context).inflate(R.layout.view_progress, parent, false)
-        else
-            super.onCreateItemView(parent, viewType)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = when (viewType) {
+        LOADING_VIEW_TYPE -> LayoutInflater.from(context).inflate(R.layout.view_progress, parent, false)
+        else -> super.onCreateItemView(parent, viewType)
     }
 
-    override fun onBindItemView(v: View, position: Int) {
+    override fun onBindItemView(view: View, position: Int) {
         if (getItemViewType(position) != LOADING_VIEW_TYPE) {
-            super.onBindItemView(v, position)
+            super.onBindItemView(view, position)
         }
     }
 

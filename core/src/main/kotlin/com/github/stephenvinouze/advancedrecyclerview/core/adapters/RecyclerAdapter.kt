@@ -134,7 +134,7 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
     }
 
     protected abstract fun onCreateItemView(parent: ViewGroup, viewType: Int): View
-    protected abstract fun onBindItemView(v: View, position: Int)
+    protected abstract fun onBindItemView(view: View, position: Int)
 
     override fun getItemCount(): Int = items.size
 
