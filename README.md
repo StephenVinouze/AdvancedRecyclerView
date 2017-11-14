@@ -48,9 +48,9 @@ The following examples illustrating how to use this library will be written in J
 
 ### Core
 
-The *core* module contains the basic logic to easily manipulate a `RecyclerView`. It allows you to define your adapter in a blink of the eye, with a already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list.
+The *core* module contains the basic logic to easily manipulate a `RecyclerView`. It allows you to define your paginationAdapter in a blink of the eye, with a already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list.
 
-Define your own adapter that overrides `RecyclerAdapter` and template it with the model that will be used to populate your list. Let's name it `Sample` and `SampleItemView` the `View` that will be displayed in each row of your list. Finally implement two abstract methods to specify how to display your views in your list:
+Define your own paginationAdapter that overrides `RecyclerAdapter` and template it with the model that will be used to populate your list. Let's name it `Sample` and `SampleItemView` the `View` that will be displayed in each row of your list. Finally implement two abstract methods to specify how to display your views in your list:
 
 ```java
 public class SampleAdapter extends RecyclerAdapter<Sample> {

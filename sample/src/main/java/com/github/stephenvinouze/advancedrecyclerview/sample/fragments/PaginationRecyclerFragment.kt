@@ -1,15 +1,17 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.stephenvinouze.advancedrecyclerview.pagination.appendItems
 import com.github.stephenvinouze.advancedrecyclerview.pagination.onPaginate
-import com.github.stephenvinouze.advancedrecyclerview.pagination.setItems
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
+import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.PaginationSampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import kotlinx.android.synthetic.main.pagination_recycler_layout.*
 
@@ -18,35 +20,56 @@ import kotlinx.android.synthetic.main.pagination_recycler_layout.*
  */
 class PaginationRecyclerFragment : Fragment() {
 
-    private val adapter: SampleAdapter by lazy {
-        SampleAdapter(context!!)
+    private var currentPage = 0
+
+    private val paginationAdapter: PaginationSampleAdapter by lazy {
+        PaginationSampleAdapter(context!!)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.pagination_recycler_layout, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.pagination_recycler_layout, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        paginationRecyclerView.setHasFixedSize(true)
-        paginationRecyclerView.layoutManager = LinearLayoutManager(context)
-        paginationRecyclerView.itemAnimator = DefaultItemAnimator()
+        paginationRecyclerView.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            itemAnimator = DefaultItemAnimator()
+            adapter = paginationAdapter
+            onPaginate(
+                    isLoading = {
+                        paginationAdapter.isLoading
+                    },
+                    hasAllItems = {
+                        false
+                    },
+                    onLoad = {
+                        populatePage(true)
+                    })
+        }
 
-        refreshLayout.setOnRefreshListener { populatePage(1) }
+        refreshLayout.setOnRefreshListener { populatePage(true) }
 
-        populatePage(1)
-
-        paginationRecyclerView.adapter = adapter
-
-        paginationRecyclerView.onPaginate({ page ->
-            populatePage(page)
-        })
+        populatePage()
     }
 
-    private fun populatePage(page: Int) {
-        adapter.setItems(SampleAdapter.buildSamples(), page)
+    private fun populatePage(delayed: Boolean = false) {
+        paginationAdapter.isLoading = true
 
+        if (delayed) {
+            val handler = Handler()
+            handler.postDelayed({
+                loadPage()
+            }, 2000)
+        } else {
+            loadPage()
+        }
+    }
+
+    private fun loadPage() {
+        paginationAdapter.appendItems(SampleAdapter.buildSamples())
+        paginationAdapter.isLoading = false
         refreshLayout.isRefreshing = false
     }
 

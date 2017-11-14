@@ -11,15 +11,14 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+open class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View {
-        return SampleItemView(context)
-    }
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
     override fun onBindItemView(v: View, position: Int) {
-        val sampleItemView = v as SampleItemView
-        sampleItemView.bind(items[position], isItemViewToggled(position))
+        when (v) {
+            is SampleItemView -> v.bind(items[position], isItemViewToggled(position))
+        }
     }
 
     companion object {

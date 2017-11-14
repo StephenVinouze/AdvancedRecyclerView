@@ -15,12 +15,13 @@ class SingleChoiceRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SampleAdapter(context!!)
-        adapter.choiceMode = RecyclerAdapter.ChoiceMode.SINGLE
-        adapter.items = SampleAdapter.buildSamples()
-        adapter.onClick = { _, position ->
-            val sample = adapter.items[position]
-            Toast.makeText(context, "Item clicked : ${sample.id} (${adapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
+        val adapter = SampleAdapter(context!!).apply {
+            choiceMode = RecyclerAdapter.ChoiceMode.SINGLE
+            items = SampleAdapter.buildSamples()
+            onClick = { _, position ->
+                val sample = items[position]
+                Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()
+            }
         }
 
         recyclerView.adapter = adapter

@@ -15,9 +15,10 @@ class SectionRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionAdapter = SampleSectionAdapter(context!!)
-        sectionAdapter.choiceMode = RecyclerAdapter.ChoiceMode.NONE
-        sectionAdapter.items = SampleAdapter.buildSamples()
+        val sectionAdapter = SampleSectionAdapter(context!!).apply {
+            choiceMode = RecyclerAdapter.ChoiceMode.NONE
+            items = SampleAdapter.buildSamples()
+        }
 
         recyclerView.adapter = sectionAdapter
     }

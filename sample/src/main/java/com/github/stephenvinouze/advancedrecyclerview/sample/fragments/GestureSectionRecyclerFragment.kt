@@ -18,12 +18,13 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionAdapter = SampleSectionAdapter(context!!)
-        sectionAdapter.items = SampleAdapter.buildSamples().sortedBy { it.rate }.toMutableList()
-        sectionAdapter.choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
-        sectionAdapter.onClick = { _, position ->
-            val sample = sectionAdapter.items[position]
-            Toast.makeText(context, "Item clicked : ${sample.id} (${sectionAdapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
+        val sectionAdapter = SampleSectionAdapter(context!!).apply {
+            items = SampleAdapter.buildSamples().sortedBy { it.rate }.toMutableList()
+            choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
+            onClick = { _, position ->
+                val sample = items[position]
+                Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()
+            }
         }
 
         recyclerView.adapter = sectionAdapter

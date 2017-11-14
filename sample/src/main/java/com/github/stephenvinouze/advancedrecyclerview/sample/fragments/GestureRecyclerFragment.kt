@@ -15,8 +15,9 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SampleAdapter(context!!)
-        adapter.items = SampleAdapter.buildSamples()
+        val adapter = SampleAdapter(context!!).apply {
+            items = SampleAdapter.buildSamples()
+        }
 
         recyclerView.adapter = adapter
         recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)

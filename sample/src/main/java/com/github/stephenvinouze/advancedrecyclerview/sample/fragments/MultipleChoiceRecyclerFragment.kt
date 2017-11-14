@@ -15,12 +15,13 @@ class MultipleChoiceRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SampleAdapter(context!!)
-        adapter.items = SampleAdapter.buildSamples()
-        adapter.choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
-        adapter.onClick = { _, position ->
-            val sample = adapter.items[position]
-            Toast.makeText(context, "Item clicked : ${sample.id} (${adapter.selectedItemViewCount} selected)", Toast.LENGTH_SHORT).show()
+        val adapter = SampleAdapter(context!!).apply {
+            items = SampleAdapter.buildSamples()
+            choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
+            onClick = { _, position ->
+                val sample = items[position]
+                Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()
+            }
         }
 
         recyclerView.adapter = adapter
