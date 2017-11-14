@@ -5,6 +5,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
+import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
 
 /**
@@ -16,7 +17,7 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = SampleAdapter(context!!).apply {
-            items = SampleAdapter.buildSamples()
+            items = Sample.mockItems()
         }
 
         recyclerView.adapter = adapter

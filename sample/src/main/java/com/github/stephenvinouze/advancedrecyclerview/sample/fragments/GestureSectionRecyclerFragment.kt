@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
-import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
+import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
 
 /**
@@ -19,7 +19,7 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val sectionAdapter = SampleSectionAdapter(context!!).apply {
-            items = SampleAdapter.buildSamples().sortedBy { it.rate }.toMutableList()
+            items = Sample.mockItems().sortedBy { it.rate }.toMutableList()
             choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
             onClick = { _, position ->
                 val sample = items[position]

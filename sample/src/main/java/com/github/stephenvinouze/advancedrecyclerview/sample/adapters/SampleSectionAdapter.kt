@@ -14,9 +14,7 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  */
 class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sample>(context, { it.rate }) {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View {
-        return SampleItemView(context)
-    }
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
     override fun onBindItemView(v: View, position: Int) {
         when (v) {
@@ -24,9 +22,8 @@ class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sampl
         }
     }
 
-    override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View {
-        return SampleSectionItemView(context)
-    }
+    override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View =
+            SampleSectionItemView(context)
 
     override fun onBindSectionItemView(sectionView: View, sectionPosition: Int) {
         sectionAt(sectionPosition)?.let {

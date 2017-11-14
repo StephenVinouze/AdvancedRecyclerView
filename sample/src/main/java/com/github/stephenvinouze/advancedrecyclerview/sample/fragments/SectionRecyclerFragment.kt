@@ -3,8 +3,8 @@ package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 import android.os.Bundle
 import android.view.View
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
+import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
 
 /**
@@ -17,7 +17,7 @@ class SectionRecyclerFragment : AbstractRecyclerFragment() {
 
         val sectionAdapter = SampleSectionAdapter(context!!).apply {
             choiceMode = RecyclerAdapter.ChoiceMode.NONE
-            items = SampleAdapter.buildSamples()
+            items = Sample.mockItems()
         }
 
         recyclerView.adapter = sectionAdapter

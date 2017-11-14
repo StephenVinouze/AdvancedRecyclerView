@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.pagination.appendItems
 import com.github.stephenvinouze.advancedrecyclerview.pagination.onPaginate
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
-import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.PaginationSampleAdapter
-import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
+import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SamplePaginationAdapter
+import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.pagination_recycler_layout.*
 
 /**
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.pagination_recycler_layout.*
  */
 class PaginationRecyclerFragment : Fragment() {
 
-    private val paginationAdapter: PaginationSampleAdapter by lazy {
-        PaginationSampleAdapter(context!!)
+    private val paginationAdapter: SamplePaginationAdapter by lazy {
+        SamplePaginationAdapter(context!!)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -66,7 +66,7 @@ class PaginationRecyclerFragment : Fragment() {
     }
 
     private fun loadPage(firstPage: Boolean) {
-        val items = SampleAdapter.buildSamples(paginationAdapter.items.size)
+        val items = Sample.mockItems(paginationAdapter.items.size)
         if (firstPage) {
             paginationAdapter.items = items
         } else {

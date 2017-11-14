@@ -3,14 +3,14 @@ package com.github.stephenvinouze.advancedrecyclerview.sample.adapters
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview.pagination.adapters.RecyclerPaginationAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleItemView
 
 /**
- * Created by Stephen Vinouze on 09/11/2015.
+ * Created by stephenvinouze on 14/11/2017.
  */
-open class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Sample>(context) {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
