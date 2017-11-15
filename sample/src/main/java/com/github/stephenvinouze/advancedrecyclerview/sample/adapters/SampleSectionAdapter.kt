@@ -16,9 +16,9 @@ class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sampl
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
-    override fun onBindItemView(v: View, position: Int) {
-        when (v) {
-            is SampleItemView -> v.bind(items[position], isItemViewToggled(position))
+    override fun onBindItemView(view: View, position: Int) {
+        when (view) {
+            is SampleItemView -> view.bind(items[position], isItemViewToggled(position))
         }
     }
 

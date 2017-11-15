@@ -23,17 +23,15 @@ android {
     }
 }
 
-def appcompat_version = "27.0.0"
-
 dependencies {
     api project(':pagination')
     api project(':gesture')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$appcompat_version"
-    implementation "com.android.support:cardview-v7:$appcompat_version"
-    implementation "com.android.support:recyclerview-v7:$appcompat_version"
+    implementation "com.android.support:appcompat-v7:$ANDROID_APPCOMPAT_VERSION"
+    implementation "com.android.support:cardview-v7:$ANDROID_APPCOMPAT_VERSION"
+    implementation "com.android.support:recyclerview-v7:$ANDROID_APPCOMPAT_VERSION"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

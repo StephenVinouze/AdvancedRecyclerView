@@ -4,20 +4,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerSectionAdapter
 
 /**
  * Created by stephenvinouze on 26/04/16.
  */
 
-val RecyclerView.canPaginate: Boolean
-    get() {
-        val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-        if (sectionAdapter != null) {
-            return sectionAdapter.numberOfSections() == 0
-        }
-        return true
-    }
 
 /**
  * Enable your list to be paginable. Trigger an event to let the user fetch the next page
@@ -28,30 +19,28 @@ fun RecyclerView.onPaginate(threshold: Int = 5,
                             isLoading: () -> Boolean,
                             hasAllItems: () -> Boolean,
                             onLoad: () -> Unit) {
-    if (canPaginate) {
-        val layoutManager = layoutManager
+    val layoutManager = layoutManager
 
-        addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+    addOnScrollListener(object: RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
 
-                val totalCount = layoutManager.itemCount
-                val firstVisible = when (layoutManager) {
-                    is LinearLayoutManager -> layoutManager.findFirstVisibleItemPosition()
-                    is StaggeredGridLayoutManager -> {
-                        if (layoutManager.childCount > 0) layoutManager.findFirstVisibleItemPositions(null)[0] else 0
-                    }
-                    else -> throw IllegalStateException("LayourManager should derived either from LinearLayoutManager or StaggeredGridLayoutManager")
+            val totalCount = layoutManager.itemCount
+            val firstVisible = when (layoutManager) {
+                is LinearLayoutManager -> layoutManager.findFirstVisibleItemPosition()
+                is StaggeredGridLayoutManager -> {
+                    if (layoutManager.childCount > 0) layoutManager.findFirstVisibleItemPositions(null)[0] else 0
                 }
+                else -> throw IllegalStateException("LayourManager should derived either from LinearLayoutManager or StaggeredGridLayoutManager")
+            }
 
-                if (totalCount - childCount <= firstVisible + threshold) {
-                    if (!isLoading() && !hasAllItems()) {
-                        onLoad()
-                    }
+            if (totalCount - childCount <= firstVisible + threshold) {
+                if (!isLoading() && !hasAllItems()) {
+                    onLoad()
                 }
             }
-        })
-    }
+        }
+    })
 }
 
 /**
