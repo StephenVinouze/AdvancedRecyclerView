@@ -144,12 +144,12 @@ Note the **Integer** generic type in the class declaration. This is require to i
 
 ### Pagination
 
-You may want to paginate your content. The *pagination* module lets you do it without a breaking a sweat by providing an extension to the `RecyclerView` class. You just need to call the `onPaginate` method. The callback will be called every time you reach the end of your content.
+You may want to enablePagination your content. The *pagination* module lets you do it without a breaking a sweat by providing an extension to the `RecyclerView` class. You just need to call the `enablePagination` method. The callback will be called every time you reach the end of your content.
 
 To make it even smoother, the triggering depends on the amount of elements in your list to be triggered a bit before reaching the bottom so that the user does not notify the loading.
 
 ```java
-PaginationKt.onPaginate(yourRecylerView, new PaginationCallback() {
+PaginationKt.enablePagination(yourRecylerView, new PaginationCallback() {
             @Override
             public void fetchNextPage(int nextPage) {
                 // Load your next page, refresh your content, etc.
@@ -164,7 +164,7 @@ As a limitation, the pagination events won't be triggered if your list contains 
 The *gesture* module allows you to enable swipe-to-delete and/or move gestures from your `RecyclerView`. Same as the *pagination* module, we leverage the Kotlin language to create another extension method to the `RecyclerView` class.
 
 ```java
-GestureKt.onGesture(yourRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
+GestureKt.enableGestures(yourRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
             @Override
             public boolean onMove(int fromPosition, int toPosition) {
                 Toast.makeText(getActivity(), "Item selected : " + sectionAdapter.getSelectedItemViews(), Toast.LENGTH_SHORT).show();

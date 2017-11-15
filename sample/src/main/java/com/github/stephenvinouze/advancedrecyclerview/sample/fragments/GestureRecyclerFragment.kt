@@ -3,7 +3,7 @@ package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
+import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.enableGestures
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
@@ -21,7 +21,10 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
         }
 
         recyclerView.adapter = adapter
-        recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+        recyclerView.enableGestures(
+                dragDirections = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        )
     }
 
 }

@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter;
-import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleSectionAdapter;
+import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
@@ -26,9 +26,9 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getActivity());
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getContext());
         sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.NONE);
-        sectionAdapter.setItems(SampleAdapter.buildSamples());
+        sectionAdapter.setItems(Sample.mockItems());
 
         recyclerView.setAdapter(sectionAdapter);
     }

@@ -5,7 +5,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
-import com.github.stephenvinouze.advancedrecyclerview.gesture.onGesture
+import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.enableGestures
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
@@ -28,11 +28,12 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
         }
 
         recyclerView.adapter = sectionAdapter
-        recyclerView.onGesture(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+        recyclerView.enableGestures(
+                dragDirections = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 onMove = { fromPosition, toPosition ->
                     Toast.makeText(context, "Item moved from position $fromPosition to position $toPosition", Toast.LENGTH_SHORT).show()
-                    false
+                    true
                 },
                 onSwipe = { position, _ ->
                     Toast.makeText(context, "Item swiped at position $position", Toast.LENGTH_SHORT).show()

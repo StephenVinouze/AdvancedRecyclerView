@@ -26,8 +26,8 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
     }
 
     @Override
-    protected void onBindItemView(@NonNull View v, int position) {
-        SampleItemView sampleItemView = (SampleItemView) v;
+    protected void onBindItemView(@NonNull View view, int position) {
+        SampleItemView sampleItemView = (SampleItemView) view;
         sampleItemView.bind(getItems().get(position), isItemViewToggled(position));
     }
 

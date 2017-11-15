@@ -9,8 +9,6 @@ import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdap
 import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.views.SampleItemView;
 
-import java.util.ArrayList;
-
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
@@ -20,20 +18,6 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
         super(context);
     }
 
-    public static ArrayList<Sample> buildSamples() {
-        ArrayList<Sample> samples = new ArrayList<>();
-
-        for (int i = 1; i < 20; i++) {
-            Sample sample = new Sample();
-            sample.setId(i);
-            sample.setRate((int) (Math.random() * 5));
-            sample.setName("Sample name for index " + i);
-            samples.add(sample);
-        }
-
-        return samples;
-    }
-
     @NonNull
     @Override
     protected View onCreateItemView(@NonNull ViewGroup parent, int viewType) {
@@ -41,8 +25,8 @@ public class SampleAdapter extends RecyclerAdapter<Sample> {
     }
 
     @Override
-    protected void onBindItemView(@NonNull View v, int position) {
-        SampleItemView sampleItemView = (SampleItemView)v;
+    protected void onBindItemView(@NonNull View view, int position) {
+        SampleItemView sampleItemView = (SampleItemView) view;
         sampleItemView.bind(getItems().get(position), isItemViewToggled(position));
     }
 

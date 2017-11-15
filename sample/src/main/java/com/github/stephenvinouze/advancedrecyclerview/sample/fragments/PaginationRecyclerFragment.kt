@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.stephenvinouze.advancedrecyclerview.pagination.appendItems
-import com.github.stephenvinouze.advancedrecyclerview.pagination.onPaginate
+import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.appendItems
+import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.enablePagination
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SamplePaginationAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.pagination_recycler_layout.*
  * Created by Stephen Vinouze on 06/11/2015.
  */
 class PaginationRecyclerFragment : Fragment() {
+
+    private val handler = Handler()
 
     private val paginationAdapter: SamplePaginationAdapter by lazy {
         SamplePaginationAdapter(context!!)
@@ -35,7 +37,7 @@ class PaginationRecyclerFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
             adapter = paginationAdapter
-            onPaginate(
+            enablePagination(
                     isLoading = {
                         paginationAdapter.isLoading
                     },
@@ -56,7 +58,6 @@ class PaginationRecyclerFragment : Fragment() {
         paginationAdapter.isLoading = true
 
         if (delayed) {
-            val handler = Handler()
             handler.postDelayed({
                 loadPage(reload)
             }, 2000)
@@ -65,9 +66,9 @@ class PaginationRecyclerFragment : Fragment() {
         }
     }
 
-    private fun loadPage(firstPage: Boolean) {
+    private fun loadPage(reload: Boolean) {
         val items = Sample.mockItems()
-        if (firstPage) {
+        if (reload) {
             paginationAdapter.items = items
         } else {
             paginationAdapter.appendItems(items)

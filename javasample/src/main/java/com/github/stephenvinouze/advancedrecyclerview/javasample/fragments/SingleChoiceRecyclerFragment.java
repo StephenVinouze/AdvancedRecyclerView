@@ -27,9 +27,9 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final SampleAdapter adapter = new SampleAdapter(getActivity());
+        final SampleAdapter adapter = new SampleAdapter(getContext());
         adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.SINGLE);
-        adapter.setItems(SampleAdapter.buildSamples());
+        adapter.setItems(Sample.mockItems());
         adapter.setOnClick((view1, position) -> {
             Sample sample = adapter.getItems().get(position);
             Toast.makeText(getActivity(), "Item clicked : " + sample.getId() + " (" + adapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();

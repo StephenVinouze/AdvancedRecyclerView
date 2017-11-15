@@ -1,6 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,16 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.stephenvinouze.advancedrecyclerview.javasample.R;
-import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleAdapter;
-import com.github.stephenvinouze.advancedrecyclerview.pagination.PaginationKt;
+import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SamplePaginationAdapter;
+import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
+import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.PaginationCallback;
+import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.PaginationKt;
+
+import java.util.List;
 
 /**
  * Created by Stephen Vinouze on 06/11/2015.
  */
 public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
 
-    private SwipeRefreshLayout mRefreshLayout;
-    private SampleAdapter mAdapter;
+    private static final int PAGINATION_THRESHOLD = 5;
+
+    private SwipeRefreshLayout refreshLayout;
+    private SamplePaginationAdapter paginationAdapter;
+    private Handler handler = new Handler();
 
     @Nullable
     @Override
@@ -30,27 +38,57 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRefreshLayout = view.findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(() -> populatePage(1));
+        paginationAdapter = new SamplePaginationAdapter(getContext());
 
         configureRecyclerView(view.findViewById(R.id.recycler_view));
+        recyclerView.setAdapter(paginationAdapter);
 
-        mAdapter = new SampleAdapter(getActivity());
+        PaginationKt.enablePagination(
+                recyclerView,
+                PAGINATION_THRESHOLD,
+                new PaginationCallback() {
+                    @Override
+                    public boolean isLoading() {
+                        return paginationAdapter.isLoading();
+                    }
 
-        populatePage(1);
+                    @Override
+                    public boolean hasAllItems() {
+                        return false;
+                    }
 
-        recyclerView.setAdapter(mAdapter);
+                    @Override
+                    public void onLoad() {
+                        populatePage(false, true);
+                    }
+                }
+        );
 
-        PaginationKt.onPaginate(recyclerView, (page) -> {
-            populatePage(page);
-            return null;
-        });
+        refreshLayout = view.findViewById(R.id.refresh_layout);
+        refreshLayout.setOnRefreshListener(() -> populatePage(true, true));
+
+        populatePage(true, false);
     }
 
-    private void populatePage(int page) {
-        PaginationKt.setItems(mAdapter, SampleAdapter.buildSamples(), page);
+    private void populatePage(boolean reload, boolean delayed) {
+        paginationAdapter.setLoading(true);
 
-        mRefreshLayout.setRefreshing(false);
+        if (delayed) {
+            handler.postDelayed(() -> loadPage(reload), 2000);
+        } else {
+            loadPage(reload);
+        }
     }
 
+    private void loadPage(boolean reload) {
+        List<Sample> items = Sample.mockItems();
+        if (reload) {
+            paginationAdapter.setItems(items);
+        } else {
+            PaginationKt.appendItems(paginationAdapter, items);
+        }
+
+        paginationAdapter.setLoading(false);
+        refreshLayout.setRefreshing(false);
+    }
 }
