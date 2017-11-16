@@ -32,32 +32,28 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
 
     private val selectedItemViews = SparseBooleanArray()
 
-    open fun addItems(items: MutableList<MODEL>, position: Int) {
-        this.items.addAll(position, items)
+    fun addItems(items: MutableList<MODEL>, position: Int) {
+        addItemsInternal(items, position)
         notifyItemRangeInserted(position, items.size)
     }
 
-    open fun addItem(item: MODEL, position: Int) {
-        this.items.add(position, item)
+    fun addItem(item: MODEL, position: Int) {
+        addItemInternal(item, position)
         notifyItemInserted(position)
     }
 
-    open fun moveItem(from: Int, to: Int) {
-        moveSelectedItemView(from, to)
-
-        this.items.swap(from, to)
-        notifyItemMoved(from, to)
-    }
-
-    open fun removeItem(position: Int) {
-        removeSelectedItemView(position)
-
-        this.items.removeAt(position)
+    fun removeItem(position: Int) {
+        removeItemInternal(position)
         notifyItemRemoved(position)
     }
 
-    open fun clearItems() {
-        this.items.clear()
+    fun moveItem(from: Int, to: Int) {
+        moveItemInternal(from, to)
+        notifyItemMoved(from, to)
+    }
+
+    fun clearItems() {
+        clearItemsInternal()
         clearSelectedItemViews()
     }
 
@@ -92,6 +88,30 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
             }
         }
         notifyItemChanged(position)
+    }
+
+    protected open fun addItemsInternal(items: MutableList<MODEL>, position: Int) {
+        this.items.addAll(position, items)
+    }
+
+    protected open fun addItemInternal(item: MODEL, position: Int) {
+        this.items.add(position, item)
+    }
+
+    protected open fun moveItemInternal(from: Int, to: Int) {
+        moveSelectedItemView(from, to)
+
+        this.items.swap(from, to)
+    }
+
+    protected open fun removeItemInternal(position: Int) {
+        removeSelectedItemView(position)
+
+        this.items.removeAt(position)
+    }
+
+    protected open fun clearItemsInternal() {
+        this.items.clear()
     }
 
     protected open fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {

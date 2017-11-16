@@ -34,9 +34,9 @@ class SectionTests {
 
     @Test
     fun testNumberOfItemsInSection() {
-        assertEquals(adapter.numberOfItemsInSection(0), 4)
-        assertEquals(adapter.numberOfItemsInSection(1), 3)
-        assertEquals(adapter.numberOfItemsInSection(2), 5)
+        assertEquals(adapter.itemCountInSection(0), 4)
+        assertEquals(adapter.itemCountInSection(1), 3)
+        assertEquals(adapter.itemCountInSection(2), 5)
     }
 
     @Test
