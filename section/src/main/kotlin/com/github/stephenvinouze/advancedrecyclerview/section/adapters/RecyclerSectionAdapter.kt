@@ -32,10 +32,6 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
             notifyDataSetChanged()
         }
 
-    final override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
-        super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
-    }
-
     final override fun addItemsInternal(items: MutableList<MODEL>, position: Int) {
         super.addItemsInternal(items, relativePosition(position))
         buildSections(items, section)
@@ -56,6 +52,10 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
 
     final override fun moveItemInternal(from: Int, to: Int) {
         super.moveItemInternal(relativePosition(from), relativePosition(to))
+    }
+
+    final override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
+        super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
     }
 
     final override fun toggleItemView(position: Int) {
