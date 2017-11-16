@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode
 import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.enableGestures
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
@@ -20,7 +20,7 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
 
         val sectionAdapter = SampleSectionAdapter(context!!).apply {
             items = Sample.mockItems().sortedBy { it.rate }.toMutableList()
-            choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
+            choiceMode = ChoiceMode.MULTIPLE
             onClick = { _, position ->
                 val sample = items[position]
                 Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()

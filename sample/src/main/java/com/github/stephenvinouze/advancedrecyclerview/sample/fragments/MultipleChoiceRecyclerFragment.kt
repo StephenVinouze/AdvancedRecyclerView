@@ -3,7 +3,7 @@ package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import kotlinx.android.synthetic.main.recycler_layout.*
@@ -18,7 +18,7 @@ class MultipleChoiceRecyclerFragment : AbstractRecyclerFragment() {
 
         val adapter = SampleAdapter(context!!).apply {
             items = Sample.mockItems()
-            choiceMode = RecyclerAdapter.ChoiceMode.MULTIPLE
+            choiceMode = ChoiceMode.MULTIPLE
             onClick = { _, position ->
                 val sample = items[position]
                 Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()

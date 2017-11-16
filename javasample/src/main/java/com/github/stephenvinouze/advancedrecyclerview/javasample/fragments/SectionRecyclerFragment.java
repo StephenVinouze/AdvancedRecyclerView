@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter;
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleSectionAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
 
@@ -27,7 +27,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getContext());
-        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.NONE);
+        sectionAdapter.setChoiceMode(ChoiceMode.NONE);
         sectionAdapter.setItems(Sample.mockItems());
 
         recyclerView.setAdapter(sectionAdapter);

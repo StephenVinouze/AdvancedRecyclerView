@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter;
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleAdapter;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.models.Sample;
 
@@ -28,7 +28,7 @@ public class SingleChoiceRecyclerFragment extends AbstractRecyclerFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final SampleAdapter adapter = new SampleAdapter(getContext());
-        adapter.setChoiceMode(RecyclerAdapter.ChoiceMode.SINGLE);
+        adapter.setChoiceMode(ChoiceMode.SINGLE);
         adapter.setItems(Sample.mockItems());
         adapter.setOnClick((view1, position) -> {
             Sample sample = adapter.getItems().get(position);

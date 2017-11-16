@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter;
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode;
 import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.GestureCallback;
 import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.GestureKt;
 import com.github.stephenvinouze.advancedrecyclerview.javasample.adapters.SampleSectionAdapter;
@@ -33,7 +33,7 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getContext());
-        sectionAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
+        sectionAdapter.setChoiceMode(ChoiceMode.MULTIPLE);
         sectionAdapter.setOnClick((view1, position) -> {
             Sample sample = sectionAdapter.getItems().get(position);
             Toast.makeText(getActivity(), "Item clicked : " + sample.getId() + " (" + sectionAdapter.getSelectedItemViewCount() + " selected)", Toast.LENGTH_SHORT).show();

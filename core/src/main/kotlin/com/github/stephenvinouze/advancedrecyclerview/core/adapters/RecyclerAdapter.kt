@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
+import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode
 import com.github.stephenvinouze.advancedrecyclerview.core.extensions.swap
 import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
 
@@ -13,28 +14,23 @@ import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
  */
 abstract class RecyclerAdapter<MODEL>(protected val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    var onClick: ((view: View, position: Int) -> Unit)? = null
-    var onLongClick: ((view: View, position: Int) -> Boolean)? = { _: View, _: Int -> false }
-    private val selectedItemViews = SparseBooleanArray()
-
+    val selectedItemViewCount: Int
+        get() = selectedItemViews.size()
     var choiceMode = ChoiceMode.NONE
         set(value) {
             field = value
             clearSelectedItemViews()
         }
-
-    val selectedItemViewCount: Int
-        get() = selectedItemViews.size()
-
     open var items: MutableList<MODEL> = arrayListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    enum class ChoiceMode {
-        NONE, SINGLE, MULTIPLE
-    }
+    var onClick: ((view: View, position: Int) -> Unit)? = null
+    var onLongClick: ((view: View, position: Int) -> Boolean)? = { _: View, _: Int -> false }
+
+    private val selectedItemViews = SparseBooleanArray()
 
     open fun addItems(items: MutableList<MODEL>, position: Int) {
         this.items.addAll(position, items)
@@ -133,9 +129,6 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
         }
     }
 
-    protected abstract fun onCreateItemView(parent: ViewGroup, viewType: Int): View
-    protected abstract fun onBindItemView(view: View, position: Int)
-
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -150,5 +143,8 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         onBindItemView(holder.view, position)
     }
+
+    abstract protected fun onCreateItemView(parent: ViewGroup, viewType: Int): View
+    abstract protected fun onBindItemView(view: View, position: Int)
 
 }
