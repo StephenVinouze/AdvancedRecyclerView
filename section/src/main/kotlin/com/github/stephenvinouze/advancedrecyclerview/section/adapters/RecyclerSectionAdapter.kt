@@ -23,7 +23,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     val sections: List<SECTION>
         get() = sectionItems.keys.toList()
 
-    private val sectionItems: LinkedHashMap<SECTION, MutableList<MODEL>> = linkedMapOf()
+    private var sectionItems: LinkedHashMap<SECTION, MutableList<MODEL>> = linkedMapOf()
 
     override var items: MutableList<MODEL> = mutableListOf()
         set(value) {
@@ -93,7 +93,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     fun sectionAt(position: Int): SECTION? = sections[position]
 
     fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
-        sectionItems.clear()
+        sectionItems = linkedMapOf()
 
         for (item in items) {
             val itemSection = section(item)
