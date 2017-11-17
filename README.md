@@ -1,184 +1,290 @@
 # AdvancedRecyclerView
 [![Release](https://jitpack.io/v/StephenVinouze/AdvancedRecyclerView.svg)](https://jitpack.io/#StephenVinouze/AdvancedRecyclerView)
 [![Build Status](https://travis-ci.org/StephenVinouze/AdvancedRecyclerView.svg)](https://travis-ci.org/StephenVinouze/AdvancedRecyclerView)
-[![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AdvancedRecyclerView-green.svg?style=true)](https://android-arsenal.com/details/1/3553)
-[![GitHub
-license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.com/StephenVinouze/AdvancedRecyclerView/blob/master/LICENSE)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AdvancedRecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/3553)
+[![GitHub license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.com/StephenVinouze/AdvancedRecyclerView/blob/master/LICENSE)
+
+Before the appearance of `RecyclerView`, `ListView` and `GridView` were the common layout used to display lists of items.
+Even though `RecyclerView` has optimized how to render list of items without having to worry how you want to display them (either list or grid) it comes with a price when implementing such behaviors.
+
+This library comes with two focuses:
+
+* Make your `RecyclerView` basic implementation dead simple.
+* Intagrating useful features that could be found in either `ListView` and `GridView` (such as choice mode) and even more (sections, pagination, gestures).
 
 Single choice | Multiple choice | Sections
 ---- | ---- | ----
 ![Single choice](art/single_choice_framed.png) | ![Multiple choice](art/multiple_choice_framed.png) | ![Sections](art/sections_framed.png)
+  
+## Migrate to v2
+
+If you are already using the v1 of this library and considering migrating to the v2, here are a few things worth mentioning
+
+* Several methods were renamed for clarification
+* Packages were renamed to apply lattest Android Studio guidelines. Some classes were also rearranged in that respect.
+* A Kotlin sample was added and callback systems were changed in favor of lambdas to match with Kotlin language.
+* In order to not disadvantage Java users I kept the previous methods. Both Java and kotlin samples are available in this repository.
+* For Java users, Java 8 is now required for this library because of lambdas. 
+
+## Basic usage
+
+The *core* module contains the basic logic to easily manipulate a `RecyclerView`. 
+It allows you to define your adapter in a blink of the eye, with a already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list. 
+
+Create your model :
+
+```kotlin
+data class Sample(val id: Int, val rate: Int, val name: String)
+```
+
+Create your view :
+
+```kotlin
+class SampleItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
+
+    init {
+        LayoutInflater.from(context).inflate(R.layout.view_sample_item, this, true)
+    }
+
+    fun bind(sample: Sample) {
+        // Update your subviews with the Sample data 
+    }
+
+}
+```
+
+Then define your own adapter that extends from `RecyclerAdapter` and template it with your model that will be used to populate your list :
+
+```kotlin
+class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+
+    override fun onBindItemView(view: View, position: Int) {
+        when (view) {
+            is SampleItemView -> view.bind(items[position])
+        }
+    }
+
+}
+```
+
+Finally in your `Activity`/`Fragment`, add your `Sample` items to your `SampleAdapter` and bind your adapter to your `RecyclerView`:
+
+```kotlin
+val adapter = SampleAdapter(this)
+adapter.items = mutableListOf()
+recyclerView.adapter = adapter
+```
+
+Your `RecyclerView` is ready to be displayed. You just have to implement your `bind()` method within your view to configure it (or use the databinding pattern if you prefer).
+
+### Click events
+
+Listening to click events are often required and usually requires to transit such an event from your adapter to your `Activity`/`Fragment` to maintain a clean architecture.
+This library provides to optional lambdas for click and long click events that can be called directly from your adapter :
+
+```kotlin
+adapter.onClick = { view, position ->
+    val sample = items[position]
+    // Do whatever you want
+}
+adapter.onLongClick = { view, position ->
+    val sample = items[position]
+    // Do whatever you want
+}
+```
+
+### Choice mode
+
+A useful feature that can be found in either `ListView` and `GridView` is **ChoiceMode**. 
+Although this does not come natively with `RecyclerView`, this library provides such a mechanism.  
+
+Choice mode can be either *NONE* (default), *SINGLE* or *MULTIPLE*. 
+If a choice mode other than *NONE* is declared for your adapter, your selected items will be internally stored at each view click.
+You can also manually select an item :
+
+```kotlin
+adapter.toggleItemView(position)
+```
+
+You can obviously retrieve which items are selected :
+ 
+```kotlin
+adapter.selectedItemViewCount // Returns the selected item view count
+adapter.getSelectedItemViews() // Returns a list of selected item views
+adapter.isItemViewToggled(position) // Returns true if item is selected
+```
+
+If you need to remove all selected items :
+
+```kotlin
+adapter.clearSelectedItemViews()
+```
+
+## Advanced usage
+
+In most cases the *core* module should handle most of the heavy work. 
+This section presents more advanced concepts that can help you while using `RecyclerView` in your applications.
+
+### Section
+
+You may encounter lists that need to be regrouped within sections to present a clear sorting or your items. 
+This can be easily done natively by overriding `getItemViewType()` and manipulate yourself each viewType in your adapter callbacks.
+The *section* module intends to lift this work for you as well as to provide a clear implementation by separating section building callbacks from main items in your list.
+
+Create a section item view to render your sections. Let's call it `SampleSectionItemView`.
+
+Extends your adapter class from `RecyclerSectionAdapter` (which itself extends from `RecyclerAdapter`) and provides two more abstract methods to shape your views that will be displayed as sections :
+
+```kotlin
+class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sample>(context, { it.rate }) {
+
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+
+    override fun onBindItemView(view: View, position: Int) {
+        when (view) {
+            is SampleItemView -> view.bind(items[position])
+        }
+    }
+
+    // Override these two new methods to render your sections
+       
+    override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View =
+            SampleSectionItemView(context)
+
+    override fun onBindSectionItemView(sectionView: View, sectionPosition: Int) {
+        sectionAt(sectionPosition)?.let {
+            when (sectionView) {
+                is SampleSectionItemView -> sectionView.bind(it)
+            }
+        }
+    }
+
+}
+```
+
+Note the **Int** generic type in the class declaration that indicates the type that will contains the section. In our case, we want to sort them by rate.
+The building of the sections will be automatically taken care of by a lambda that you must provide in your constructor ()`{ sample -> sample.rate }`).
+
+Wraps things up the way you were doing with your `RecyclerAdapter` :
+
+```kotlin
+val sectionAdapter = SampleSectionAdapter(this)
+sectionAdapter.items = mutableListOf()
+recyclerView.adapter = sectionAdapter
+```
+
+Setting items to your adapter will take care of the section building and relayout your list.
+You may want to sort your items before setting them in your adapter to obtain consistent sections.
+
+### Pagination
+
+Pagination is a common pattern especially when interacting with an API to lazy load your items into your list.
+The *pagination* module provides an extension to the `RecyclerView` class to easily activate pagination and notify what to do when pagination is triggered.
+You should also notify your users that your content is being loaded into your list by providing a loader at the bottom of your list.
+
+Extend your adapter from `RecyclerPaginationAdapter` and implement the loader creator callback :
+
+```kotlin
+class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Sample>(context) {
+
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+
+    override fun onBindItemView(view: View, position: Int) {
+        when (view) {
+            is SampleItemView -> view.bind(items[position], isItemViewToggled(position))
+        }
+    }
+
+    override fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View =
+            LayoutInflater.from(context).inflate(R.layout.view_progress, parent, false)
+
+}
+```
+
+Activate pagination on your `RecyclerView` and populate your list with the `appendItems()` extension method :
+
+```kotlin
+val paginationAdapter = SamplePaginationAdapter(this)
+recyclerView.adapter = paginationAdapter
+recyclerView.enablePagination(
+    isLoading = {
+        paginationAdapter.isLoading
+    },
+    hasAllItems = {
+        // return true if you have loaded all your items to stop the pagination to try loading more
+    },
+    onLoad = {
+        // Fetch and/or load your items within your list
+        paginationAdapter.isLoading = true
+        // Fetch items from API. Indicate loading done once fetch is finished
+        paginationAdapter.isLoading = false
+        // Append items into your list
+        paginationAdapter.appendItems(items)
+    }
+)
+```
+
+:warning: Note that `RecyclerPaginationAdapter` extends from `RecyclerAdapter` as pagination for sectioned content is not (and won't be) supported. 
+
+### Gesture
+
+The `RecyclerView` component allows you to interact with your items by draging them with the `ItemTouchHelper` class. 
+The *gesture* module abstracts this behavior to let you easily swipe-to-delete and/or move your items from your `RecyclerView`.
+Items are manipulated for you for both move on swipe-to-delete gestures.
+
+You can enable gestures by using the `RecyclerView` extension method :
+
+```kotlin
+recyclerView.enableGestures(
+                dragDirections = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                onMove = { fromPosition, toPosition ->
+                    // Do whatever you want
+                    true
+                },
+                onSwipe = { position, direction ->
+                    // Do whatever you want
+                }
+        )
+```
+
+Note that all lambdas are optionals so that you may enable/configure your desired gestures.
+Also, the *gesture* module includes the *section* module so that all your gestures also works while using your list with sections. 
+The only limitation is that you cannot move an item from one section to another.
 
 ## Gradle Dependency
 
-Add this in your root `build.gradle` file:
+The gradle dependency is available via [JitPack](https://jitpack.io/#StephenVinouze/AdvancedRecyclerView). Add this in your root `build.gradle` file:
 
-```gradle
+```groovy
 allprojects {
 	repositories {
-		// ... other repositories
 		maven { url "https://jitpack.io" }
 	}
 }
 ```
+
 Then add the dependencies that you need in your project.
 
-```gradle
-
+```groovy
 def advancedrecyclerview_version = "{latest_version}"
 
 dependencies {
-
-  // ... other dependencies here
   compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
+  
+  // If you need to display lists with sections
   compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
+   
+   // If you need to paginate your lists
   compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
+  
+  // If you need to handle gestures within your lists (note that it will include the section module as well)
   compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
 }
 ```
-
-If you need to fetch the *section* module, just declare it in your dependencies without the *core* as the latter is included in the *section* module. Also *pagination* and *gesture* depend on the *section* module so same thing applies for these two modules.
-
-## Usage
-
-Note that this library, although written in Kotlin, will perfectly work in a Java environment. As such, the sample provided in this repository has been written in Java to prove its interoperability. The only limitation you will face while using this library in a Java environment is that you will need to use Java 8 if you need the *section* module as sections are built using **Lambdas**.
-
-The following examples illustrating how to use this library will be written in Java to keep track of the *sample* module and illustrate how to use Kotlin **lambdas** and **extensions** in Java.
-
-### Core
-
-The *core* module contains the basic logic to easily manipulate a `RecyclerView`. It allows you to define your paginationAdapter in a blink of the eye, with a already built-in `ViewHolder` pattern so that you just need to define how your items will be laid out in your list.
-
-Define your own paginationAdapter that overrides `RecyclerAdapter` and template it with the model that will be used to populate your list. Let's name it `Sample` and `SampleItemView` the `View` that will be displayed in each row of your list. Finally implement two abstract methods to specify how to display your views in your list:
-
-```java
-public class SampleAdapter extends RecyclerAdapter<Sample> {
-
-    public SampleAdapter(Context context) {
-        super(context);
-    }
-
-    @NotNull
-    @Override
-    protected View onCreateItemView(@NotNull ViewGroup parent, int viewType) {
-        return new SampleItemView(getContext());
-    }
-
-    @Override
-    protected void onBindItemView(@NonNull View itemView, int position) {
-        Sample sample = getItems().get(position);
-        SampleItemView sampleItemView = (SampleItemView)itemView;
-        sampleItemView.bind(sample);
-    }
-}
-```
-
-And `Sample` our basic model:
-
-```java
-public class Sample {
-    public int id;
-    public int rate;
-    public String name;
-}
-```
-
-That's it! You can now instanciate your `SampleAdapter`, set it some `Sample` items and apply it to your `RecyclerView` by calling:
-
-```java
-SampleAdapter sampleAdapter = new SampleAdapter(getActivity());
-sampleAdapter.setItems(yourSampleItems);
-
-yourRecyclerView.setAdapter(sampleAdapter);
-```
-
-In addition, the *core* module also provides within the `RecyclerAdapter` abstract class some useful features such as **ChoiceMode** to easily configure a list with either *NONE* (default), *SINGLE* or *MULTIPLE* and retrieve all selected items in your list.
-
-Finally, you can listen to click events and easily respond to it by setting a `clickCallback` to your `SampleAdapter`.
-
-A full example using these features would look like:
-
-```java
-final SampleAdapter sampleAdapter = new SampleAdapter(getActivity());
-sampleAdapter.setItems(yourSampleItems);
-sampleAdapter.setChoiceMode(RecyclerAdapter.ChoiceMode.MULTIPLE);
-sampleAdapter.setClickCallback(new ClickCallback() {
-            @Override
-            public void onItemClick(@NonNull View view, int position) {
-                Toast.makeText(getActivity(), sampleAdapter.getSelectedItemViewCount() + " items selected)", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-yourRecyclerView.setAdapter(sampleAdapter);
-```
-
-### Section
-
-The *section* module allows you to easily build sections within your list. To do so, you must override the `RecyclerSectionAdapter` abstract class. This class extends from `RecyclerAdapter` and provides two more abstract methods to shape your views that will be displayed as sections. The building itself will be automatically taken care of by a lambda that you must provide in your constructor. Let's call it `SampleSectionAdapter` and `SampleSectionItemView` our new classes to manage our sections:
-
-```java
-public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample> {
-
-    public SampleSectionAdapter(Context context) {
-        super(context, (sample -> sample.getRate()));
-    }
-
-    // ... RecyclerAdapter abstract methods to implement as well
-
-    @NonNull
-    @Override
-    public View onCreateSectionItemView(@NonNull ViewGroup parent, int viewType) {
-        return new SampleSectionItemView(getContext());
-    }
-
-    @Override
-    public void onBindSectionItemView(@NonNull View sectionView, int sectionPosition) {
-        SampleSectionItemView sampleSectionItemView = (SampleSectionItemView)sectionView;
-        sampleSectionItemView.bind(sectionAt(sectionPosition));
-    }
-}
-```
-
-Note the **Integer** generic type in the class declaration. This is require to indicate the type that will contains the section. In our case, we want to sort them by rate. This will be done via the constructor that contains a **lambda** `(sample -> sample.rate)`. That's it! Using `sampleSectionAdapter.setItems(yourSampleItems)` will do the magic for you! You may want before settings your items sorting them in any way you want (e.g. : in an ascending order).
-
-### Pagination
-
-You may want to enablePagination your content. The *pagination* module lets you do it without a breaking a sweat by providing an extension to the `RecyclerView` class. You just need to call the `enablePagination` method. The callback will be called every time you reach the end of your content.
-
-To make it even smoother, the triggering depends on the amount of elements in your list to be triggered a bit before reaching the bottom so that the user does not notify the loading.
-
-```java
-PaginationKt.enablePagination(yourRecylerView, new PaginationCallback() {
-            @Override
-            public void fetchNextPage(int nextPage) {
-                // Load your next page, refresh your content, etc.
-            }
-        });
-```
-
-As a limitation, the pagination events won't be triggered if your list contains sections. Also, the library is only supporting pagination for `LinearLayoutManager` as of now.
-
-### Gesture
-
-The *gesture* module allows you to enable swipe-to-delete and/or move gestures from your `RecyclerView`. Same as the *pagination* module, we leverage the Kotlin language to create another extension method to the `RecyclerView` class.
-
-```java
-GestureKt.enableGestures(yourRecyclerView, ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, new GestureCallback() {
-            @Override
-            public boolean onMove(int fromPosition, int toPosition) {
-                Toast.makeText(getActivity(), "Item selected : " + sectionAdapter.getSelectedItemViews(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public void onSwiped(int position, int direction) {
-                Toast.makeText(getActivity(), "Item selected : " + sectionAdapter.getSelectedItemViews(), Toast.LENGTH_SHORT).show();
-            }
-        });
-```
-
-Gestures depend whether your list contains sections as the library needs to do some extra computations to correctly position your items while your list is being updated. Although the gestures is fully working with sections, the re-computations lead to animation drawbacks and limit the move gesture to one item at a time. Finally, you won't be able to move items from one section into another section as it would break the section behavior of your list.
 
 ## Pull requests
 
