@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class SampleSectionItemView extends LinearLayout {
 
-    private List<TextView> mIcons = new ArrayList<>();
+    private final List<TextView> mIcons = new ArrayList<>();
 
     public SampleSectionItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);

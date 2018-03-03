@@ -26,7 +26,7 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
 
     private SwipeRefreshLayout refreshLayout;
     private SamplePaginationAdapter paginationAdapter;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Nullable
     @Override

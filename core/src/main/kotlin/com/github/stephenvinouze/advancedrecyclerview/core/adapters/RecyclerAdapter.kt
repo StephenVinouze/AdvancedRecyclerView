@@ -164,7 +164,7 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
         onBindItemView(holder.view, position)
     }
 
-    abstract protected fun onCreateItemView(parent: ViewGroup, viewType: Int): View
-    abstract protected fun onBindItemView(view: View, position: Int)
+    protected abstract fun onCreateItemView(parent: ViewGroup, viewType: Int): View
+    protected abstract fun onBindItemView(view: View, position: Int)
 
 }

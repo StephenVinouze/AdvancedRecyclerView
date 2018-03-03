@@ -12,7 +12,10 @@ import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdap
 /**
  * Enable your list to be paginable. Trigger an event to let the user fetch the next page
  * Note that pagination will be ignore whether you are using sections. Same if you are using a LayoutManager that does not extend LinearLayoutManager.
- * @param onLoad The pagination onLoad that let you fetch your pages
+ * @param threshold The threshold indicating when the pagination is triggered. If 0, will trigger when reaching the bottom of the list. Default is 5. This parameter is optional.
+ * @param isLoading Indicate in this block whether a pagination is already ongoing. The application should retain a state and apply it in this block.
+ * @param hasAllItems Indicate in this block if all items has been loaded.
+ * @param onLoad The pagination has been triggered. You should handle the logic in this block.
  */
 fun RecyclerView.enablePagination(threshold: Int = 5,
                                   isLoading: () -> Boolean,
@@ -46,7 +49,8 @@ fun RecyclerView.enablePagination(threshold: Int = 5,
  * [JAVA VERSION with abstract class as callback instead of lambdas]
  * Enable your list to be paginable. Trigger an event to let the user fetch the next page
  * Note that pagination will be ignore whether you are using sections. Same if you are using a LayoutManager that does not extend LinearLayoutManager.
- * @param onLoad The pagination onLoad that let you fetch your pages
+ * @param threshold The threshold indicating when the pagination is triggered. If 0, will trigger when reaching the bottom of the list. Default is 5. This parameter is optional.
+ * @param callback The pagination callback that let you fetch your pages
  */
 fun RecyclerView.enablePagination(threshold: Int = 5, callback: PaginationCallback) {
     layoutManager?.let {

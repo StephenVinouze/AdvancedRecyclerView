@@ -13,7 +13,7 @@ data class Sample(val id: Int, val rate: Int, val name: String) {
             return (1 until 20).mapTo(ArrayList()) {
                 Sample(id = it,
                         rate = (Math.random() * 5).toInt(),
-                        name = "Sample name for index " + it
+                        name = "Sample name for index $it"
                 )
             }
         }

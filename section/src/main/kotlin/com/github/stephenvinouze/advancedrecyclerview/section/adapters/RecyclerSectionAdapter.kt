@@ -95,13 +95,13 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
         sectionItems = linkedMapOf()
 
-        for (item in items) {
-            val itemSection = section(item)
+        items.forEach {
+            val itemSection = section(it)
             val itemsInSection = sectionItems[itemSection] ?: arrayListOf()
 
-            itemsInSection.add(item)
+            itemsInSection.add(it)
 
-            sectionItems.put(itemSection, itemsInSection)
+            sectionItems[itemSection] = itemsInSection
         }
     }
 
@@ -112,14 +112,14 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
      */
     fun isSectionAt(position: Int): Boolean {
         var absoluteSectionPosition = 0
-        for (section in 0 until sectionCount) {
+        (0 until sectionCount).forEach {
             if (position == absoluteSectionPosition) {
                 return true
             } else if (position < absoluteSectionPosition) {
                 return false
             }
 
-            absoluteSectionPosition += itemCountInSection(section) + 1
+            absoluteSectionPosition += itemCountInSection(it) + 1
         }
         return false
     }
@@ -132,8 +132,8 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     fun sectionPosition(position: Int): Int {
         var sectionPosition = 0
         var absoluteSectionPosition = 0
-        for (section in 0 until sectionCount) {
-            absoluteSectionPosition += itemCountInSection(section)
+        (0 until sectionCount).forEach {
+            absoluteSectionPosition += itemCountInSection(it)
             if (position <= absoluteSectionPosition) {
                 return sectionPosition
             }
@@ -155,8 +155,8 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
         }
 
         var relativePosition = position
-        for (absolutePosition in 0..position) {
-            if (isSectionAt(absolutePosition)) {
+        (0..position).forEach {
+            if (isSectionAt(it)) {
                 relativePosition--
             }
         }
@@ -170,15 +170,15 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
      */
     fun absolutePosition(position: Int): Int {
         var offset = 0
-        for (relativePosition in 0..position) {
-            if (isSectionAt(relativePosition + offset)) {
+        (0..position).forEach {
+            if (isSectionAt(it + offset)) {
                 offset++
             }
         }
         return position + offset
     }
 
-    abstract protected fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
-    abstract protected fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
+    protected abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
+    protected abstract fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
 
 }

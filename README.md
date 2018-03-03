@@ -22,7 +22,7 @@ Single choice | Multiple choice | Sections
 If you are already using the v1 of this library and considering migrating to the v2, here are a few things worth mentioning
 
 * Several methods were renamed for clarification
-* Packages were renamed to apply lattest Android Studio guidelines. Some classes were also rearranged in that respect.
+* Packages were renamed to apply latest Android Studio guidelines. Some classes were also rearranged in the process.
 * A Kotlin sample was added and callback systems were changed in favor of lambdas to match with Kotlin language.
 * In order to not disadvantage Java users I kept the previous methods. Both Java and kotlin samples are available in this repository.
 * For Java users, Java 8 is now required for this library because of lambdas. 
@@ -239,16 +239,16 @@ You can enable gestures by using the `RecyclerView` extension method :
 
 ```kotlin
 recyclerView.enableGestures(
-                dragDirections = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onMove = { fromPosition, toPosition ->
-                    // Do whatever you want
-                    true
-                },
-                onSwipe = { position, direction ->
-                    // Do whatever you want
-                }
-        )
+    dragDirections = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+    swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+    onMove = { fromPosition, toPosition ->
+        // Do whatever you want
+        true
+    },
+    onSwipe = { position, direction ->
+        // Do whatever you want
+    }
+)
 ```
 
 Note that all lambdas are optionals so that you may enable/configure your desired gestures.
@@ -261,9 +261,9 @@ The gradle dependency is available via [JitPack](https://jitpack.io/#StephenVino
 
 ```groovy
 allprojects {
-	repositories {
-		maven { url "https://jitpack.io" }
-	}
+    repositories {
+	    maven { url "https://jitpack.io" }
+    }
 }
 ```
 
@@ -273,16 +273,16 @@ Then add the dependencies that you need in your project.
 def advancedrecyclerview_version = "{latest_version}"
 
 dependencies {
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
+    compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
   
-  // If you need to display lists with sections
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
+    // If you need to display lists with sections
+    compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
    
-   // If you need to paginate your lists
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
+    // If you need to paginate your lists
+    compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
   
-  // If you need to handle gestures within your lists (note that it will include the section module as well)
-  compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
+    // If you need to handle gestures within your lists (note that it will include the section module as well)
+    compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
 }
 ```
 

@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+    api project(':core')
+    api project(':section')
     api project(':pagination')
     api project(':gesture')
 
