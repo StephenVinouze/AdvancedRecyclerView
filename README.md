@@ -21,6 +21,7 @@ Single choice | Multiple choice | Sections
 
 If you are already using the v1 of this library and considering migrating to the v2, here are a few things worth mentioning
 
+* You need to declare all modules that you require as they are not transitive anymore.
 * Several methods were renamed for clarification
 * Packages were renamed to apply latest Android Studio guidelines. Some classes were also rearranged in the process.
 * A Kotlin sample was added and callback systems were changed in favor of lambdas to match with Kotlin language.
@@ -273,16 +274,16 @@ Then add the dependencies that you need in your project.
 def advancedrecyclerview_version = "{latest_version}"
 
 dependencies {
-    compile "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
+    implementation "com.github.StephenVinouze.AdvancedRecyclerView:core:${advancedrecyclerview_version}"
   
     // If you need to display lists with sections
-    compile "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
+    implementation "com.github.StephenVinouze.AdvancedRecyclerView:section:${advancedrecyclerview_version}"
    
     // If you need to paginate your lists
-    compile "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
+    implementation "com.github.StephenVinouze.AdvancedRecyclerView:pagination:${advancedrecyclerview_version}"
   
-    // If you need to handle gestures within your lists (note that it will include the section module as well)
-    compile "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
+    // If you need to handle gestures within your lists
+    implementation "com.github.StephenVinouze.AdvancedRecyclerView:gesture:${advancedrecyclerview_version}"
 }
 ```
 
