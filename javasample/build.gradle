@@ -26,10 +26,10 @@ android {
 }
 
 dependencies {
-    api project(':core')
-    api project(':section')
-    api project(':pagination')
-    api project(':gesture')
+    implementation project(':core')
+    implementation project(':section')
+    implementation project(':pagination')
+    implementation project(':gesture')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$ANDROID_APPCOMPAT_VERSION"
@@ -37,6 +37,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$ANDROID_APPCOMPAT_VERSION"
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

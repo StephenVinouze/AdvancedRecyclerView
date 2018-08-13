@@ -28,7 +28,7 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
         }
 
     var onClick: ((view: View, position: Int) -> Unit)? = null
-    var onLongClick: ((view: View, position: Int) -> Boolean)? = { _: View, _: Int -> false }
+    var onLongClick: ((view: View, position: Int) -> Boolean)? = null
 
     private val selectedItemViews = SparseBooleanArray()
 
@@ -122,8 +122,8 @@ abstract class RecyclerAdapter<MODEL>(protected val context: Context) : Recycler
             onClick?.invoke(itemView, clickPosition(viewHolder))
         }
 
-        onLongClick?.let {
-            itemView.setOnLongClickListener { it(itemView, clickPosition(viewHolder)) }
+        onLongClick?.let { listener ->
+            itemView.setOnLongClickListener { listener(itemView, clickPosition(viewHolder)) }
         }
     }
 
