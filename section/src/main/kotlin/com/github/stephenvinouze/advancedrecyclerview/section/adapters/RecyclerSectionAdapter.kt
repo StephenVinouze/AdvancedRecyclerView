@@ -55,7 +55,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     }
 
     final override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
-        super.handleClick(viewHolder, { relativePosition(it.layoutPosition) })
+        super.handleClick(viewHolder) { relativePosition(it.layoutPosition) }
     }
 
     final override fun toggleItemView(position: Int) {
