@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,10 @@ import com.github.stephenvinouze.advancedrecyclerview.javasample.views.SampleIte
  */
 public class SampleAdapter extends RecyclerAdapter<Sample> {
 
-    public SampleAdapter(Context context) {
-        super(context);
-    }
-
     @NonNull
     @Override
     protected View onCreateItemView(@NonNull ViewGroup parent, int viewType) {
-        return new SampleItemView(getContext());
+        return new SampleItemView(parent.getContext());
     }
 
     @Override

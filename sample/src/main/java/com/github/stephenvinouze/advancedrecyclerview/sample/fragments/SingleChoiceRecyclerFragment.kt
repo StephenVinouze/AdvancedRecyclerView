@@ -16,7 +16,7 @@ class SingleChoiceRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SampleAdapter(context!!).apply {
+        val adapter = SampleAdapter().apply {
             choiceMode = ChoiceMode.SINGLE
             items = Sample.mockItems()
             onClick = { _, position ->

@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.core.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.View
@@ -12,7 +11,7 @@ import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<MODEL>(protected val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+abstract class RecyclerAdapter<MODEL>() : RecyclerView.Adapter<BaseViewHolder>() {
 
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()

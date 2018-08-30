@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.section.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>(context) {
+abstract class RecyclerSectionAdapter<SECTION, MODEL>(var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val SECTION_VIEW_TYPE = 222

@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.pagination.adapters
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
@@ -9,7 +8,7 @@ import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
 /**
  * Created by stephenvinouze on 10/11/2017.
  */
-abstract class RecyclerPaginationAdapter<MODEL>(context: Context) : RecyclerAdapter<MODEL>(context) {
+abstract class RecyclerPaginationAdapter<MODEL> : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val LOADING_VIEW_TYPE = 111

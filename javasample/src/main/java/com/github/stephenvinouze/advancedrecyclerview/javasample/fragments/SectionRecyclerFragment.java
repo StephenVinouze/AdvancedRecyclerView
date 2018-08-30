@@ -18,7 +18,7 @@ public class SectionRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getContext());
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter();
         sectionAdapter.setChoiceMode(ChoiceMode.NONE);
         sectionAdapter.setItems(Sample.mockItems());
 

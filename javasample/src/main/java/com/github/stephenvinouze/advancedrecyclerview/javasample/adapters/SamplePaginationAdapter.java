@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.javasample.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +17,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class SamplePaginationAdapter extends RecyclerPaginationAdapter<Sample> {
 
-    public SamplePaginationAdapter(Context context) {
-        super(context);
-    }
-
     @NotNull
     @Override
     protected View onCreateItemView(@NotNull ViewGroup parent, int viewType) {
-        return new SampleItemView(getContext());
+        return new SampleItemView(parent.getContext());
     }
 
     @NotNull
     @Override
     protected View onCreateLoaderView(@NotNull ViewGroup parent, int viewType) {
-        return LayoutInflater.from(getContext()).inflate(R.layout.view_progress, parent, false);
+        return LayoutInflater.from(parent.getContext()).inflate(R.layout.view_progress, parent, false);
     }
 
     @Override

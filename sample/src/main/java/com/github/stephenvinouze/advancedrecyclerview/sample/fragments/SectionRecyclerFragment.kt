@@ -15,7 +15,7 @@ class SectionRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionAdapter = SampleSectionAdapter(context!!).apply {
+        val sectionAdapter = SampleSectionAdapter().apply {
             choiceMode = ChoiceMode.NONE
             items = Sample.mockItems()
         }

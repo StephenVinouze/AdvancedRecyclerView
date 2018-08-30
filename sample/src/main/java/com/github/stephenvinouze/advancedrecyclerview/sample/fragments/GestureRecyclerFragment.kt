@@ -16,7 +16,7 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SampleAdapter(context!!).apply {
+        val adapter = SampleAdapter().apply {
             items = Sample.mockItems()
         }
 

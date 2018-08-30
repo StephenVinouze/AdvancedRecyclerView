@@ -19,7 +19,7 @@ public class GestureRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final SampleAdapter adapter = new SampleAdapter(getContext());
+        final SampleAdapter adapter = new SampleAdapter();
         adapter.setItems(Sample.mockItems());
 
         recyclerView.setAdapter(adapter);

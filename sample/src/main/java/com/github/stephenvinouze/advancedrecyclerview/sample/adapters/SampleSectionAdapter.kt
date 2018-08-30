@@ -1,9 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.adapters
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
 import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleItemView
 import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleSectionItemView
@@ -12,9 +10,9 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sample>(context, { it.rate }) {
+class SampleSectionAdapter : RecyclerSectionAdapter<Int, Sample>({ it.rate }) {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {
@@ -23,7 +21,7 @@ class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sampl
     }
 
     override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View =
-            SampleSectionItemView(context)
+            SampleSectionItemView(parent.context)
 
     override fun onBindSectionItemView(sectionView: View, sectionPosition: Int) {
         sectionAt(sectionPosition)?.let {

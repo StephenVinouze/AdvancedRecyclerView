@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,9 @@ import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleItemVie
 /**
  * Created by stephenvinouze on 14/11/2017.
  */
-class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Sample>(context) {
+class SamplePaginationAdapter : RecyclerPaginationAdapter<Sample>() {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {
@@ -23,6 +22,6 @@ class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Samp
     }
 
     override fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View =
-            LayoutInflater.from(context).inflate(R.layout.view_progress, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.view_progress, parent, false)
 
 }
