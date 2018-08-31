@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.section.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>(context) {
+abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val SECTION_VIEW_TYPE = 222
@@ -23,7 +22,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     val sections: List<SECTION>
         get() = sectionItems.keys.toList()
 
-    private var sectionItems: LinkedHashMap<SECTION, MutableList<MODEL>> = linkedMapOf()
+    private var sectionItems: SortedMap<SECTION, List<MODEL>> = sortedMapOf()
 
     override var items: MutableList<MODEL> = mutableListOf()
         set(value) {
@@ -93,16 +92,7 @@ abstract class RecyclerSectionAdapter<SECTION, MODEL>(context: Context, var sect
     fun sectionAt(position: Int): SECTION? = sections[position]
 
     fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
-        sectionItems = linkedMapOf()
-
-        items.forEach {
-            val itemSection = section(it)
-            val itemsInSection = sectionItems[itemSection] ?: arrayListOf()
-
-            itemsInSection.add(it)
-
-            sectionItems[itemSection] = itemsInSection
-        }
+        sectionItems = items.groupBy(section).toSortedMap()
     }
 
     /**

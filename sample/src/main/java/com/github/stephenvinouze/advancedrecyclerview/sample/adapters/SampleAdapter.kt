@@ -1,6 +1,5 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.adapters
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
@@ -10,9 +9,9 @@ import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleItemVie
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-open class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+open class SampleAdapter : RecyclerAdapter<Sample>() {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {

@@ -38,7 +38,7 @@ public class PaginationRecyclerFragment extends AbstractRecyclerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        paginationAdapter = new SamplePaginationAdapter(getContext());
+        paginationAdapter = new SamplePaginationAdapter();
 
         configureRecyclerView(view.findViewById(R.id.recycler_view));
         recyclerView.setAdapter(paginationAdapter);

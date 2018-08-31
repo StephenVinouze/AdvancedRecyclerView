@@ -23,7 +23,7 @@ class PaginationRecyclerFragment : Fragment() {
     private val handler = Handler()
 
     private val paginationAdapter: SamplePaginationAdapter by lazy {
-        SamplePaginationAdapter(context!!)
+        SamplePaginationAdapter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

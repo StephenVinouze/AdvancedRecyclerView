@@ -24,7 +24,7 @@ public class GestureSectionRecyclerFragment extends AbstractRecyclerFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter(getContext());
+        final SampleSectionAdapter sectionAdapter = new SampleSectionAdapter();
         sectionAdapter.setChoiceMode(ChoiceMode.MULTIPLE);
         sectionAdapter.setOnClick((view1, position) -> {
             Sample sample = sectionAdapter.getItems().get(position);

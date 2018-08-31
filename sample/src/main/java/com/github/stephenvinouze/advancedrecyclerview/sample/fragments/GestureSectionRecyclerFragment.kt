@@ -18,7 +18,7 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionAdapter = SampleSectionAdapter(context!!).apply {
+        val sectionAdapter = SampleSectionAdapter().apply {
             items = Sample.mockItems().sortedBy { it.rate }.toMutableList()
             choiceMode = ChoiceMode.MULTIPLE
             onClick = { _, position ->
