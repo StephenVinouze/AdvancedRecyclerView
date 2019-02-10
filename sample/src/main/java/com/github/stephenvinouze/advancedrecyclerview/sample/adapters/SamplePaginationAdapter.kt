@@ -13,7 +13,8 @@ import com.github.stephenvinouze.advancedrecyclerview.sample.views.SampleItemVie
  */
 class SamplePaginationAdapter : RecyclerPaginationAdapter<Sample>() {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View =
+            SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {

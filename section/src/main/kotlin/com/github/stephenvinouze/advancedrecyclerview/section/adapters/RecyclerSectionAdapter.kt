@@ -10,7 +10,8 @@ import java.util.*
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>() {
+abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION)
+    : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val SECTION_VIEW_TYPE = 222

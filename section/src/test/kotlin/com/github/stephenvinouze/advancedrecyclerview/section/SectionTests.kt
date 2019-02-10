@@ -22,7 +22,7 @@ class SectionTests {
 
     @Before
     fun setup() {
-        adapter.buildSections(items, { it.rate })
+        adapter.buildSections(items) { it.rate }
     }
 
     @Test

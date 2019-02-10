@@ -23,14 +23,14 @@ fun RecyclerView.enablePagination(threshold: Int = 5,
                                   onLoad: () -> Unit) {
     layoutManager?.let {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val totalCount = it.itemCount
                 val firstVisible = when (it) {
                     is LinearLayoutManager -> it.findFirstVisibleItemPosition()
                     is StaggeredGridLayoutManager -> {
-                        if (layoutManager.childCount > 0) it.findFirstVisibleItemPositions(null)[0] else 0
+                        if (it.childCount > 0) it.findFirstVisibleItemPositions(null)[0] else 0
                     }
                     else -> throw IllegalStateException("LayourManager should derived either from LinearLayoutManager or StaggeredGridLayoutManager")
                 }
@@ -55,14 +55,14 @@ fun RecyclerView.enablePagination(threshold: Int = 5,
 fun RecyclerView.enablePagination(threshold: Int = 5, callback: PaginationCallback) {
     layoutManager?.let {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val totalCount = it.itemCount
                 val firstVisible = when (it) {
                     is LinearLayoutManager -> it.findFirstVisibleItemPosition()
                     is StaggeredGridLayoutManager -> {
-                        if (layoutManager.childCount > 0) it.findFirstVisibleItemPositions(null)[0] else 0
+                        if (it.childCount > 0) it.findFirstVisibleItemPositions(null)[0] else 0
                     }
                     else -> throw IllegalStateException("LayourManager should derived either from LinearLayoutManager or StaggeredGridLayoutManager")
                 }

@@ -20,49 +20,46 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  * @param canSwipeAt The gesture callback that enables swipe at given position (default true)
  */
 fun RecyclerView.enableGestures(dragDirections: Int,
-                           swipeDirections: Int,
-                           onMove: ((fromPosition: Int, toPosition: Int) -> Boolean)? = null,
-                           onSwipe: ((position: Int, direction: Int) -> Unit)? = null,
-                           canMoveAt: (position: Int) -> Boolean = { true },
-                           canSwipeAt: (position: Int) -> Boolean = { true }) {
+                                swipeDirections: Int,
+                                onMove: ((fromPosition: Int, toPosition: Int) -> Boolean)? = null,
+                                onSwipe: ((position: Int, direction: Int) -> Unit)? = null,
+                                canMoveAt: (position: Int) -> Boolean = { true },
+                                canSwipeAt: (position: Int) -> Boolean = { true }) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
-        override fun getDragDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-            val position = viewHolder!!.layoutPosition
-            val adapter = adapter as? RecyclerSectionAdapter<*, *>
+        override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            val position = viewHolder.layoutPosition
             var isMovable = canMoveAt(position)
-            if (adapter != null) {
-                isMovable = !adapter.isSectionAt(position)
+            (adapter as? RecyclerSectionAdapter<*, *>)?.let {
+                isMovable = !it.isSectionAt(position)
             }
 
             return if (isMovable) super.getDragDirs(recyclerView, viewHolder) else 0
         }
 
-        override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-            val position = viewHolder!!.layoutPosition
-            val adapter = adapter as? RecyclerSectionAdapter<*, *>
+        override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            val position = viewHolder.layoutPosition
             var isSwipable = canSwipeAt(position)
-            if (adapter != null) {
-                isSwipable = !adapter.isSectionAt(position)
+            (adapter as? RecyclerSectionAdapter<*, *>)?.let {
+                isSwipable = !it.isSectionAt(position)
             }
 
             return if (isSwipable) super.getSwipeDirs(recyclerView, viewHolder) else 0
         }
 
-        override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            val fromPosition = viewHolder!!.layoutPosition
-            val toPosition = target!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
-
+        override fun onMove(recyclerView: RecyclerView,
+                            viewHolder: RecyclerView.ViewHolder,
+                            target: RecyclerView.ViewHolder): Boolean {
+            val fromPosition = viewHolder.layoutPosition
+            val toPosition = target.layoutPosition
+            (adapter as? RecyclerAdapter<*>)?.let { adapter ->
                 // Prevent move items outside its section if any
-                val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-                if (sectionAdapter != null) {
-                    if (sectionAdapter.isSectionAt(toPosition)) {
-                        sectionAdapter.notifyDataSetChanged()
-                        return false
-                    }
-                }
+                (adapter as? RecyclerSectionAdapter<*, *>)
+                        ?.takeIf { it.isSectionAt(toPosition) }
+                        ?.let {
+                            it.notifyDataSetChanged()
+                            return false
+                        }
 
                 adapter.moveItem(fromPosition, toPosition)
                 return onMove?.invoke(fromPosition, toPosition) ?: true
@@ -71,11 +68,10 @@ fun RecyclerView.enableGestures(dragDirections: Int,
             return false
         }
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            val position = viewHolder!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
-                adapter.removeItem(position)
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.layoutPosition
+            (adapter as? RecyclerAdapter<*>)?.let {
+                it.removeItem(position)
                 onSwipe?.invoke(position, direction)
             }
         }
@@ -96,43 +92,39 @@ fun RecyclerView.enableGestures(dragDirections: Int,
                                 callback: GestureCallback? = null) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
-        override fun getDragDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-            val position = viewHolder!!.layoutPosition
+        override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            val position = viewHolder.layoutPosition
             var isMovable = callback?.canMoveAt(position) ?: true
-            val adapter = adapter as? RecyclerSectionAdapter<*, *>
-            if (adapter != null) {
-                isMovable = !adapter.isSectionAt(position)
+            (adapter as? RecyclerSectionAdapter<*, *>)?.let {
+                isMovable = !it.isSectionAt(position)
             }
 
             return if (isMovable) super.getDragDirs(recyclerView, viewHolder) else 0
         }
 
-        override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-            val position = viewHolder!!.layoutPosition
+        override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            val position = viewHolder.layoutPosition
             var isSwipable = callback?.canSwipeAt(position) ?: true
-            val adapter = adapter as? RecyclerSectionAdapter<*, *>
-            if (adapter != null) {
-                isSwipable = !adapter.isSectionAt(position)
+            (adapter as? RecyclerSectionAdapter<*, *>)?.let {
+                isSwipable = !it.isSectionAt(position)
             }
 
             return if (isSwipable) super.getSwipeDirs(recyclerView, viewHolder) else 0
         }
 
-        override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            val fromPosition = viewHolder!!.layoutPosition
-            val toPosition = target!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
-
+        override fun onMove(recyclerView: RecyclerView,
+                            viewHolder: RecyclerView.ViewHolder,
+                            target: RecyclerView.ViewHolder): Boolean {
+            val fromPosition = viewHolder.layoutPosition
+            val toPosition = target.layoutPosition
+            (adapter as? RecyclerAdapter<*>)?.let { adapter ->
                 // Prevent move items outside its section if any
-                val sectionAdapter = adapter as? RecyclerSectionAdapter<*, *>
-                if (sectionAdapter != null) {
-                    if (sectionAdapter.isSectionAt(toPosition)) {
-                        sectionAdapter.notifyDataSetChanged()
-                        return false
-                    }
-                }
-
+                (adapter as? RecyclerSectionAdapter<*, *>)
+                        ?.takeIf { it.isSectionAt(toPosition) }
+                        ?.let {
+                            it.notifyDataSetChanged()
+                            return false
+                        }
                 adapter.moveItem(fromPosition, toPosition)
                 return callback?.onMove(fromPosition, toPosition) ?: true
             }
@@ -140,11 +132,10 @@ fun RecyclerView.enableGestures(dragDirections: Int,
             return false
         }
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            val position = viewHolder!!.layoutPosition
-            val adapter = adapter as? RecyclerAdapter<*>
-            if (adapter != null) {
-                adapter.removeItem(position)
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.layoutPosition
+            (adapter as? RecyclerAdapter<*>)?.let {
+                it.removeItem(position)
                 callback?.onSwiped(position, direction)
             }
         }

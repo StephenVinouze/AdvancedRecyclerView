@@ -11,15 +11,17 @@ import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerAdapter<MODEL>() : RecyclerView.Adapter<BaseViewHolder>() {
+abstract class RecyclerAdapter<MODEL> : RecyclerView.Adapter<BaseViewHolder>() {
 
     val selectedItemViewCount: Int
         get() = selectedItemViews.size()
+
     var choiceMode = ChoiceMode.NONE
         set(value) {
             field = value
             clearSelectedItemViews()
         }
+
     open var items: MutableList<MODEL> = arrayListOf()
         set(value) {
             field = value
@@ -154,7 +156,7 @@ abstract class RecyclerAdapter<MODEL>() : RecyclerView.Adapter<BaseViewHolder>()
         val itemView = onCreateItemView(parent, viewType)
         val viewHolder = BaseViewHolder(itemView)
 
-        handleClick(viewHolder, { it.layoutPosition })
+        handleClick(viewHolder) { it.layoutPosition }
 
         return viewHolder
     }
