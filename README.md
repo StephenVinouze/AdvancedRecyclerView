@@ -58,7 +58,7 @@ class SampleItemView @JvmOverloads constructor(context: Context, attrs: Attribut
 Then define your own adapter that extends from `RecyclerAdapter` and template it with your model that will be used to populate your list :
 
 ```kotlin
-class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+class SampleAdapter(private val context: Context) : RecyclerAdapter<Sample>() {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
@@ -140,7 +140,7 @@ Create a section item view to render your sections. Let's call it `SampleSection
 Extends your adapter class from `RecyclerSectionAdapter` (which itself extends from `RecyclerAdapter`) and provides two more abstract methods to shape your views that will be displayed as sections :
 
 ```kotlin
-class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sample>(context, { it.rate }) {
+class SampleSectionAdapter(private val context: Context) : RecyclerSectionAdapter<Int, Sample>({ it.rate }) {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
@@ -189,7 +189,7 @@ You should also notify your users that your content is being loaded into your li
 Extend your adapter from `RecyclerPaginationAdapter` and implement the loader creator callback :
 
 ```kotlin
-class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Sample>(context) {
+class SamplePaginationAdapter(private val context: Context) : RecyclerPaginationAdapter<Sample>() {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
 
