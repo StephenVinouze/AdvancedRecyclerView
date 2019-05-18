@@ -1,6 +1,6 @@
 # AdvancedRecyclerView
 [![Release](https://jitpack.io/v/StephenVinouze/AdvancedRecyclerView.svg)](https://jitpack.io/#StephenVinouze/AdvancedRecyclerView)
-[![Build Status](https://www.bitrise.io/app/aa32eb2a506f12b7/status.svg?token=s1ggZ36H_7eI-Duu7TvGwA)](https://www.bitrise.io/app/aa32eb2a506f12b7)
+[![Build Status](https://app.bitrise.io/app/aa32eb2a506f12b7/status.svg?token=s1ggZ36H_7eI-Duu7TvGwA)](https://app.bitrise.io/app/aa32eb2a506f12b7)
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AdvancedRecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/3553)
 [![GitHub license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.com/StephenVinouze/AdvancedRecyclerView/blob/master/LICENSE)
@@ -58,9 +58,9 @@ class SampleItemView @JvmOverloads constructor(context: Context, attrs: Attribut
 Then define your own adapter that extends from `RecyclerAdapter` and template it with your model that will be used to populate your list :
 
 ```kotlin
-class SampleAdapter(context: Context) : RecyclerAdapter<Sample>(context) {
+class SampleAdapter : RecyclerAdapter<Sample>() {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {
@@ -140,9 +140,9 @@ Create a section item view to render your sections. Let's call it `SampleSection
 Extends your adapter class from `RecyclerSectionAdapter` (which itself extends from `RecyclerAdapter`) and provides two more abstract methods to shape your views that will be displayed as sections :
 
 ```kotlin
-class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sample>(context, { it.rate }) {
+class SampleSectionAdapter : RecyclerSectionAdapter<Int, Sample>({ it.rate }) {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {
@@ -153,7 +153,7 @@ class SampleSectionAdapter(context: Context) : RecyclerSectionAdapter<Int, Sampl
     // Override these two new methods to render your sections
        
     override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View =
-            SampleSectionItemView(context)
+            SampleSectionItemView(parent.context)
 
     override fun onBindSectionItemView(sectionView: View, sectionPosition: Int) {
         sectionAt(sectionPosition)?.let {
@@ -189,9 +189,9 @@ You should also notify your users that your content is being loaded into your li
 Extend your adapter from `RecyclerPaginationAdapter` and implement the loader creator callback :
 
 ```kotlin
-class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Sample>(context) {
+class SamplePaginationAdapter : RecyclerPaginationAdapter<Sample>() {
 
-    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(context)
+    override fun onCreateItemView(parent: ViewGroup, viewType: Int): View = SampleItemView(parent.context)
 
     override fun onBindItemView(view: View, position: Int) {
         when (view) {
@@ -200,7 +200,7 @@ class SamplePaginationAdapter(context: Context) : RecyclerPaginationAdapter<Samp
     }
 
     override fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View =
-            LayoutInflater.from(context).inflate(R.layout.view_progress, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.view_progress, parent, false)
 
 }
 ```
