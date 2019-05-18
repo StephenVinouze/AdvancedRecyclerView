@@ -45,6 +45,5 @@ abstract class RecyclerPaginationAdapter<MODEL> : RecyclerAdapter<MODEL>() {
     private fun isLoaderAt(position: Int): Boolean =
             isLoading && position == itemCount - 1
 
-    protected abstract fun onCreateLoaderView(parent: ViewGroup, viewType: Int) : View
-
+    protected abstract fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View
 }

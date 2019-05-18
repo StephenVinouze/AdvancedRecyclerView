@@ -2,12 +2,12 @@ package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.appendItems
 import com.github.stephenvinouze.advancedrecyclerview.pagination.extensions.enablePagination
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
@@ -69,7 +69,7 @@ class PaginationRecyclerFragment : Fragment() {
     private fun loadPage(reload: Boolean) {
         val items = Sample.mockItems()
         if (reload) {
-            paginationAdapter.items = items
+            paginationAdapter.items = items.toMutableList()
         } else {
             paginationAdapter.appendItems(items)
         }
@@ -77,5 +77,4 @@ class PaginationRecyclerFragment : Fragment() {
         paginationAdapter.isLoading = false
         refreshLayout.isRefreshing = false
     }
-
 }

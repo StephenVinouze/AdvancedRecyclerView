@@ -1,11 +1,16 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.activities
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
-import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.*
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.GestureRecyclerFragment
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.GestureSectionRecyclerFragment
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.MultipleChoiceRecyclerFragment
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.PaginationRecyclerFragment
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.SectionRecyclerFragment
+import com.github.stephenvinouze.advancedrecyclerview.sample.fragments.SingleChoiceRecyclerFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,5 +67,4 @@ class MainActivity : AppCompatActivity() {
         title = getString(R.string.pagination_recycler_name)
         supportFragmentManager.beginTransaction().replace(R.id.main_container, PaginationRecyclerFragment()).commit()
     }
-
 }

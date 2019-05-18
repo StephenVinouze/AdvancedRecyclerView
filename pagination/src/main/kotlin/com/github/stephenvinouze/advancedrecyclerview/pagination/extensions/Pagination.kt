@@ -17,12 +17,14 @@ import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdap
  * @param hasAllItems Indicate in this block if all items has been loaded.
  * @param onLoad The pagination has been triggered. You should handle the logic in this block.
  */
-fun RecyclerView.enablePagination(threshold: Int = 5,
-                                                               isLoading: () -> Boolean,
-                                                               hasAllItems: () -> Boolean,
-                                                               onLoad: () -> Unit) {
+fun RecyclerView.enablePagination(
+    threshold: Int = 5,
+    isLoading: () -> Boolean,
+    hasAllItems: () -> Boolean,
+    onLoad: () -> Unit
+) {
     layoutManager?.let {
-        addOnScrollListener(object: RecyclerView.OnScrollListener() {
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -54,7 +56,7 @@ fun RecyclerView.enablePagination(threshold: Int = 5,
  */
 fun RecyclerView.enablePagination(threshold: Int = 5, callback: PaginationCallback) {
     layoutManager?.let {
-        addOnScrollListener(object: RecyclerView.OnScrollListener() {
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -86,9 +88,7 @@ fun <T> RecyclerAdapter<T>.appendItems(itemsToAdd: List<T>) {
 }
 
 abstract class PaginationCallback {
-
     abstract fun isLoading(): Boolean
     abstract fun hasAllItems(): Boolean
     abstract fun onLoad()
-
 }

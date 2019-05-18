@@ -24,5 +24,4 @@ class SamplePaginationAdapter : RecyclerPaginationAdapter<Sample>() {
 
     override fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View =
             LayoutInflater.from(parent.context).inflate(R.layout.view_progress, parent, false)
-
 }

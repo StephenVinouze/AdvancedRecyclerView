@@ -23,5 +23,4 @@ class SampleItemView @JvmOverloads constructor(context: Context, attrs: Attribut
         sampleItemNameTV.text = sample.name
         sampleItemTickIcon.visibility = if (isToggled) View.VISIBLE else View.GONE
     }
-
 }

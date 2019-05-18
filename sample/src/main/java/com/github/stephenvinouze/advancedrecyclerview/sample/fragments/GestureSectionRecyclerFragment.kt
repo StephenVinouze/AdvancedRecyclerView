@@ -1,9 +1,9 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode
 import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.enableGestures
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleSectionAdapter
@@ -40,5 +40,4 @@ class GestureSectionRecyclerFragment : AbstractRecyclerFragment() {
                 }
         )
     }
-
 }

@@ -1,12 +1,12 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.stephenvinouze.advancedrecyclerview.sample.R
 import kotlinx.android.synthetic.main.recycler_layout.*
 
@@ -27,5 +27,4 @@ abstract class AbstractRecyclerFragment : Fragment() {
             itemAnimator = DefaultItemAnimator()
         }
     }
-
 }

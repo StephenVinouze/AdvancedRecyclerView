@@ -1,8 +1,8 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.github.stephenvinouze.advancedrecyclerview.gesture.extensions.enableGestures
 import com.github.stephenvinouze.advancedrecyclerview.sample.adapters.SampleAdapter
 import com.github.stephenvinouze.advancedrecyclerview.sample.models.Sample
@@ -17,7 +17,7 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = SampleAdapter().apply {
-            items = Sample.mockItems()
+            items = Sample.mockItems().toMutableList()
         }
 
         recyclerView.adapter = adapter
@@ -26,5 +26,4 @@ class GestureRecyclerFragment : AbstractRecyclerFragment() {
                 swipeDirections = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         )
     }
-
 }
