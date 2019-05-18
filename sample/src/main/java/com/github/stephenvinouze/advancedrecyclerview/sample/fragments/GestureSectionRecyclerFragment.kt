@@ -1,7 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.fragments
 
 import android.os.Bundle
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
 import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode

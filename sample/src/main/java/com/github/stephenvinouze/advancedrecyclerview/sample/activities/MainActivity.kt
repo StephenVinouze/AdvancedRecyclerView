@@ -1,7 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.sample.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.github.stephenvinouze.advancedrecyclerview.sample.R

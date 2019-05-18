@@ -1,7 +1,7 @@
 package com.github.stephenvinouze.advancedrecyclerview.gesture.extensions
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerSectionAdapter
 
@@ -20,11 +20,11 @@ import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerS
  * @param canSwipeAt The gesture callback that enables swipe at given position (default true)
  */
 fun RecyclerView.enableGestures(dragDirections: Int,
-                                swipeDirections: Int,
-                                onMove: ((fromPosition: Int, toPosition: Int) -> Boolean)? = null,
-                                onSwipe: ((position: Int, direction: Int) -> Unit)? = null,
-                                canMoveAt: (position: Int) -> Boolean = { true },
-                                canSwipeAt: (position: Int) -> Boolean = { true }) {
+                                                             swipeDirections: Int,
+                                                             onMove: ((fromPosition: Int, toPosition: Int) -> Boolean)? = null,
+                                                             onSwipe: ((position: Int, direction: Int) -> Unit)? = null,
+                                                             canMoveAt: (position: Int) -> Boolean = { true },
+                                                             canSwipeAt: (position: Int) -> Boolean = { true }) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
         override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -88,8 +88,8 @@ fun RecyclerView.enableGestures(dragDirections: Int,
  * @param callback The gesture callback
  */
 fun RecyclerView.enableGestures(dragDirections: Int,
-                                swipeDirections: Int,
-                                callback: GestureCallback? = null) {
+                                                             swipeDirections: Int,
+                                                             callback: GestureCallback? = null) {
     ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(dragDirections, swipeDirections) {
 
         override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
