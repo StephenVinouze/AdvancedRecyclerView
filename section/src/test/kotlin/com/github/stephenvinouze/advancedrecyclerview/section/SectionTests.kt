@@ -1,6 +1,6 @@
 package com.github.stephenvinouze.advancedrecyclerview.section
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.section.adapters.RecyclerSectionAdapter
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals

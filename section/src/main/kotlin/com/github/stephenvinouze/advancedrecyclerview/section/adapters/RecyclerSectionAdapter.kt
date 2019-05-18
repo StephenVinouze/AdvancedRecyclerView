@@ -1,6 +1,6 @@
 package com.github.stephenvinouze.advancedrecyclerview.section.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter

@@ -1,8 +1,8 @@
 package com.github.stephenvinouze.advancedrecyclerview.pagination.extensions
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 
 /**
@@ -18,9 +18,9 @@ import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdap
  * @param onLoad The pagination has been triggered. You should handle the logic in this block.
  */
 fun RecyclerView.enablePagination(threshold: Int = 5,
-                                  isLoading: () -> Boolean,
-                                  hasAllItems: () -> Boolean,
-                                  onLoad: () -> Unit) {
+                                                               isLoading: () -> Boolean,
+                                                               hasAllItems: () -> Boolean,
+                                                               onLoad: () -> Unit) {
     layoutManager?.let {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
