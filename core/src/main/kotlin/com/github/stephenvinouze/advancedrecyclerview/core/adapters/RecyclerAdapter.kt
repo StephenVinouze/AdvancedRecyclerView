@@ -167,4 +167,5 @@ abstract class RecyclerAdapter<MODEL> : RecyclerView.Adapter<BaseViewHolder>() {
 
     protected abstract fun onCreateItemView(parent: ViewGroup, viewType: Int): View
     protected abstract fun onBindItemView(view: View, position: Int)
+
 }

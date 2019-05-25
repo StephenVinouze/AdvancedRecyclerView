@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply from: '../ktlint.gradle'
+//apply from: '../ktlint.gradle'
+apply plugin: 'org.jmailen.kotlinter'
 
 group = 'com.github.stephenvinouze'
 
@@ -45,4 +46,19 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     //archives javadocJar
     archives sourcesJar
+}
+
+kotlinter {
+    ignoreFailures = true
+}
+
+task runChecksForDanger() {
+    group = "Reporting"
+    dependsOn 'ktlint'
+    dependsOn 'lint'
+
+    def ktlintFile = file("${project.rootDir}/build/reports/ktlint")
+    if (!ktlintFile.exists()) ktlintFile.mkdirs()
+    def lintFile = new File("${project.rootDir}/build/reports/lint")
+    if (!lintFile.exists()) lintFile.mkdirs()
 }
