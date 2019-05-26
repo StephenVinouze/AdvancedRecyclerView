@@ -12,9 +12,13 @@ warn("Big PR") if git.lines_of_code > 500
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
-if github.pr_body.length < 5
-  warn "Please provide a summary in the Pull Request description"
-end
-
+# Ktlint
 checkstyle_format.base_path = Dir.pwd
 checkstyle_format.report 'core/build/reports/ktlint/main-lint.xml'
+
+# Unit tests
+junit_tests_dir = "**/test-results/**/*.xml"
+Dir[junit_tests_dir].each do |file_name|
+  junit.parse file_name
+  junit.report
+end
