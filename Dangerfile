@@ -12,13 +12,28 @@ warn("Big PR") if git.lines_of_code > 500
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
+# Ignore issues out of PR scope
+github.dismiss_out_of_range_messages
+
+# Lint
+lint_dir = "**/reports/lint-results*.xml"
+Dir[lint_dir].each do |file_name|
+  android_lint.report_file = file_name
+  android_lint.filtering = true
+  android_lint.lint(inline_mode: true)
+end
+
 # Ktlint
-checkstyle_format.base_path = Dir.pwd
-checkstyle_format.report 'core/build/reports/ktlint/main-lint.xml'
+checkstyle_dir = "**/reports/ktlint/main-lint.xml"
+Dir[checkstyle_dir].each do |file_name|
+  checkstyle_format.base_path = file_name
+  checkstyle_format.report file_name
+end
 
 # Unit tests
 junit_tests_dir = "**/test-results/**/*.xml"
 Dir[junit_tests_dir].each do |file_name|
   junit.parse file_name
+  junit.show_skipped_tests = true
   junit.report
 end
