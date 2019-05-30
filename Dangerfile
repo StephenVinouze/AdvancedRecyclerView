@@ -12,15 +12,27 @@ warn("Big PR") if git.lines_of_code > 500
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
+# Handle labels
+message "Please add labels to this PR" if github.pr_labels.empty?
+
+can_merge = github.pr_json["mergeable"]
+message("This PR cannot be merged yet.", sticky: false) unless can_merge
+
+message "This PR does not have any assignees yet." unless github.pr_json["assignee"]
+
+# Handle milestones
+has_milestone = github.pr_json["milestone"] != nil
+message("This PR does not refer to an existing milestone", sticky: false) unless has_milestone
+
 # Ignore issues out of PR scope
-github.dismiss_out_of_range_messages
+# github.dismiss_out_of_range_messages
 
 # Lint
-lint_dir = "**/reports/lint-results*.xml"
+lint_dir = "**/reports/lint-*.xml"
 Dir[lint_dir].each do |file_name|
   android_lint.skip_gradle_task = true
-  android_lint.report_file = file_name
   android_lint.filtering = true
+  android_lint.report_file = file_name
   android_lint.lint(inline_mode: true)
 end
 
