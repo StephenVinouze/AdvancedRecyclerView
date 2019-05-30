@@ -13,9 +13,11 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath("org.jmailen.gradle:kotlinter-gradle:1.25.2")
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:8.0.0"
     }
 }
+
+ext.ReporterType = org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 allprojects {
     repositories {

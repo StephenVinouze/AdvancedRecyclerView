@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'org.jmailen.kotlinter'
+apply from: '../ktlint.gradle'
 
 group = 'com.github.stephenvinouze'
 

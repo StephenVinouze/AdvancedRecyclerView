@@ -6,5 +6,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'danger'
 gem 'danger-android_lint'
-gem "danger-checkstyle_format"
+gem "danger-checkstyle_reports"
 gem 'danger-junit'

@@ -25,7 +25,19 @@ has_milestone = github.pr_json["milestone"] != nil
 message("This PR does not refer to an existing milestone", sticky: false) unless has_milestone
 
 # Ignore issues out of PR scope
-# github.dismiss_out_of_range_messages
+github.dismiss_out_of_range_messages({
+  error: false,
+  warning: false,
+  message: true,
+  markdown: true
+})
+
+# Ktlint
+checkstyle_dir = "**/reports/ktlint/ktlint*.xml"
+Dir[checkstyle_dir].each do |file_name|
+  checkstyle_reports.inline_comment = true
+  checkstyle_reports.report file_name
+end
 
 # Lint
 lint_dir = "**/reports/lint-*.xml"
@@ -34,13 +46,6 @@ Dir[lint_dir].each do |file_name|
   android_lint.filtering = true
   android_lint.report_file = file_name
   android_lint.lint(inline_mode: true)
-end
-
-# Ktlint
-checkstyle_dir = "**/reports/ktlint/*-lint.xml"
-Dir[checkstyle_dir].each do |file_name|
-  checkstyle_format.base_path = file_name
-  checkstyle_format.report file_name
 end
 
 # Unit tests
