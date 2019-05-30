@@ -25,6 +25,11 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
