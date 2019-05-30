@@ -18,7 +18,7 @@ class SingleChoiceRecyclerFragment : AbstractRecyclerFragment() {
 
         val adapter = SampleAdapter().apply {
             choiceMode = ChoiceMode.SINGLE
-            items = Sample.mockItems()
+            items = Sample.mockItems().toMutableList()
             onClick = { _, position ->
                 val sample = items[position]
                 Toast.makeText(context, "Item clicked : ${sample.id} ($selectedItemViewCount selected)", Toast.LENGTH_SHORT).show()
@@ -27,5 +27,4 @@ class SingleChoiceRecyclerFragment : AbstractRecyclerFragment() {
 
         recyclerView.adapter = adapter
     }
-
 }

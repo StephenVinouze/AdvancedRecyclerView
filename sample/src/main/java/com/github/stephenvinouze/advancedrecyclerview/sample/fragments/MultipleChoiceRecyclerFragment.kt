@@ -17,7 +17,7 @@ class MultipleChoiceRecyclerFragment : AbstractRecyclerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = SampleAdapter().apply {
-            items = Sample.mockItems()
+            items = Sample.mockItems().toMutableList()
             choiceMode = ChoiceMode.MULTIPLE
             onClick = { _, position ->
                 val sample = items[position]
@@ -27,5 +27,4 @@ class MultipleChoiceRecyclerFragment : AbstractRecyclerFragment() {
 
         recyclerView.adapter = adapter
     }
-
 }

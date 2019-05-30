@@ -19,5 +19,4 @@ open class SampleAdapter : RecyclerAdapter<Sample>() {
             is SampleItemView -> view.bind(items[position], isItemViewToggled(position))
         }
     }
-
 }

@@ -3,6 +3,8 @@ package com.github.stephenvinouze.advancedrecyclerview.core.adapters
 import android.util.SparseBooleanArray
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import androidx.recyclerview.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.core.enums.ChoiceMode
 import com.github.stephenvinouze.advancedrecyclerview.core.extensions.swap
@@ -32,6 +34,16 @@ abstract class RecyclerAdapter<MODEL> : RecyclerView.Adapter<BaseViewHolder>() {
     var onLongClick: ((view: View, position: Int) -> Boolean)? = null
 
     private val selectedItemViews = SparseBooleanArray()
+
+    @UiThread
+    fun testUIMethod() {
+        testNetworkMethod()
+    }
+
+    @WorkerThread
+    fun testNetworkMethod() {
+        // ...
+    }
 
     fun addItems(items: MutableList<MODEL>, position: Int) {
         addItemsInternal(items, position)

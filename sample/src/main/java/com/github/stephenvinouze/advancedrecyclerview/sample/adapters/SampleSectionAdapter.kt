@@ -30,5 +30,4 @@ class SampleSectionAdapter : RecyclerSectionAdapter<Int, Sample>({ it.rate }) {
             }
         }
     }
-
 }

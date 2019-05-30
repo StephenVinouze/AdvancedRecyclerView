@@ -1,17 +1,15 @@
 package com.github.stephenvinouze.advancedrecyclerview.section.adapters
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
-import java.util.*
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION)
-    : RecyclerAdapter<MODEL>() {
+abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val SECTION_VIEW_TYPE = 222
@@ -23,7 +21,7 @@ abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var 
     val sections: List<SECTION>
         get() = sectionItems.keys.toList()
 
-    private var sectionItems: SortedMap<SECTION, List<MODEL>> = sortedMapOf()
+    private var sectionItems: Map<SECTION, List<MODEL>> = mapOf()
 
     override var items: MutableList<MODEL> = mutableListOf()
         set(value) {
@@ -67,18 +65,18 @@ abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var 
     }
 
     override fun getItemViewType(position: Int): Int =
-            if (isSectionAt(position)) SECTION_VIEW_TYPE else super.getItemViewType(relativePosition(position))
+        if (isSectionAt(position)) SECTION_VIEW_TYPE else super.getItemViewType(relativePosition(position))
 
     override fun getItemId(position: Int): Long =
-            if (isSectionAt(position)) Long.MAX_VALUE - sectionPosition(position) else super.getItemId(relativePosition(position))
+        if (isSectionAt(position)) Long.MAX_VALUE - sectionPosition(position) else super.getItemId(relativePosition(position))
 
     override fun getItemCount(): Int = super.getItemCount() + sectionCount
 
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
-            when (viewType) {
-                SECTION_VIEW_TYPE -> BaseViewHolder(onCreateSectionItemView(parent, viewType))
-                else -> super.onCreateViewHolder(parent, viewType)
-            }
+        when (viewType) {
+            SECTION_VIEW_TYPE -> BaseViewHolder(onCreateSectionItemView(parent, viewType))
+            else -> super.onCreateViewHolder(parent, viewType)
+        }
 
     final override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (isSectionAt(position)) {

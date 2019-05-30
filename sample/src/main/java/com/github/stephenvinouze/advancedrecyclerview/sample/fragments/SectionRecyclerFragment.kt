@@ -17,10 +17,9 @@ class SectionRecyclerFragment : AbstractRecyclerFragment() {
 
         val sectionAdapter = SampleSectionAdapter().apply {
             choiceMode = ChoiceMode.NONE
-            items = Sample.mockItems()
+            items = Sample.mockItems().toMutableList()
         }
 
         recyclerView.adapter = sectionAdapter
     }
-
 }
