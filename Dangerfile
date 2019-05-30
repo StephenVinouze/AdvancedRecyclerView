@@ -18,13 +18,14 @@ github.dismiss_out_of_range_messages
 # Lint
 lint_dir = "**/reports/lint-results*.xml"
 Dir[lint_dir].each do |file_name|
+  android_lint.skip_gradle_task = true
   android_lint.report_file = file_name
   android_lint.filtering = true
   android_lint.lint(inline_mode: true)
 end
 
 # Ktlint
-checkstyle_dir = "**/reports/ktlint/main-lint.xml"
+checkstyle_dir = "**/reports/ktlint/*-lint.xml"
 Dir[checkstyle_dir].each do |file_name|
   checkstyle_format.base_path = file_name
   checkstyle_format.report file_name

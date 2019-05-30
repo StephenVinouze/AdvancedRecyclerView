@@ -25,10 +25,9 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
-    android {
-        lintOptions {
-            abortOnError false
-        }
+    lintOptions {
+        xmlReport true
+        abortOnError false
     }
 }
 

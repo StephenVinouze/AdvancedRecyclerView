@@ -115,4 +115,5 @@ class SectionTests {
         assertEquals(adapter.absolutePosition(4), 6)
         assertEquals(adapter.absolutePosition(6), 8)
     }
+
 }
