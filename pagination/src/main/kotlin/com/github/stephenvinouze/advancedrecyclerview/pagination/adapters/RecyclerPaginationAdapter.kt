@@ -23,13 +23,13 @@ abstract class RecyclerPaginationAdapter<MODEL> : RecyclerAdapter<MODEL>() {
         }
 
     override fun getItemCount(): Int =
-            if (isLoading) super.getItemCount() + 1 else super.getItemCount()
+        if (isLoading) super.getItemCount() + 1 else super.getItemCount()
 
     override fun getItemViewType(position: Int): Int =
-            if (isLoaderAt(position)) LOADING_VIEW_TYPE else super.getItemViewType(position)
+        if (isLoaderAt(position)) LOADING_VIEW_TYPE else super.getItemViewType(position)
 
     override fun getItemId(position: Int): Long =
-            if (isLoaderAt(position)) Long.MAX_VALUE - LOADING_VIEW_TYPE else super.getItemId(position)
+        if (isLoaderAt(position)) Long.MAX_VALUE - LOADING_VIEW_TYPE else super.getItemId(position)
 
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder = when (viewType) {
         LOADING_VIEW_TYPE -> BaseViewHolder(onCreateLoaderView(parent, viewType))
@@ -43,7 +43,7 @@ abstract class RecyclerPaginationAdapter<MODEL> : RecyclerAdapter<MODEL>() {
     }
 
     private fun isLoaderAt(position: Int): Boolean =
-            isLoading && position == itemCount - 1
+        isLoading && position == itemCount - 1
 
     protected abstract fun onCreateLoaderView(parent: ViewGroup, viewType: Int): View
 }

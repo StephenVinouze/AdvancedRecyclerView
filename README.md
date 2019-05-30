@@ -1,6 +1,6 @@
 # AdvancedRecyclerView
 [![Release](https://jitpack.io/v/StephenVinouze/AdvancedRecyclerView.svg)](https://jitpack.io/#StephenVinouze/AdvancedRecyclerView)
-[![Build Status](https://app.bitrise.io/app/aa32eb2a506f12b7/status.svg?token=s1ggZ36H_7eI-Duu7TvGwA)](https://app.bitrise.io/app/aa32eb2a506f12b7)
+[![Build Status](https://app.bitrise.io/app/aa32eb2a506f12b7/status.svg?token=s1ggZ36H_7eI-Duu7TvGwA&branch=master)](https://app.bitrise.io/app/aa32eb2a506f12b7)
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AdvancedRecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/3553)
 [![GitHub license](http://img.shields.io/badge/license-APACHE2-blue.svg)](https://github.com/StephenVinouze/AdvancedRecyclerView/blob/master/LICENSE)

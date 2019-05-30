@@ -169,5 +169,4 @@ abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var 
 
     protected abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View
     protected abstract fun onBindSectionItemView(sectionView: View, sectionPosition: Int)
-
 }
