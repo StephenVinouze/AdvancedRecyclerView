@@ -2,75 +2,78 @@ package com.github.stephenvinouze.advancedrecyclerview.section.adapters
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.github.stephenvinouze.advancedrecyclerview.core.adapters.RecyclerAdapter
 import com.github.stephenvinouze.advancedrecyclerview.core.views.BaseViewHolder
+import com.github.stephenvinouze.advancedrecyclerview.section.helpers.SectionViewModel
 
 /**
  * Created by Stephen Vinouze on 09/11/2015.
  */
-abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var section: (MODEL) -> SECTION) : RecyclerAdapter<MODEL>() {
+abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(
+    var section: (MODEL) -> SECTION
+) : RecyclerAdapter<MODEL>() {
 
     companion object {
         private const val SECTION_VIEW_TYPE = 222
     }
 
-    val sectionCount: Int
-        get() = sectionItems.size
-
-    val sections: List<SECTION>
-        get() = sectionItems.keys.toList()
-
-    private var sectionItems: Map<SECTION, List<MODEL>> = mapOf()
+    val viewModel = SectionViewModel<SECTION, MODEL>()
 
     override var items: MutableList<MODEL> = mutableListOf()
         set(value) {
-            buildSections(value, section)
-            field = sectionItems.values.flatten().toMutableList()
+            viewModel.buildSections(value, section)
+            field = viewModel.items.toMutableList()
             notifyDataSetChanged()
         }
 
     final override fun addItemsInternal(items: MutableList<MODEL>, position: Int) {
-        super.addItemsInternal(items, relativePosition(position))
-        buildSections(items, section)
+        super.addItemsInternal(items, viewModel.relativePosition(position))
+        viewModel.buildSections(items, section)
         notifyDataSetChanged()
     }
 
     final override fun addItemInternal(item: MODEL, position: Int) {
-        super.addItemInternal(item, relativePosition(position))
-        buildSections(items, section)
+        super.addItemInternal(item, viewModel.relativePosition(position))
+        viewModel.buildSections(items, section)
         notifyDataSetChanged()
     }
 
     final override fun removeItemInternal(position: Int) {
-        super.removeItemInternal(relativePosition(position))
-        buildSections(items, section)
+        super.removeItemInternal(viewModel.relativePosition(position))
+        viewModel.buildSections(items, section)
         notifyDataSetChanged()
     }
 
     final override fun moveItemInternal(from: Int, to: Int) {
-        super.moveItemInternal(relativePosition(from), relativePosition(to))
+        super.moveItemInternal(viewModel.relativePosition(from), viewModel.relativePosition(to))
     }
 
     final override fun handleClick(viewHolder: BaseViewHolder, clickPosition: (BaseViewHolder) -> Int) {
-        super.handleClick(viewHolder) { relativePosition(it.layoutPosition) }
+        super.handleClick(viewHolder) { viewModel.relativePosition(it.layoutPosition) }
     }
 
     final override fun toggleItemView(position: Int) {
         getSelectedItemViews().forEach {
-            notifyItemChanged(absolutePosition(it))
+            notifyItemChanged(viewModel.absolutePosition(it))
         }
         super.toggleItemView(position)
-        notifyItemChanged(absolutePosition(position))
+        notifyItemChanged(viewModel.absolutePosition(position))
     }
 
     override fun getItemViewType(position: Int): Int =
-        if (isSectionAt(position)) SECTION_VIEW_TYPE else super.getItemViewType(relativePosition(position))
+        if (viewModel.isSectionAt(position))
+            SECTION_VIEW_TYPE
+        else
+            super.getItemViewType(viewModel.relativePosition(position))
 
     override fun getItemId(position: Int): Long =
-        if (isSectionAt(position)) Long.MAX_VALUE - sectionPosition(position) else super.getItemId(relativePosition(position))
+        if (viewModel.isSectionAt(position))
+            Long.MAX_VALUE - viewModel.sectionPosition(position)
+        else
+            super.getItemId(viewModel.relativePosition(position))
 
-    override fun getItemCount(): Int = super.getItemCount() + sectionCount
+    override fun getItemCount(): Int =
+        super.getItemCount() + viewModel.sectionCount
 
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
         when (viewType) {
@@ -79,92 +82,11 @@ abstract class RecyclerSectionAdapter<SECTION : Comparable<SECTION>, MODEL>(var 
         }
 
     final override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        if (isSectionAt(position)) {
-            onBindSectionItemView(holder.view, sectionPosition(position))
+        if (viewModel.isSectionAt(position)) {
+            onBindSectionItemView(holder.view, viewModel.sectionPosition(position))
         } else {
-            super.onBindViewHolder(holder, relativePosition(position))
+            super.onBindViewHolder(holder, viewModel.relativePosition(position))
         }
-    }
-
-    fun itemCountInSection(section: Int): Int = sectionItems[sectionAt(section)]?.size ?: 0
-
-    fun sectionAt(position: Int): SECTION? = sections[position]
-
-    fun buildSections(items: List<MODEL>, section: (MODEL) -> SECTION) {
-        sectionItems = items.groupBy(section).toSortedMap()
-    }
-
-    /**
-     * Check that the given position in the list matches with a section position
-     * @param position: The absolute position in the list
-     * @return True if this is a section
-     */
-    fun isSectionAt(position: Int): Boolean {
-        var absoluteSectionPosition = 0
-        (0 until sectionCount).forEach {
-            if (position == absoluteSectionPosition) {
-                return true
-            } else if (position < absoluteSectionPosition) {
-                return false
-            }
-
-            absoluteSectionPosition += itemCountInSection(it) + 1
-        }
-        return false
-    }
-
-    /**
-     * Compute the relative section position in the list depending on the number of items in each section
-     * @param position: The absolute position in the list
-     * @return The relative section position of the given position
-     */
-    fun sectionPosition(position: Int): Int {
-        var sectionPosition = 0
-        var absoluteSectionPosition = 0
-        (0 until sectionCount).forEach {
-            absoluteSectionPosition += itemCountInSection(it)
-            if (position <= absoluteSectionPosition) {
-                return sectionPosition
-            }
-
-            sectionPosition++
-            absoluteSectionPosition++
-        }
-        return sectionPosition
-    }
-
-    /**
-     * Compute the relative position in the list that omits the sections
-     * @param position: The absolute position in the list
-     * @return The relative position without sections or NO_POSITION if matches section position
-     */
-    fun relativePosition(position: Int): Int {
-        if (isSectionAt(position)) {
-            return RecyclerView.NO_POSITION
-        }
-
-        var relativePosition = position
-        (0..position).forEach {
-            if (isSectionAt(it)) {
-                relativePosition--
-            }
-        }
-        return relativePosition
-    }
-
-    /**
-     * Compute the absolute position in the list that includes the sections
-     * @param position: The relative position in the list
-     * @return The absolute position with sections
-     */
-    fun absolutePosition(position: Int): Int {
-        var offset = 0
-        (0..position).forEach {
-            if (isSectionAt(it + offset)) {
-                offset++
-            }
-        }
-        return position + offset
     }
 
     protected abstract fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View

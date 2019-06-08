@@ -8,4 +8,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'org.amshove.kluent:kluent-android:1.50'
 }

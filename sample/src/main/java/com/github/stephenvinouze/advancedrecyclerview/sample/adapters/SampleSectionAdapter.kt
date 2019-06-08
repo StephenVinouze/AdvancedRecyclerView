@@ -21,10 +21,10 @@ class SampleSectionAdapter : RecyclerSectionAdapter<Int, Sample>({ it.rate }) {
     }
 
     override fun onCreateSectionItemView(parent: ViewGroup, viewType: Int): View =
-            SampleSectionItemView(parent.context)
+        SampleSectionItemView(parent.context)
 
     override fun onBindSectionItemView(sectionView: View, sectionPosition: Int) {
-        sectionAt(sectionPosition)?.let {
+        viewModel.sectionAt(sectionPosition)?.let {
             when (sectionView) {
                 is SampleSectionItemView -> sectionView.bind(it)
             }

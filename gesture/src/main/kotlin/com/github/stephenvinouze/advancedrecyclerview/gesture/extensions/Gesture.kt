@@ -33,7 +33,7 @@ fun RecyclerView.enableGestures(
             val position = viewHolder.layoutPosition
             var isMovable = canMoveAt(position)
             (adapter as? RecyclerSectionAdapter<*, *>)?.let {
-                isMovable = !it.isSectionAt(position)
+                isMovable = !it.viewModel.isSectionAt(position)
             }
 
             return if (isMovable) super.getDragDirs(recyclerView, viewHolder) else 0
@@ -43,7 +43,7 @@ fun RecyclerView.enableGestures(
             val position = viewHolder.layoutPosition
             var isSwipable = canSwipeAt(position)
             (adapter as? RecyclerSectionAdapter<*, *>)?.let {
-                isSwipable = !it.isSectionAt(position)
+                isSwipable = !it.viewModel.isSectionAt(position)
             }
 
             return if (isSwipable) super.getSwipeDirs(recyclerView, viewHolder) else 0
@@ -59,7 +59,7 @@ fun RecyclerView.enableGestures(
             (adapter as? RecyclerAdapter<*>)?.let { adapter ->
                 // Prevent move items outside its section if any
                 (adapter as? RecyclerSectionAdapter<*, *>)
-                    ?.takeIf { it.isSectionAt(toPosition) }
+                    ?.takeIf { it.viewModel.isSectionAt(toPosition) }
                     ?.let {
                         it.notifyDataSetChanged()
                         return false
@@ -101,7 +101,7 @@ fun RecyclerView.enableGestures(
             val position = viewHolder.layoutPosition
             var isMovable = callback?.canMoveAt(position) ?: true
             (adapter as? RecyclerSectionAdapter<*, *>)?.let {
-                isMovable = !it.isSectionAt(position)
+                isMovable = !it.viewModel.isSectionAt(position)
             }
 
             return if (isMovable) super.getDragDirs(recyclerView, viewHolder) else 0
@@ -111,7 +111,7 @@ fun RecyclerView.enableGestures(
             val position = viewHolder.layoutPosition
             var isSwipable = callback?.canSwipeAt(position) ?: true
             (adapter as? RecyclerSectionAdapter<*, *>)?.let {
-                isSwipable = !it.isSectionAt(position)
+                isSwipable = !it.viewModel.isSectionAt(position)
             }
 
             return if (isSwipable) super.getSwipeDirs(recyclerView, viewHolder) else 0
@@ -127,7 +127,7 @@ fun RecyclerView.enableGestures(
             (adapter as? RecyclerAdapter<*>)?.let { adapter ->
                 // Prevent move items outside its section if any
                 (adapter as? RecyclerSectionAdapter<*, *>)
-                    ?.takeIf { it.isSectionAt(toPosition) }
+                    ?.takeIf { it.viewModel.isSectionAt(toPosition) }
                     ?.let {
                         it.notifyDataSetChanged()
                         return false

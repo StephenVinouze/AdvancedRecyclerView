@@ -38,7 +38,7 @@ public class SampleSectionAdapter extends RecyclerSectionAdapter<Integer, Sample
 
     @Override
     public void onBindSectionItemView(@NonNull View sectionView, int sectionPosition) {
-        Integer section = sectionAt(sectionPosition);
+        Integer section = getViewModel().sectionAt(sectionPosition);
         if (section != null) {
             SampleSectionItemView sampleSectionItemView = (SampleSectionItemView) sectionView;
             sampleSectionItemView.bind(section);
